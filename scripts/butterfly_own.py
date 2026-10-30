@@ -11,7 +11,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from sunspot_groups import load_groups
 
-D = "/home/user/planethack/data/"; F = "/home/user/planethack/figures/"
+from paths import D, F
 SPLIT = 15            # latitude separating "high" (new cycle) from "low" (old cycle) spots
 CR_DAYS = 27.2753     # one Carrington rotation
 T0 = pd.Timestamp("1853-11-09")

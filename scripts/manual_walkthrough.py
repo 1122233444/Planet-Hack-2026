@@ -16,7 +16,7 @@ from scipy import ndimage
 from solar_geometry import jd_from_date
 import manual_rotation as mr
 
-D = "/home/user/planethack/data/"; F = "/home/user/planethack/figures/"
+from paths import D, F
 SPOTS = ["A", "E"]       # NOAA 12236 at +30° and NOAA 12235 at -8°: two very different latitudes
 auto = pd.read_csv(D + "rotation/sdo_spot_positions.csv", dtype={"spot": str})   # which dark dot is which
 

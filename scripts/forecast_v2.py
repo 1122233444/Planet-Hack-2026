@@ -12,7 +12,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 
-D = "/home/user/planethack/data/"; F = "/home/user/planethack/figures/"
+from paths import D, F
 
 sn = pd.read_csv(D+"SN_m_tot_V2.0.csv", sep=";", header=None,
                  names=["y","m","t","ssn","sd","nobs","prov"])
@@ -57,27 +57,34 @@ print(f"   Waldmeier effect (cycles 10-25): correlation(peak, rise time) = {r:.2
 c = cyc.loc[10:]
 A = 2019.9 + np.array([c.length[n] + c.rise[n+1] for n in range(10, 25)])   # min(n) -> max(n+1)
 B = cyc.tmax[25] + np.array([c.tmax[n+1] - c.tmax[n] for n in range(10, 25)])  # max(n) -> max(n+1)
-print("\n3) Cycle 26 maximum timing (each value = one historical cycle pair):")
+print("\n3) Cycle 26 maximum timing, two estimators (each value = one historical cycle pair; both use the")
+print("   same cycles 10-25, so they are not independent). ± = spread of the historical values (~68%):")
 for lab, x in [("A: from Cycle 25 minimum (2019.9)", A), (f"B: from Cycle 25 maximum ({cyc.tmax[25]:.1f})", B)]:
     print(f"   {lab}: mean {x.mean():.1f} ± {x.std(ddof=1):.1f}, median {np.median(x):.1f}, "
-          f"range {x.min():.1f}-{x.max():.1f}")
+          f"full range {x.min():.1f}-{x.max():.1f}")
 both = np.r_[A, B]
 print(f"   Combined: {both.mean():.1f} ± {both.std(ddof=1):.1f};  "
       f"share of the 30 estimates landing within 2034.0-2036.99: {np.mean((both>=2034)&(both<2037))*100:.0f}%")
 
 # ---------- 4. analogue ensemble ----------
 # start of Cycle 26 = 2019.9 + (length of a past cycle i); then follow the REAL smoothed curve
-# of a past cycle j from its minimum. All 15 x 14 combinations of i (10-24) and j (11-24).
+# of a past cycle j from its minimum. Main run: all 15 x 14 combinations of i (10-24) and j (11-24).
 ts = s.t.values; ys = s.smooth.values
 years = np.arange(2028, 2045.01, 1/12)
-ens, own = [], []          # own = the part of each curve that belongs to Cycle 26 itself
-for i in range(10, 25):
-    start26 = 2019.9 + cyc.length[i]
-    for j in range(11, 25):
-        tau = years - start26
-        ens.append(np.where(tau >= 0, np.interp(cyc.start[j] + tau, ts, ys), np.nan))
-        own.append(np.where((tau >= 0) & (tau < cyc.length[j]), ens[-1], -1))
-ens = np.array(ens); own = np.array(own)
+
+
+def ensemble(lengths_from, shapes_from):
+    ens, own = [], []      # own = the part of each curve that belongs to Cycle 26 itself
+    for i in range(lengths_from, 25):
+        start26 = 2019.9 + cyc.length[i]
+        for j in range(shapes_from, 25):
+            tau = years - start26
+            ens.append(np.where(tau >= 0, np.interp(cyc.start[j] + tau, ts, ys), np.nan))
+            own.append(np.where((tau >= 0) & (tau < cyc.length[j]), ens[-1], -1))
+    return np.array(ens), np.array(own)
+
+
+ens, own = ensemble(10, 11)
 pct = np.nanpercentile(ens, [10, 25, 50, 75, 90], axis=0)
 
 y35 = (years >= 2035) & (years < 2036)
@@ -85,8 +92,16 @@ mean35 = np.nanmean(ens[:, y35], axis=1)
 q = np.percentile(mean35, [10, 50, 90])
 print(f"\n4) Analogue ensemble ({len(ens)} combinations): mean smoothed SSN during 2035")
 print(f"   10th pct {q[0]:.0f} | median {q[1]:.0f} | 90th pct {q[2]:.0f}")
+print("   The combinations come from only 15 cycle lengths and 14 cycle shapes (~15 independent pieces of")
+print("   information), so the shares below are scenario frequencies within the 1855-2019 record,")
+print("   not calibrated probabilities. A weaker cycle than any in that record is not covered.")
 for thr in [50, 100, 150]:
-    print(f"   P(2035 average SSN > {thr}) = {np.mean(mean35 > thr)*100:.0f}%")
+    print(f"   share of combinations with 2035 average SSN > {thr}: {np.mean(mean35 > thr)*100:.0f}%")
+e_all, _ = ensemble(1, 1)
+m_all = np.nanmean(e_all[:, y35], axis=1)
+print(f"   Check with all cycles 1-24 (adds the less reliable 1755-1855 cycles, incl. the weak Dalton-minimum")
+print(f"   cycles 5-6; {len(e_all)} combinations): median {np.median(m_all):.0f}, 10th pct {np.percentile(m_all, 10):.0f}; "
+      + ", ".join(f"share > {t}: {np.mean(m_all > t)*100:.0f}%" for t in [50, 100, 150]))
 pk = years[np.argmax(own, axis=1)]
 print(f"   Peak year of the ensemble members: median {np.median(pk):.1f}, 10-90%: {np.percentile(pk,10):.1f}-{np.percentile(pk,90):.1f}")
 

@@ -17,7 +17,7 @@ from solar_geometry import (CARRINGTON_RATE, YEAR_DAYS, julian_day, sun_ephemeri
                             pixel_to_helio, helio_to_pixel, simple_pixel_to_helio, fit_line, speed_km_s)
 from sunspot_groups import load_groups
 
-D = "/home/user/planethack/data/"; F = "/home/user/planethack/figures/"
+from paths import D, F
 IMG = D + "sdo/"; os.makedirs(IMG, exist_ok=True); os.makedirs(D + "rotation", exist_ok=True)
 DAYS = pd.date_range("2014-12-12", "2014-12-18")
 API = "https://api.helioviewer.org/v2/"
@@ -30,9 +30,13 @@ def get_image(day):
     """HMI continuum image, 2048x2048, 1 arcsec/pixel, solar north up (helioviewer.org)."""
     stamp = f"{day:%Y-%m-%d}T00:00:00Z"
     png, meta_file = IMG + f"hmi_{day:%Y%m%d}.png", IMG + f"hmi_{day:%Y%m%d}.json"
+    jpg = png.replace(".png", ".jpg")
     if not os.path.exists(meta_file):
         meta = json.load(urllib.request.urlopen(f"{API}getClosestImage/?date={stamp}&sourceId=18", timeout=60))
         json.dump(meta, open(meta_file, "w"))
+    if not os.path.exists(png) and os.path.exists(jpg):
+        # the repository keeps only the JPG copies; results agree with the PNG originals within 0.01 °/day
+        return jpg, json.load(open(meta_file))
     if not os.path.exists(png):
         urllib.request.urlretrieve(f"{API}takeScreenshot/?date={stamp}&imageScale=1.0&layers=%5B18,1,100%5D"
                                    "&x0=0&y0=0&width=2048&height=2048&display=true&watermark=false", png)

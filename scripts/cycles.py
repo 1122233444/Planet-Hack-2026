@@ -4,7 +4,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 
-D = "/home/user/planethack/data/"; F = "/home/user/planethack/figures/"
+from paths import D, F
 
 # ---------- monthly sunspot number, our own 13-month smoothing ----------
 sn = pd.read_csv(D+"SN_m_tot_V2.0.csv", sep=";", header=None,

@@ -2,7 +2,7 @@
 USAF/NOAA 1977-present data, files data/groups/gYYYY.txt)."""
 import glob, numpy as np, pandas as pd
 
-D = "/home/user/planethack/data/"
+from paths import D
 
 
 def load_groups(first_year=1874, last_year=2100):

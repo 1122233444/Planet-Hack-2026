@@ -13,6 +13,7 @@ True (sidereal) rate = rate seen from Earth + Earth's orbital motion (0.9856 °/
 import sys, numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from paths import D, F
 from solar_geometry import (YEAR_DAYS, R_SUN_KM, julian_day, sun_ephemeris, earth_orbital_rate,
                             pixel_to_helio, simple_pixel_to_helio, fit_line, fit_sine, speed_km_s)
 
@@ -103,8 +104,8 @@ def plot(m, res, fits, out):
 
 
 if __name__ == "__main__":
-    path = sys.argv[1] if len(sys.argv) > 1 else "/home/user/planethack/data/rotation/sdo_spot_positions.csv"
-    out = sys.argv[2] if len(sys.argv) > 2 else "/home/user/planethack/figures/xy_sine_fit_all.png"
+    path = sys.argv[1] if len(sys.argv) > 1 else D + "rotation/sdo_spot_positions.csv"
+    out = sys.argv[2] if len(sys.argv) > 2 else F + "xy_sine_fit_all.png"
     m = load(path)
     res, fits = analyse(m)
     report(m, res)

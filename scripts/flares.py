@@ -1,14 +1,18 @@
 """NOAA GOES X-ray flares 1975-2026 vs sunspot number; radio-blackout (R-scale) check and 2035 outlook.
 
 Calibration: GOES 1-15 (to 2016) fluxes were officially scaled by 0.7 by NOAA SWPC.
-GOES-16/19 science data are true fluxes. We divide the old fluxes by 0.7 so the whole
-record is on today's NOAA scale (the one used for current R-scale alerts).
+GOES-16/19 data are true fluxes, and flare classes announced in the GOES-16 era use them
+(e.g. 14 May 2024: SWPC X8.7, GOES-16 science data X8.7). We divide the old fluxes by 0.7 so the
+whole record is on this true-flux scale. Official classes and R levels of older events are on the
+old scale and therefore 0.7x ours (e.g. 6 Sep 2017: reported X9.3 / R3, here X14.6 / R4).
+Two alternatives are computed as a check: old fluxes / 0.64 (our measured ratio) and everything on
+the old scale.
 """
 import glob, re, numpy as np, pandas as pd, xarray as xr, matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-D = "/home/user/planethack/data/"; F = "/home/user/planethack/figures/"
+from paths import D, F
 BASE = dict(A=1e-8, B=1e-7, C=1e-6, M=1e-5, X=1e-4)
 
 # ---------- legacy text reports 1975 - 2017-02-08 ----------
@@ -47,24 +51,34 @@ ratio = (ov.flux_old / ov.flux).median()
 print(f"Calibration check: {len(ov)} C-class+ flares seen in both datasets, "
       f"median old/new flux ratio = {ratio:.2f} (NOAA official: 0.70)")
 
+print(f"   i.e. {abs(ratio / 0.7 - 1) * 100:.0f}% below NOAA's factor; both are tried below")
 old = old[old.time < "2017-02-09"].assign(flux=lambda x: x.flux_old / 0.7)
-fl = pd.concat([old[["time", "flux", "src"]], g16, g19]).sort_values("time").reset_index(drop=True)
+fl = pd.concat([old[["time", "flux", "flux_old", "src"]], g16, g19]).sort_values("time").reset_index(drop=True)
+fl["flux_064"] = np.where(fl.src == "legacy", fl.flux_old / ratio, fl.flux)    # old data / measured ratio
+fl["flux_oldscale"] = np.where(fl.src == "legacy", fl.flux_old, fl.flux * 0.7)  # as officially reported pre-GOES-16
+fl = fl.drop(columns="flux_old")
 fl["year"] = fl.time.dt.year
 def cls(f):
     for L in "XMCBA":
         if f >= BASE[L]: return f"{L}{f/BASE[L]:.1f}"
     return "A0"
 fl["class"] = fl.flux.map(cls)
-fl.to_csv(D+"flares_1975_2026.csv", index=False)
+fl[["time", "flux", "src", "year", "class"]].to_csv(D+"flares_1975_2026.csv", index=False)
 print(f"Total flares: {len(fl)}  ({fl.time.min():%Y-%m} to {fl.time.max():%Y-%m})")
 
 # ---------- yearly counts per NOAA radio-blackout level ----------
 R = {"R1+ (≥M1)": 1e-5, "R2+ (≥M5)": 5e-5, "R3+ (≥X1)": 1e-4, "R4+ (≥X10)": 1e-3}
-yr = pd.DataFrame({k: fl[fl.flux >= v].groupby("year").size() for k, v in R.items()}).fillna(0).astype(int)
 sn = pd.read_csv(D+"SN_m_tot_V2.0.csv", sep=";", header=None, names=["y","m","t","ssn","sd","n","p"])
-yr["SSN"] = sn.groupby("y").ssn.mean().reindex(yr.index).round(1)
-yr = yr.loc[1976:2026]          # 1975: GOES record starts part-way through the year
-yr.loc[2026, yr.columns[:4]] = (yr.loc[2026, yr.columns[:4]] * 12 / 10).round()   # Jan-Oct -> full-year estimate
+
+def per_year(col):
+    """Flares per year above each R threshold, 1976-2026 (1975 is incomplete; 2026 Jan-Oct scaled to 12 months)."""
+    t = pd.DataFrame({k: fl[fl[col] >= v].groupby("year").size() for k, v in R.items()})
+    t = t.reindex(range(1976, 2027)).fillna(0).astype(int)
+    t.loc[2026] = (t.loc[2026] * 12 / 10).round().astype(int)
+    t["SSN"] = sn.groupby("y").ssn.mean().reindex(t.index).round(1)
+    return t
+
+yr = per_year("flux")
 yr.to_csv(D+"flares_per_year.csv")
 print("\nFlares per year by radio-blackout level (2026 scaled to a full year):")
 print(yr.to_string())
@@ -78,8 +92,20 @@ for k in R:
     fits[k] = rate
     print(f"   {k:11s}: r = {rr:.2f}, about {rate*100:.2f} flares/yr per 100 SSN")
 
-# ---------- 2035 outlook using the v2 ensemble ----------
+# ---------- does the choice of scale matter? ----------
 ssn35 = pd.read_csv(D+"forecast_v2_ssn2035_samples.csv").ssn_2035.values
+print("\nScale check: flares per year per 100 SSN, and the 2035 median, on three scales")
+print("   scale                                        R1+  R3+  R4+  | 2035: R1+  R3+ | 6 Sep 2017")
+for lab, col in [("true flux, old data / 0.70  (main)", "flux"), (f"true flux, old data / {ratio:.2f} (measured)", "flux_064"),
+                 ("old scale (as reported before GOES-16)", "flux_oldscale")]:
+    t = per_year(col)
+    rate = {k: t[k].sum() / t.SSN.sum() for k in R}
+    f17 = fl.loc[(fl.time >= "2017-09-06") & (fl.time < "2017-09-07"), col].max()
+    print(f"   {lab:44s} {rate['R1+ (≥M1)']*100:4.0f} {rate['R3+ (≥X1)']*100:4.0f} {rate['R4+ (≥X10)']*100:4.1f}  |"
+          f"       {np.median(rate['R1+ (≥M1)'] * ssn35):4.0f} {np.median(rate['R3+ (≥X1)'] * ssn35):4.0f} | X{f17 / 1e-4:.1f}")
+print("   (2035 alerts will be issued from true-flux data, so the main scale is the one that applies to 2035)")
+
+# ---------- 2035 outlook using the v2 ensemble ----------
 print(f"\n2035 outlook (SSN 10/50/90 percentile = {np.percentile(ssn35,[10,50,90]).round(0)}):")
 for k, rate in fits.items():
     lam = rate * ssn35
@@ -92,6 +118,8 @@ print(f"   Real years with SSN >= 100 ({len(act)} years): at least one R3+ event
 print(f"   R4+ years: {', '.join(map(str, act.index[act['R4+ (≥X10)'] > 0]))}")
 
 # ---------- when do the biggest flares happen? (position in the cycle) ----------
+# maximum = highest value of the 13-month smoothed sunspot number (cycles.py); cycle 23 has two
+# peaks (2000.3 and 2001.9) and the higher one, 2001.9, is used
 MAX = {21: 1979.96, 22: 1989.87, 23: 2001.87, 24: 2014.29, 25: 2024.79}
 dec = fl.time.dt.year + (fl.time.dt.dayofyear - 1) / 365.25
 fl["cycle"] = pd.cut(dec, [1976.2, 1986.7, 1996.6, 2008.9, 2019.9, 2031], labels=[21, 22, 23, 24, 25]).astype(float)
@@ -103,10 +131,20 @@ for lo, hi, lab in [(-99, -1, "rising phase (>1 yr before max)"), (-1, 1, "withi
     n = ((big.from_max >= lo) & (big.from_max < hi)).sum()
     print(f"   {lab:32s}: {n:4d} ({n/len(big)*100:.0f}%)")
 print(f"   within ±2 yr of max: {(big.from_max.abs() < 2).mean()*100:.0f}%")
+# the phases above have different lengths, so compare equal 1-year windows (complete cycles 21-24 only)
+b4 = big[big.cycle <= 24]
+print("X-class flares per year per cycle, in 1-year windows around maximum (cycles 21-24):")
+for lo in range(-3, 6):
+    n = ((b4.from_max >= lo) & (b4.from_max < lo + 1)).sum() / 4
+    print(f"   {lo:+d} to {lo + 1:+d} yr: {n:5.1f} per year")
+for a in (1, 2):
+    before = ((b4.from_max >= -a - 1) & (b4.from_max < -a)).sum(); after = ((b4.from_max >= a) & (b4.from_max < a + 1)).sum()
+    print(f"   {a}-{a + 1} yr after max vs {a}-{a + 1} yr before: {after} vs {before} flares ({after / before:.1f}x)")
 top = fl[fl.flux >= 1e-3].sort_values("time")
-print("\nAll R4+ events (≥X10 on today's scale):")
+print("\nAll R4+ events (≥X10 on the true-flux scale; * = detector saturated, size is an estimate):")
 for _, e in top.iterrows():
-    print(f"   {e.time:%Y-%m-%d}  {e['class']:6s} cycle {e.cycle:.0f}, {e.from_max:+.1f} yr from max  [{e.src}]")
+    sat = "*" if e.src == "legacy" and e.flux * 0.7 >= 1.7e-3 else " "
+    print(f"   {e.time:%Y-%m-%d}  {e['class']:6s}{sat} cycle {e.cycle:.0f}, {e.from_max:+.1f} yr from max  [{e.src}]")
 
 # ---------- figures ----------
 fig, ax = plt.subplots(figsize=(13, 5.5))
@@ -122,7 +160,8 @@ ax.set_ylim(0, 1150)
 ax2.set_ylim(0, 280)
 h1, l1 = ax.get_legend_handles_labels(); h2, l2 = ax2.get_legend_handles_labels()
 ax.legend(h1+h2, l1+l2, loc="upper center", ncol=3, fontsize=9)
-ax.set_title("NOAA GOES flares vs sunspot number, 1976–2026  (n×R4 = number of ≥X10 flares that year)")
+ax.set_title("NOAA GOES flares vs sunspot number, 1976–2026, true-flux scale (pre-2017 reports ÷ 0.7)  "
+             "(n×R4 = ≥X10 flares that year)", fontsize=10)
 plt.tight_layout(); plt.savefig(F+"flares_vs_sunspots.png", dpi=150)
 
 fig, (a, a2, b) = plt.subplots(1, 3, figsize=(16, 5))
@@ -137,6 +176,6 @@ for axx, k, col in [(a, "R1+ (≥M1)", "tab:orange"), (a2, "R3+ (≥X1)", "tab:r
     axx.set_title(f"{k} flares per year (r = {rr:.2f})"); axx.legend(fontsize=8)
 b.hist(big.from_max, bins=np.arange(-6, 9, 0.5), color="tab:red")
 b.axvspan(-1, 1, color="tab:orange", alpha=.2); b.axvline(0, c="k", ls=":")
-b.set_xlabel("Years from cycle maximum (cycles 21–25)"); b.set_ylabel("Number of X-class flares")
+b.set_xlabel("Years from cycle maximum (13-month smoothed SSN peak), cycles 21–25"); b.set_ylabel("X-class flares per 0.5 yr")
 b.set_title("When do X-class flares happen?")
 plt.tight_layout(); plt.savefig(F+"flares_relation.png", dpi=150)

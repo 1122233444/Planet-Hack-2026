@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from solar_geometry import R_SUN_KM
 import manual_rotation as mr
 
-D = "/home/user/planethack/data/"; F = "/home/user/planethack/figures/"
+from paths import D, F
 r = pd.read_csv(D + "rotation_groups.csv")
 A, B = pd.read_csv(D + "rotation_fit.csv").iloc[0]
 

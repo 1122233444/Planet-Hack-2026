@@ -4,9 +4,13 @@ Check: sidereal rate from Carrington longitudes minus (synodic rate + Earth's or
        Using a constant 0.9856 deg/day for the Earth (the simple formula) instead is off by -0.032 .. +0.034 deg/day depending on the season
 
 Fit  omega(lat) = A + B sin²(lat)   [deg/day, sidereal]
-   All groups            : A = 14.535 ± 0.005, B = -2.84 ± 0.05   (20,582 groups)
-   Greenwich 1874-1976   : A = 14.546 ± 0.006, B = -2.92 ± 0.06   (12,463 groups)
-   USAF/NOAA 1977-2026   : A = 14.515 ± 0.008, B = -2.72 ± 0.07   (8,118 groups)
+   (each fit removes its own outliers beyond 3 standard deviations, so the counts of the two eras
+    need not add up exactly to the count of the combined fit)
+   All groups            : A = 14.535 ± 0.005, B = -2.84 ± 0.05   (20,582 groups used, 421 outliers removed)
+   Greenwich 1874-1976   : A = 14.546 ± 0.006, B = -2.92 ± 0.06   (12,463 groups used, 215 outliers removed)
+   USAF/NOAA 1977-2026   : A = 14.515 ± 0.008, B = -2.72 ± 0.07   (8,118 groups used, 207 outliers removed)
+   Result: A = 14.535 ± 0.005 (statistical) ± 0.016 (systematic), B = -2.84 ± 0.05 (statistical) ± 0.10 (systematic)
+   systematic = half the difference between the two independent datasets (Greenwich vs USAF/NOAA)
    with sin⁴ term       : A = 14.534 ± 0.006, B = -2.82 ± 0.11, C = -0.10 ± 0.43  (C is poorly fixed: almost no sunspots above 40°)
    Carrington's 14.184 deg/day matches sunspots at latitude 20.6°
    North hemisphere      : A = 14.535 ± 0.006, B = -2.88 ± 0.07

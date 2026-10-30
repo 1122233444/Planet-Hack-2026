@@ -8,7 +8,7 @@ import numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-D = "/home/user/planethack/data/"; F = "/home/user/planethack/figures/"
+from paths import D, F
 CYCLE_MAX = [1979.9, 1989.9, 2001.9, 2014.3, 2024.8]          # smoothed sunspot maxima (cycles.py)
 
 # well-documented incidents: (first day, last day, short name, biggest flare as reported at the time, what happened, source)
@@ -41,6 +41,10 @@ def r_level(flux):
     return "below R1"
 
 
+def class_flux(c):
+    return dict(M=1e-5, X=1e-4)[c[0]] * float(c[1:].rstrip("+"))
+
+
 fl = pd.read_csv(D + "flares_1975_2026.csv", parse_dates=["time"])
 yr = pd.read_csv(D + "flares_per_year.csv", index_col=0)
 rows = []
@@ -49,13 +53,14 @@ for a, b, name, reported, what, src in INCIDENTS:
     big = w.loc[w.flux.idxmax()]
     y = pd.Timestamp(a); dec = y.year + y.dayofyear / 365.25
     cmax = min(CYCLE_MAX, key=lambda m: abs(m - dec))
-    rows.append(dict(incident=name, reported_then=reported, biggest_flare=big["class"], blackout=r_level(big.flux),
+    rows.append(dict(incident=name, reported_then=reported, level_then=r_level(class_flux(reported)),
+                     biggest_flare=big["class"], blackout=r_level(big.flux),
                      n_X=(w.flux >= 1e-4).sum(), year_SSN=yr.SSN[y.year], years_from_max=round(dec - cmax, 1),
                      what=what, source=src))
 inc = pd.DataFrame(rows)
 pd.set_option("display.width", 250); pd.set_option("display.max_colwidth", 200)
-print("Reported incidents vs our data (biggest_flare and blackout level on today's NOAA scale; "
-      "reported_then = class announced at the time; up to 2017 that used the old scale, about 0.7× today's):")
+print("Reported incidents vs our data. reported_then / level_then = class and R level announced at the time "
+      "(up to 2017 on the old scale, about 0.7x the true flux); biggest_flare / blackout = our true-flux scale:")
 print(inc.drop(columns=["what", "source"]).to_string(index=False))
 inc.to_csv(D + "incidents.csv", index=False)
 

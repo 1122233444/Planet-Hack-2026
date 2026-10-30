@@ -1,11 +1,11 @@
-Reported incidents vs our data (biggest_flare and blackout level on today's NOAA scale; reported_then = class announced at the time; up to 2017 that used the old scale, about 0.7× today's):
-      incident reported_then biggest_flare blackout  n_X  year_SSN  years_from_max
-    March 1989           X15         X21.4       R5   11     211.2            -0.7
-Halloween 2003          X28+         X40.0       R5    6      99.0             1.9
- December 2006          X9.0         X12.9       R4    2      24.6             5.0
-September 2017          X9.3         X14.6       R4    6      21.8             3.4
- February 2022          M1.1          M1.1       R1    0      83.0            -2.7
-      May 2024          X8.7          X8.7       R3   12     154.5            -0.4
+Reported incidents vs our data. reported_then / level_then = class and R level announced at the time (up to 2017 on the old scale, about 0.7x the true flux); biggest_flare / blackout = our true-flux scale:
+      incident reported_then level_then biggest_flare blackout  n_X  year_SSN  years_from_max
+    March 1989           X15         R4         X21.4       R5   11     211.2            -0.7
+Halloween 2003          X28+         R5         X40.0       R5    6      99.0             1.9
+ December 2006          X9.0         R3         X12.9       R4    2      24.6             5.0
+September 2017          X9.3         R3         X14.6       R4    6      21.8             3.4
+ February 2022          M1.1         R1          M1.1       R1    0      83.0            -2.7
+      May 2024          X8.7         R3          X8.7       R3   12     154.5            -0.4
 
 Past years with a sunspot number like the 2035 forecast (middle half: 112-189):
         SSN  R1+ (≥M1)  R3+ (≥X1)  R4+ (≥X10)

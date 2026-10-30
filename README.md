@@ -11,13 +11,13 @@
 | Trigonometric rotation period at each latitude; plot x and y vs time, fit a sine curve, estimate the rate of motion | ✅ | Part 4B: arcsin method and sine-curve fit for every spot |
 | Quantify differential rotation; derive an equation, state the assumptions | ✅ | Part 4C: ω = 14.54 − 2.84 sin²φ °/day, v = 2.04 cos φ (1 − 0.196 sin²φ) km/s, 10 assumptions |
 | Own butterfly diagram of the last two cycles; cycle period and next maximum from it | ✅ | Part 1B: period 11.2 yr, next maximum ≈ 2036.4 (all 12 cycles: 2034.9 ± 1.3) |
-| Forecast 2035; cross-check with solar activity ↔ radio blackouts (reported incidents) | ✅ | Parts 2–3: SSN median 156, ~30 R3 blackouts in 2035; 6 reported incidents and 12 look-alike years |
+| Forecast 2035; cross-check with solar activity ↔ radio blackouts (reported incidents) | ✅ | Parts 2–3: SSN median 156, ~30 R3 blackouts in 2035 (true-flux scale); 6 reported incidents and 12 look-alike years |
 | Mission protection strategy | ⏳ | Step 5 (next) |
 | Video pitch to the ISECG launch panel | ⏳ | Step 5 (next) |
 
-**Headline:** Cycle 26 maximum ≈ **2035.4 ± 1.2** → mid-2035 smoothed sunspot number median **156** (80% range 99–210) → expect ~**30 X-class flares (R3+ radio blackouts)** and ~440 M-class-or-stronger flares in 2035; elevated risk continues to ~2038 because big flares cluster *after* maximum.
+**Headline:** Cycle 26 maximum ≈ **2035.4** (spread of historical analogues ±1.2 yr, full range 2033.6–2038.1) → mid-2035 smoothed sunspot number median **156** (10–90% of the historical-analogue combinations: 99–210) → expect ~**30 X-class flares (R3+ radio blackouts)** and ~440 M-class-or-stronger flares in 2035 on the true-flux scale used for today's alerts (19 and ~290 on the old pre-GOES-16 scale); elevated risk continues to ~2038 because, in equal time windows, X-class flares are 2.5–2.9× more frequent after a maximum than before it.
 
-## Part 1 – Butterfly diagram & Cycle 26 forecast
+## Part 1 – Butterfly diagram & first (v1) forecast (the v1 numbers are superseded by Part 2)
 
 ![Butterfly diagram](figures/butterfly_c24_c25.png)
 ![Forecast 2035](figures/forecast_2035.png)
@@ -28,9 +28,9 @@
 | Mean cycle length (Cycles 1–24) | 11.0 ± 1.2 yr |
 | Mean rise time (minimum → maximum) | 4.4 ± 1.1 yr |
 | Cycle 24 maximum | 2014.3, smoothed SSN 116 |
-| Cycle 25 maximum | 2024.8, smoothed SSN 161 |
+| Cycle 25 maximum | 2024.8, smoothed SSN 161 (data to Sept 2026; SILSO's last months are provisional) |
 | **Cycle 26 minimum (estimate)** | **2030.9 ± 1.2** |
-| **Cycle 26 maximum (estimate)** | **2035.3 ± 1.6** |
+| **Cycle 26 maximum (v1 estimate)** | **2035.3 ± 1.6** (superseded by Part 2: 2035.4 ± 1.2) |
 
 **Conclusion:** the 2035 launch window very likely falls close to the maximum of Solar Cycle 26.
 Scenario peak strengths (smoothed SSN): weak like Cycle 24 ≈ 116, like Cycle 25 ≈ 161, historical average ≈ 178.
@@ -59,8 +59,8 @@ Built directly from the latitude of 3,647 sunspot groups (2006–2026). A cycle 
 
 - Hand-typed cycle minima agree with minima found in the data to within 0.23 yr.
 - Using only reliable cycles 10–25: length 10.93 ± 0.75 yr, rise 4.17 ± 0.70 yr. Waldmeier effect: corr(peak, rise) = −0.61.
-- Two independent timings of the Cycle 26 maximum: from the Cycle 25 minimum 2035.0 ± 1.2, from the Cycle 25 maximum 2035.8 ± 1.1; 77% of the 30 estimates fall in 2034–2036.
-- 210-member historical-analogue ensemble (real cycle shapes): 2035 mean SSN median 156, 10–90% 99–210; P(>100) = 88%, P(>150) = 55%; peak year median 2035.0 (10–90% 2033.7–2036.3).
+- Two estimators of the Cycle 26 maximum (both use the same 15 historical cycles, so they are not independent): from the Cycle 25 minimum 2035.0 ± 1.2, from the Cycle 25 maximum 2035.8 ± 1.1 (± = spread of the historical values, ~68%; full range 2033.6–2038.1); 77% of the 30 estimates fall in 2034–2036. The spread assumes future cycles behave like past ones; the first high-latitude spots of Cycle 26 (~2029–31) will narrow it.
+- Historical-analogue ensemble: 210 combinations of 15 cycle lengths × 14 real cycle shapes, i.e. only ~15 independent pieces of information. 2035 mean SSN median 156, 10–90% 99–210; share of combinations above 100: 88%, above 150: 55%, above 50: 100%. These are scenario frequencies within the 1855–2019 record, not calibrated probabilities: a cycle weaker than any in that record is not covered. Check with all cycles 1–24 (adds the less reliable 1755–1855 cycles, including the weak Dalton-minimum cycles): median 139, above 100: 74%, above 50: 97%. Peak year median 2035.0 (10–90% 2033.7–2036.3).
 
 Details: [`results_forecast_v2.txt`](results_forecast_v2.txt)
 
@@ -69,7 +69,17 @@ Details: [`results_forecast_v2.txt`](results_forecast_v2.txt)
 ![Flares vs sunspots](figures/flares_vs_sunspots.png)
 ![Flare relations](figures/flares_relation.png)
 
-96,840 GOES flares (NCEI legacy reports 1975–2016, GOES-16 2017–2025, GOES-19 2025–2026), all put on today's NOAA flux scale (legacy fluxes ÷ 0.7; checked empirically: median ratio 0.64 on 120 overlapping flares).
+96,840 GOES flares (NCEI legacy reports 1975–2016, GOES-16 2017–2025, GOES-19 2025–2026).
+
+**Flux scale – read this before comparing with official records.** NOAA multiplied GOES-1 to GOES-15 fluxes by 0.7; GOES-16 onwards report the true flux, and flare classes announced in the GOES-16 era use it (14 May 2024: SWPC X8.7, GOES-16 science data X8.7). We divide the legacy fluxes by 0.7, so the whole record is on this **true-flux scale** – the scale on which 2035 alerts will be issued. Official classes and R levels of older events are therefore lower than ours: 6 Sep 2017 was reported as X9.3 / R3, here it is X14.6 / R4. On 120 flares seen by both GOES-15 and GOES-16 (Feb–Jun 2017) we measure a median ratio of 0.64, 8% below NOAA's 0.70, so the results are also shown with 0.64 and on the old scale:
+
+| Scale | Flares per year per 100 SSN: R1+ / R3+ / R4+ | 2035 median: R1+ / R3+ | 6 Sep 2017 flare |
+|---|---|---|---|
+| True flux, legacy ÷ 0.70 (main) | 280 / 19 / 0.8 | 438 / 30 | X14.6 |
+| True flux, legacy ÷ 0.64 (measured ratio) | 298 / 21 / 0.9 | 466 / 33 | X14.6 |
+| Old scale (as reported before GOES-16) | 184 / 12 / 0.5 | 287 / 19 | X10.2 (GOES-15 reported X9.3) |
+
+Everything below is on the true-flux scale.
 
 | Radio-blackout level | r with yearly SSN | flares/yr per 100 SSN | 2035 expected (10% / median / 90%) |
 |---|---|---|---|
@@ -78,8 +88,8 @@ Details: [`results_forecast_v2.txt`](results_forecast_v2.txt)
 | R3+ (≥X1) | 0.80 | 19 | 19 / 30 / 40 |
 | R4+ (≥X10) | 0.38 | 0.8 | ~1–2 |
 
-- In all 18 past years with SSN ≥ 100 there was at least one R3 event; 39% had an R4 event.
-- X-class flares (cycles 21–25): 17% in the rising phase, 41% within ±1 yr of maximum, 34% 1–3 yr after, 9% later → risk stays high for several years after the 2035 maximum (e.g. Halloween 2003, Sept 2005, Sept 2017).
+- In all 18 past years with SSN ≥ 100 there was at least one R3 event; 39% had an R4 event (true-flux scale).
+- When in the cycle? Maximum = peak of the 13-month smoothed sunspot number (for the double-peaked cycle 23, the higher peak, 2001.9). In equal 1-year windows (complete cycles 21–24), X-class flares per cycle-year: 15.5 one to two years before maximum, 41.5 in the year before, 28.8 in the year after, 39.2 one to two years after, 25.8 two to three years after, 12.5 three to four years after. So there are 2.5× more X-class flares 1–2 years after a maximum than 1–2 years before (157 vs 62), and 2.9× more 2–3 years after than 2–3 years before (103 vs 35): risk stays high for about 3 years after the 2035 maximum (e.g. Halloween 2003, Sept 2005, Sept 2017).
 
 Details: [`results_flares.txt`](results_flares.txt), [`data/flares_per_year.csv`](data/flares_per_year.csv)
 
@@ -87,14 +97,16 @@ Details: [`results_flares.txt`](results_flares.txt), [`data/flares_per_year.csv`
 
 ![Incidents timeline](figures/incidents_timeline.png)
 
-| Incident | Reported then | Our data (today's scale) | Blackout | Year SSN | From max | What happened |
-|---|---|---|---|---|---|---|
-| March 1989 | X15 | X21.4 | R5 | 211 | −0.7 yr | Hydro-Québec grid collapse, 6 million without power ~9 h |
-| Halloween 2003 | X28+ | X40.0 | R5 | 99 | +1.9 yr | HF blackouts, polar flights rerouted, WAAS GPS unusable ~30 h, Malmö power cut |
-| December 2006 | X9.0 | X12.9 | R4 | 25 | +5.0 yr | Solar radio burst: GPS receivers on the dayside lose lock |
-| September 2017 | X9.3 | X14.6 | R4 | 22 | +3.4 yr | Hours-long HF blackout during the Caribbean hurricane (Irma) response |
-| February 2022 | M1.1 | M1.1 | R1 | 83 | −2.7 yr | Minor geomagnetic storm: 38 of 49 new Starlink satellites re-enter |
-| May 2024 | X8.7 | X8.7 | R3 | 155 | −0.4 yr | G5 storm: GPS-guided farm machinery disrupted, HF blackouts |
+| Incident | Reported then | Level then | Our data (true-flux scale) | Level (true-flux) | Year SSN | From max | What happened |
+|---|---|---|---|---|---|---|---|
+| March 1989 | X15 | R4 | X21.4 | R5 | 211 | −0.7 yr | Hydro-Québec grid collapse, 6 million without power ~9 h |
+| Halloween 2003 | X28+ | R5 | X40.0* | R5 | 99 | +1.9 yr | HF blackouts, polar flights rerouted, WAAS GPS unusable ~30 h, Malmö power cut |
+| December 2006 | X9.0 | R3 | X12.9 | R4 | 25 | +5.0 yr | Solar radio burst: GPS receivers on the dayside lose lock |
+| September 2017 | X9.3 | R3 | X14.6 | R4 | 22 | +3.4 yr | Hours-long HF blackout during the Caribbean hurricane (Irma) response |
+| February 2022 | M1.1 | R1 | M1.1 | R1 | 83 | −2.7 yr | Minor geomagnetic storm: 38 of 49 new Starlink satellites re-enter |
+| May 2024 | X8.7 | R3 | X8.7 | R3 | 155 | −0.4 yr | G5 storm: GPS-guided farm machinery disrupted, HF blackouts |
+
+\* GOES saturated near X17 (old scale); X28+ was itself an estimate, so X40 is uncertain – quote "X28+" in the pitch.
 
 Sources: Boteler 2019; NOAA Service Assessment 2004; Cerruti et al. 2008; Redmon et al. 2018; SpaceX 2022, Dang et al. 2022; NOAA SWPC 2024.
 Look-alike years (yearly SSN 112–189, the middle half of the 2035 forecast; 12 years since 1978): every one had R3 blackouts (median ~20 per year, range 8–66), 3 of 12 had an R4. Our 2035 forecast (~30 R3, ~440 R1+) is of the same size. Details: [`results_incidents.txt`](results_incidents.txt)
@@ -115,7 +127,7 @@ Equator: 24.8 days, 2.04 km/s · 30°: 26.0 days, 1.68 km/s · 40°: 26.9 days, 
 | 30° | 13.83 | 26.0 d | 28.0 d | 1.68 km/s |
 | 40° | 13.36 | 26.9 d | 29.1 d | 1.44 km/s |
 
-Checks: fit errors ±0.005 (A) and ±0.05 (B); Greenwich era 14.55 − 2.92 sin² vs USAF/NOAA era 14.52 − 2.72 sin²; north 14.535 − 2.88 sin² vs south 14.537 − 2.81 sin²; changing the 60° limit to 45° or 75° moves A by ≤ 0.014 °/day. No sunspots above ~40°, so values there are extrapolations (Doppler measurements give ~34 days at the poles).
+Checks: A = 14.535 ± 0.005 (statistical) ± 0.016 (systematic = half the Greenwich–USAF/NOAA difference), B = −2.84 ± 0.05 ± 0.10. Sample: 21,003 passages pass the quality cuts; the fit removes 421 outliers beyond 3σ and uses 20,582 (the two era fits remove their own 215 + 207, hence 12,463 + 8,118 = 20,581). Greenwich era 14.55 − 2.92 sin² vs USAF/NOAA era 14.52 − 2.72 sin²; north 14.535 − 2.88 sin² vs south 14.537 − 2.81 sin²; changing the 60° limit to 45° or 75° moves A by ≤ 0.014 °/day. No sunspots above ~40°, so values there are extrapolations (Doppler measurements give ~34 days at the poles).
 
 ![Shear of a straight line](figures/differential_rotation_shear.png)
 
@@ -154,7 +166,7 @@ Checks: fit errors ±0.005 (A) and ±0.05 (B); Greenwich era 14.55 − 2.92 sin�
 
 The sine fits leave 0.5 px residuals. The amplitude is fixed to R·cos(lat): with only ~1/5 of a rotation observed, fitting amplitude and period together is unstable.
 
-*Automatic tracking of 9 spots* (`scripts/track_sdo.py`, sub-pixel positions, circle fit to the limb):
+*Automatic tracking of 9 spots* (`scripts/track_sdo.py`, sub-pixel positions, circle fit to the limb; without the PNG originals it uses the JPG copies in `data/sdo/`, which give the same rates within 0.01 °/day):
 
 ![Tracking](figures/sdo_tracking.png)
 ![SDO result](figures/sdo_rotation_result.png)
@@ -184,7 +196,7 @@ The sine fits leave 0.5 px residuals. The amplitude is fixed to R·cos(lat): wit
 2. **Choose the form.** The Sun is north–south symmetric (+φ and −φ rotate alike), so only even powers of sin φ can appear. The simplest such form, and the standard one in solar physics, is ω = A + B·sin²φ.
 3. **Make it a straight line.** With s = sin²φ the model becomes ω = A + B·s. Plotted against s, the band medians (red dots above) do lie on a straight line.
 4. **Least squares (linear regression).** B = Σ(sᵢ − s̄)(ωᵢ − ω̄) / Σ(sᵢ − s̄)², A = ω̄ − B·s̄ (A is the rate at the equator, s = 0). Fitted to all single groups after removing 421 outliers beyond 3 standard deviations (20,582 left); errors from 200 bootstrap resamples.
-5. **Result: A = 14.535 ± 0.005 °/day, B = −2.84 ± 0.05 °/day → ω(φ) = 14.54 − 2.84 sin²φ °/day.**
+5. **Result: A = 14.535 ± 0.005 (stat.) ± 0.016 (syst.) °/day, B = −2.84 ± 0.05 (stat.) ± 0.10 (syst.) °/day → ω(φ) = 14.54 − 2.84 sin²φ °/day.** Systematic = half the difference between the Greenwich and USAF/NOAA datasets.
    - A line through the 2.5°-band medians gives 14.48 − 2.77 sin²φ: the distribution of single groups is skewed (young groups rotate fast), so its mean sits a little above its median.
    - Adding a C·sin⁴φ term gives C = −0.10 ± 0.43, i.e. zero: within ±40° the sin²φ term is enough.
    - Our 9 SDO spots alone give 14.68 ± 0.17 − (4.70 ± 1.69) sin²φ: same trend, much larger error.
@@ -205,16 +217,27 @@ Assumptions:
 Details: [`results_rotation.txt`](results_rotation.txt), [`results_sdo_tracking.txt`](results_sdo_tracking.txt), [`results_manual_walkthrough.txt`](results_manual_walkthrough.txt), [`results_sine_fit_all.txt`](results_sine_fit_all.txt), [`results_rotation_equation.txt`](results_rotation_equation.txt)
 
 ## Data sources
-- Monthly sunspot number: WDC-SILSO, Royal Observatory of Belgium, Brussels (`SN_m_tot_V2.0.csv`)
-- Sunspot area by latitude (butterfly data): D. Hathaway, NASA/MSFC (`bflydata.txt`)
-- Solar flares: NOAA NCEI GOES XRS flare reports (1975–2017) and GOES-16 / GOES-19 XRS L2 flare summaries (2017–2026)
-- Sunspot group positions: D. Hathaway, Greenwich (RGO) 1874–1976 and USAF/NOAA 1977–2026 (`gYYYY.txt`)
-- Solar images: SDO/HMI continuum via helioviewer.org
+- Monthly sunspot number: WDC-SILSO, Royal Observatory of Belgium, Brussels – https://www.sidc.be/SILSO/datafiles (`SN_m_tot_V2.0.csv`)
+- Sunspot area by latitude (butterfly data) and daily sunspot-group positions (Greenwich/RGO 1874–1976, USAF/NOAA 1977–2026): D. Hathaway – http://solarcyclescience.com/AR_Database/ (`bflydata.txt`, `gYYYY.txt`; also at https://solarscience.msfc.nasa.gov/greenwch.shtml)
+- Solar flares: NOAA NCEI GOES XRS flare reports 1975–2017 – https://www.ngdc.noaa.gov/stp/space-weather/solar-data/solar-features/solar-flares/x-rays/goes/xrs/ ; GOES-16 / GOES-19 XRS L2 flare summaries 2017–2026 – https://data.ngdc.noaa.gov/platforms/solar-space-observing-satellites/goes/
+- Solar images: SDO/HMI continuum via the Helioviewer API – https://api.helioviewer.org (viewer: https://helioviewer.org)
+- Exact download commands: [`scripts/download_data.sh`](scripts/download_data.sh)
+
+## References (methods)
+- Meeus, J. 1998, *Astronomical Algorithms*, 2nd ed., ch. 25 and 29 (solar ephemeris: B0, L0, P)
+- Hathaway, D., Wilson, R. & Reichmann, E. 1994, Solar Physics 151, 177 (shape of the sunspot cycle)
+- Snodgrass, H. & Ulrich, R. 1990, ApJ 351, 309 (rotation of Doppler features)
+- Balthasar, H., Vázquez, M. & Wöhl, H. 1986, A&A 155, 87 (sunspot-group rotation from Greenwich data)
 
 ## Reproduce
+All scripts find `data/` and `figures/` relative to the repository, so they run wherever it is cloned.
 ```bash
-pip install numpy pandas scipy matplotlib xarray netCDF4 pillow
-bash scripts/download_data.sh        # raw flare and sunspot-group files are not stored in the repo
+pip install -r requirements.txt      # versions used for the results (Python 3.13)
+bash scripts/download_data.sh        # raw flare and sunspot-group files (~60 MB) are not stored in the repo
+bash scripts/run_all.sh              # runs every script below in order and rewrites results_*.txt
+```
+Or one by one:
+```bash
 python3 scripts/cycles.py            # Part 1
 python3 scripts/forecast_v2.py       # Part 2
 python3 scripts/flares.py            # Part 3 (needs forecast_v2 output)

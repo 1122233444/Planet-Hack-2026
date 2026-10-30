@@ -11,7 +11,7 @@ from sunspot_groups import load_groups
 from solar_geometry import (CARRINGTON_RATE, YEAR_DAYS, julian_day, earth_orbital_rate,
                             fit_line, speed_km_s)
 
-D = "/home/user/planethack/data/"; F = "/home/user/planethack/figures/"
+from paths import D, F
 MAX_CMD = 60          # only use positions within 60° of the central meridian (less foreshortening)
 rng = np.random.default_rng(0)
 
@@ -63,10 +63,19 @@ def fit(df, terms=2):
     return c, np.std(boot, axis=0), keep.sum()
 
 print("\nFit  omega(lat) = A + B sin²(lat)   [deg/day, sidereal]")
+print("   (each fit removes its own outliers beyond 3 standard deviations, so the counts of the two eras")
+print("    need not add up exactly to the count of the combined fit)")
 fits = {}
 for lab, df in [("All groups", r)] + list(r.groupby("era")):
-    c, e, n = fit(df); fits[lab] = c
-    print(f"   {lab:22s}: A = {c[0]:.3f} ± {e[0]:.3f}, B = {c[1]:.2f} ± {e[1]:.2f}   ({n:,} groups)")
+    c, e, n = fit(df); fits[lab] = (c, e)
+    print(f"   {lab:22s}: A = {c[0]:.3f} ± {e[0]:.3f}, B = {c[1]:.2f} ± {e[1]:.2f}   "
+          f"({n:,} groups used, {len(df) - n:,} outliers removed)")
+(cA, eA), (cG, _), (cU, _) = fits["All groups"], fits["Greenwich 1874-1976"], fits["USAF/NOAA 1977-2026"]
+sA, sB = abs(cG[0] - cU[0]) / 2, abs(cG[1] - cU[1]) / 2
+print(f"   Result: A = {cA[0]:.3f} ± {eA[0]:.3f} (statistical) ± {sA:.3f} (systematic), "
+      f"B = {cA[1]:.2f} ± {eA[1]:.2f} (statistical) ± {sB:.2f} (systematic)")
+print("   systematic = half the difference between the two independent datasets (Greenwich vs USAF/NOAA)")
+fits = {k: v[0] for k, v in fits.items()}
 c3, e3, _ = fit(r, 3)
 print(f"   with sin⁴ term       : A = {c3[0]:.3f} ± {e3[0]:.3f}, B = {c3[1]:.2f} ± {e3[1]:.2f}, "
       f"C = {c3[2]:.2f} ± {e3[2]:.2f}  (C is poorly fixed: almost no sunspots above 40°)")
