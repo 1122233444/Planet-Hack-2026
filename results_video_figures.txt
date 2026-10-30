@@ -1,0 +1,13 @@
+saved figures/video/v01_cover.png
+saved figures/video/v02_incidents.png
+saved figures/video/v03_butterfly.png
+saved figures/video/v04_forecast.png
+saved figures/video/v05_step1_measure.png
+saved figures/video/v06_step2_trigonometry.png
+saved figures/video/v07_step2_sine_fit.png
+saved figures/video/v08_step2_equation.png
+saved figures/video/v09_rotation_meaning.png
+saved figures/video/v10_flares_vs_sunspots.png
+saved figures/video/v11_after_maximum.png
+saved figures/video/v12_risk_calendar.png
+saved figures/video/v13_2035_in_numbers.png

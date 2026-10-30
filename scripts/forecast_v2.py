@@ -108,6 +108,13 @@ print(f"   Peak year of the ensemble members: median {np.median(pk):.1f}, 10-90%
 out = pd.DataFrame({"year": years, "p10": pct[0], "p25": pct[1], "p50": pct[2], "p75": pct[3], "p90": pct[4]})
 out.to_csv(D+"forecast_v2_ensemble.csv", index=False)
 pd.Series(mean35, name="ssn_2035").to_csv(D+"forecast_v2_ssn2035_samples.csv", index=False)
+import json
+json.dump(dict(max_mean=both.mean(), max_sd=both.std(ddof=1), max_min=both.min(), max_max=both.max(),
+               share_2034_2036=np.mean((both >= 2034) & (both < 2037)), n_estimates=len(both),
+               ssn2035_p10=q[0], ssn2035_median=q[1], ssn2035_p90=q[2],
+               share_gt100=np.mean(mean35 > 100), share_gt150=np.mean(mean35 > 150),
+               peak_median=np.median(pk), peak_p10=np.percentile(pk, 10), peak_p90=np.percentile(pk, 90),
+               n_combinations=len(ens)), open(D + "forecast_v2_summary.json", "w"), indent=1)
 
 # ---------- figure ----------
 fig, ax = plt.subplots(figsize=(12, 5.5))

@@ -13,7 +13,7 @@
 | Own butterfly diagram of the last two cycles; cycle period and next maximum from it | ✅ | Part 1B: period 11.2 yr, next maximum ≈ 2036.4 (all 13 cycles: 2034.8 ± 1.2) |
 | Forecast 2035; cross-check with solar activity ↔ radio blackouts (reported incidents) | ✅ | Parts 2–3: SSN median 156, ~30 R3 blackouts in 2035 (true-flux scale); 6 reported incidents and 12 look-alike years |
 | Mission protection strategy | ⏳ | Step 5 (next) |
-| Video pitch to the ISECG launch panel | ⏳ | Step 5 (next) |
+| Video pitch to the ISECG launch panel | ⏳ | Figures for the video and slides are ready ([below](#video-and-slide-figures-scriptsvideo_figurespy)); the pitch itself comes with Step 5 |
 
 **Headline:** Cycle 26 maximum ≈ **2035.4** (spread of historical analogues ±1.2 yr, full range 2033.6–2038.1) → mid-2035 smoothed sunspot number median **156** (10–90% of the historical-analogue combinations: 99–210) → expect ~**30 X-class flares (R3+ radio blackouts)** and ~440 M-class-or-stronger flares in 2035 on the true-flux scale used for today's alerts (19 and ~290 on the old pre-GOES-16 scale); elevated risk continues to ~2038 because, in equal time windows, X-class flares are 2.5–2.9× more frequent after a maximum than before it.
 
@@ -216,6 +216,25 @@ Assumptions:
 
 Details: [`results_rotation.txt`](results_rotation.txt), [`results_sdo_tracking.txt`](results_sdo_tracking.txt), [`results_manual_walkthrough.txt`](results_manual_walkthrough.txt), [`results_sine_fit_all.txt`](results_sine_fit_all.txt), [`results_rotation_equation.txt`](results_rotation_equation.txt)
 
+## Video and slide figures (`scripts/video_figures.py`)
+Thirteen 16:9 figures (1920×1080, English) in `figures/video/`, ready for the video and the slides. Every number on them is read from the data and result files, so they follow any rerun. Before saving, the script checks that no text overlaps or runs off the frame (`results_video_figures.txt`).
+
+| Figure | Shows |
+|---|---|
+| `v01_cover.png` | Title slide with an SDO/HMI image |
+| `v02_incidents.png` | Yearly sunspot number 1976–2026, our forecast to 2041 and six reported incidents |
+| `v03_butterfly.png` | Our butterfly diagram: 11.2-year period, cycle 26 starts ≈ 2031, next maximum 2035–2036 |
+| `v04_forecast.png` | Forecast: maximum 2035.4 ± 1.2, 2035 sunspot number 156 (99–210) |
+| `v05_step1_measure.png` | Step 1: disk edges, centre and radius; pixel positions and Julian Date of spots A and E |
+| `v06_step2_trigonometry.png` | Step 2, method 1: the arcsin formulas worked through for spot A (26.1-day true rotation) |
+| `v07_step2_sine_fit.png` | Step 2, method 2: sine fits of x(t) (true rotation: A 26.1 d, E 25.4 d) |
+| `v08_step2_equation.png` | Step 3: ω against sin²φ is a straight line → ω = 14.54 − 2.84 sin²φ, period and speed |
+| `v09_rotation_meaning.png` | What the rotation law means for launch planning: a region returns every ~27 days, ~7 days from the east limb to facing Earth |
+| `v10_flares_vs_sunspots.png` | X-class flares vs sunspot number: ~19 per year per 100 sunspots → ~30 in 2035 |
+| `v11_after_maximum.png` | X-class flares per year around solar maximum (cycles 21–24) |
+| `v12_risk_calendar.png` | Expected X-class flares per year, 2030–2041 |
+| `v13_2035_in_numbers.png` | Six key numbers for 2035 |
+
 ## Data sources
 - Monthly sunspot number: WDC-SILSO, Royal Observatory of Belgium, Brussels – https://www.sidc.be/SILSO/datafiles (`SN_m_tot_V2.0.csv`)
 - Sunspot area by latitude (butterfly data) and daily sunspot-group positions (Greenwich/RGO 1874–1976, USAF/NOAA 1977–2026): D. Hathaway – http://solarcyclescience.com/AR_Database/ (`bflydata.txt`, `gYYYY.txt`; also at https://solarscience.msfc.nasa.gov/greenwch.shtml)
@@ -248,5 +267,6 @@ python3 scripts/manual_rotation.py my_spots.csv out.png   # your own hand measur
 python3 scripts/rotation_equation.py # Part 4C
 python3 scripts/butterfly_own.py     # Part 1B
 python3 scripts/incidents.py         # Part 3 cross-check (needs flares.py output)
+python3 scripts/video_figures.py     # 16:9 figures for the video and slides (figures/video/)
 python3 scripts/solar_geometry.py    # self-test against SunPy (pip install sunpy)
 ```
