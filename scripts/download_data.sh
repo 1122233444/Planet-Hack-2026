@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Download all raw data used by the analysis into data/
 set -e
-cd "$(dirname "$0")/../data"
+DATA="$(cd "$(dirname "$0")/../data" && pwd)"
+cd "$DATA"
 curl -sSO https://www.sidc.be/SILSO/DATA/SN_m_tot_V2.0.csv
 curl -sSO http://solarcyclescience.com/AR_Database/bflydata.txt
 mkdir -p flares/g19 && cd flares
@@ -13,3 +14,8 @@ cd g19
 for y in 2025 2026; do for m in 01 02 03 04 05 06 07 08 09 10 11 12; do
   curl -sS "$G/$y/$m/" 2>/dev/null | grep -o 'sci_xrsf[^"]*\.nc' | sort -u | sed "s|^|$G/$y/$m/|"
 done; done | xargs -P 8 -n 1 curl -sSO
+
+# Daily sunspot-group positions 1874-2026 (D. Hathaway: Greenwich + USAF/NOAA), for rotation.py
+mkdir -p "$DATA/groups" && cd "$DATA/groups"
+seq 1874 2026 | xargs -P 6 -I{} curl -sSO "http://solarcyclescience.com/AR_Database/g{}.txt"
+# The SDO/HMI images for track_sdo.py are downloaded by that script itself (helioviewer.org).

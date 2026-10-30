@@ -1,0 +1,29 @@
+2014-12-11 23:59 UT  disk centre ( 1024.0, 1024.5) px, radius  954.8 px, B0 -0.49°  ->  16 dark spots
+2014-12-12 23:59 UT  disk centre ( 1024.1, 1024.5) px, radius  954.7 px, B0 -0.62°  ->  15 dark spots
+2014-12-13 23:59 UT  disk centre ( 1023.8, 1024.2) px, radius  954.5 px, B0 -0.75°  ->  12 dark spots
+2014-12-14 23:59 UT  disk centre ( 1023.8, 1024.2) px, radius  954.7 px, B0 -0.88°  ->  19 dark spots
+2014-12-15 23:59 UT  disk centre ( 1023.4, 1023.9) px, radius  954.6 px, B0 -1.00°  ->  20 dark spots
+2014-12-16 23:59 UT  disk centre ( 1023.4, 1024.5) px, radius  954.5 px, B0 -1.13°  ->  21 dark spots
+2014-12-17 23:59 UT  disk centre ( 1024.1, 1024.5) px, radius  955.0 px, B0 -1.26°  ->  24 dark spots
+
+127 spot detections, 60 tracks, 11 followed for >= 4 days within 60° of the central meridian; best spot of each NOAA region:
+ spot  NOAA   our lat  NOAA lat  days   omega (°/day)   150-yr fit  P_sid  P_syn  speed(km/s)
+  A   12236   +29.8    +30.0    5     13.82 ± 0.02      13.84    26.05  28.10    1.69
+  B   12239   +14.2    +13.5    4     14.86 ± 0.04      14.36    24.22  25.99    2.02
+  C   12240   +10.4    +10.8    4     14.55 ± 0.09      14.44    24.74  26.59    2.01
+  D   12234    +3.6     +4.3    5     15.26 ± 0.14      14.52    23.59  25.26    2.14
+  E   12235    -8.0     -8.1    7     14.26 ± 0.01      14.48    25.24  27.16    1.99
+  F   12241    -9.5    -10.2    4     14.90 ± 0.09      14.46    24.16  25.92    2.07
+  G   12237   -13.1    -13.3    6     14.16 ± 0.01      14.39    25.42  27.37    1.94
+  H   12230   -14.3    -15.0    4     14.36 ± 0.06      14.36    25.07  26.96    1.96
+  I   12242   -21.0    -19.0    4     13.90 ± 0.17      14.17    25.90  27.92    1.82
+Our spots minus the 150-year fit: mean +0.12, spread 0.36 °/day. Single groups in the 150-year data spread by 0.50 °/day (middle 68%: -0.39 .. +0.46)
+Fit to our 9 spots only: omega = 14.78 ± 0.17 -4.60 ± 1.69 sin²(lat)   (150-year fit: 14.54 -2.84 sin²(lat))
+Latitude check vs NOAA: mean |difference| 0.7° (NOAA gives the centre of the whole group, we measure one spot)
+Simple school formulas (no B0, Earth = 0.9856 °/day) vs full method: max difference 0.089 °/day
+Two ways to the sidereal rate (Carrington drift vs synodic + Earth): max difference 0.008 °/day
+
+Worked example, spot E (NOAA 12235):
+   2014-12-11 23:59:40: spot (295.3, 1149.0) px, disk centre (1024.0, 1024.5), R = 954.8 px -> X = -0.7632, Y = -0.1304 -> latitude -7.49°, CMD -50.33°
+   2014-12-17 23:59:40: spot (1485.6, 1144.2) px, disk centre (1024.1, 1024.5), R = 955.0 px -> X = +0.4832, Y = -0.1253 -> latitude -7.20°, CMD +29.15°
+   moved 79.48° in 6.000 days -> synodic 13.247 °/day -> sidereal 14.233 °/day -> period 25.29 days, speed 1.98 km/s
