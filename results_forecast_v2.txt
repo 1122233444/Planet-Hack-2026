@@ -1,0 +1,44 @@
+1) Hand-typed minimum vs minimum found in data:
+   Cycle  1: typed 1755.2  data 1755.12
+   Cycle  2: typed 1766.5  data 1766.45
+   Cycle  3: typed 1775.5  data 1775.45
+   Cycle  4: typed 1784.7  data 1784.71
+   Cycle  5: typed 1798.3  data 1798.29
+   Cycle  6: typed 1810.6  data 1810.62
+   Cycle  7: typed 1823.3  data 1823.37
+   Cycle  8: typed 1833.9  data 1833.87
+   Cycle  9: typed 1843.5  data 1843.54
+   Cycle 10: typed 1855.9  data 1855.96
+   Cycle 11: typed 1867.2  data 1867.20
+   Cycle 12: typed 1878.9  data 1878.96
+   Cycle 13: typed 1890.2  data 1890.20
+   Cycle 14: typed 1902.0  data 1902.04
+   Cycle 15: typed 1913.6  data 1913.54
+   Cycle 16: typed 1923.6  data 1923.62
+   Cycle 17: typed 1933.7  data 1933.71
+   Cycle 18: typed 1944.1  data 1944.12
+   Cycle 19: typed 1954.3  data 1954.29
+   Cycle 20: typed 1964.8  data 1964.79
+   Cycle 21: typed 1976.2  data 1976.21
+   Cycle 22: typed 1986.7  data 1986.71
+   Cycle 23: typed 1996.6  data 1996.37
+   Cycle 24: typed 2008.9  data 2008.96
+   Cycle 25: typed 2019.9  data 2019.96
+   max |difference| = 0.23 yr
+
+2) Cycle statistics, all cycles vs reliable cycles (10-25):
+   Cycles 1-25 : length 11.03 ± 1.16 yr, rise 4.38 ± 1.12 yr, peak 178 ± 57
+   Cycles 10-25: length 10.93 ± 0.75 yr, rise 4.17 ± 0.70 yr, peak 179 ± 49
+   Waldmeier effect (cycles 10-25): correlation(peak, rise time) = -0.61  (negative = strong cycles rise faster)
+
+3) Cycle 26 maximum timing (each value = one historical cycle pair):
+   A: from Cycle 25 minimum (2019.9): mean 2035.0 ± 1.2, median 2035.0, range 2033.6-2037.6
+   B: from Cycle 25 maximum (2024.8): mean 2035.8 ± 1.1, median 2035.5, range 2033.8-2038.1
+   Combined: 2035.4 ± 1.2;  share of the 30 estimates landing within 2034.0-2036.99: 77%
+
+4) Analogue ensemble (210 combinations): mean smoothed SSN during 2035
+   10th pct 99 | median 156 | 90th pct 210
+   P(2035 average SSN > 50) = 100%
+   P(2035 average SSN > 100) = 88%
+   P(2035 average SSN > 150) = 55%
+   Peak year of the ensemble members: median 2035.0, 10-90%: 2033.7-2036.3
