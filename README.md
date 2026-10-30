@@ -121,7 +121,23 @@ Checks: fit errors ±0.005 (A) and ±0.05 (B); Greenwich era 14.55 − 2.92 sin�
 
 **B. Tracking spots on SDO/HMI images**: 7 daily images, 12–18 Dec 2014 (chosen because B0 ≈ 0 and spots sit at 4°–30°).
 
-*Step by step* (`scripts/manual_walkthrough.py`, the same steps as reading positions with the mouse; whole pixels): on each image read the left/right/top/bottom edge of the disk → centre and radius (e.g. edges 64, 1983, 65, 1984 → centre (1023.5, 1024.5), R = 959.5 px); read the centre of the spot's dark core; convert the time to a Julian Date (JD = 367Y − INT(7(Y + INT((M+9)/12))/4) + INT(275M/9) + D + 1721013.5 + UT/24, e.g. 2014-12-12 23:59:40 UT → 2457004.49977). Records for spot A (NOAA 12236, +30°) and spot E (NOAA 12235, −8°): [`data/rotation/manual_walkthrough.csv`](data/rotation/manual_walkthrough.csv).
+*Step by step* (`scripts/manual_walkthrough.py`, the same steps as reading positions with the mouse; whole pixels): on each image read the left/right/top/bottom edge of the disk → centre and radius (e.g. edges 64, 1983, 65, 1984 → centre (1023.5, 1024.5), R = 959.5 px); read the centre of the spot's dark core; convert the time to a Julian Date (JD = 367Y − INT(7(Y + INT((M+9)/12))/4) + INT(275M/9) + D + 1721013.5 + UT/24, e.g. 2014-12-12 23:59:40 UT → 2457004.49977). Records for spot A (NOAA 12236, +30°) and spot E (NOAA 12235, −8°), also in [`data/rotation/manual_walkthrough.csv`](data/rotation/manual_walkthrough.csv):
+
+| Spot | Time (UT) | Julian Date | x (px) | y (px) | Disk centre (px) | Disk radius (px) |
+|---|---|---|---|---|---|---|
+| A | 2014-12-12 23:59:40 | 2457004.49977 | 302 | 553 | (1023.5, 1024.5) | 959.50 |
+| A | 2014-12-13 23:59:40 | 2457005.49977 | 413 | 548 | (1023.5, 1024.0) | 959.25 |
+| A | 2014-12-14 23:59:40 | 2457006.49977 | 553 | 542 | (1023.5, 1024.0) | 959.25 |
+| A | 2014-12-15 23:59:40 | 2457007.49977 | 718 | 535 | (1023.0, 1024.0) | 959.00 |
+| A | 2014-12-16 23:59:40 | 2457008.49977 | 898 | 532 | (1023.0, 1024.5) | 959.25 |
+| A | 2014-12-17 23:59:40 | 2457009.49977 | 1082 | 528 | (1024.0, 1024.5) | 959.25 |
+| E | 2014-12-11 23:59:40 | 2457003.49977 | 296 | 1149 | (1024.0, 1024.5) | 959.25 |
+| E | 2014-12-12 23:59:40 | 2457004.49977 | 455 | 1147 | (1023.5, 1024.5) | 959.50 |
+| E | 2014-12-13 23:59:40 | 2457005.49977 | 643 | 1144 | (1023.5, 1024.0) | 959.25 |
+| E | 2014-12-14 23:59:40 | 2457006.49977 | 852 | 1143 | (1023.5, 1024.0) | 959.25 |
+| E | 2014-12-15 23:59:40 | 2457007.49977 | 1069 | 1142 | (1023.0, 1024.0) | 959.00 |
+| E | 2014-12-16 23:59:40 | 2457008.49977 | 1283 | 1145 | (1023.0, 1024.5) | 959.25 |
+| E | 2014-12-17 23:59:40 | 2457009.49977 | 1486 | 1143 | (1024.0, 1024.5) | 959.25 |
 
 ![Measurement steps](figures/manual_steps.png)
 
@@ -144,18 +160,47 @@ The sine fits leave 0.5 px residuals. The amplitude is fixed to R·cos(lat): wit
 ![SDO result](figures/sdo_rotation_result.png)
 ![Sine fits for all 9 spots](figures/xy_sine_fit_all.png)
 
+| Spot | NOAA | Latitude | Days | ω sidereal (°/day) | 150-yr law | P_syn arcsin / sine fit (d) | P sidereal (d) | Speed (km/s) |
+|---|---|---|---|---|---|---|---|---|
+| A | 12236 | +29.5° | 6 | 13.71 ± 0.01 | 13.85 | 28.34 / 28.25 | 26.26 | 1.68 |
+| B | 12239 | +14.2° | 4 | 14.79 ± 0.04 | 14.37 | 26.12 / 26.10 | 24.34 | 2.02 |
+| C | 12240 | +10.3° | 4 | 14.42 ± 0.07 | 14.44 | 26.84 / 26.93 | 24.96 | 1.99 |
+| D | 12234 | +3.6° | 5 | 15.17 ± 0.15 | 14.52 | 25.43 / 25.29 | 23.74 | 2.13 |
+| E | 12235 | −8.0° | 7 | 14.19 ± 0.01 | 14.48 | 27.32 / 27.33 | 25.38 | 1.97 |
+| F | 12241 | −9.4° | 4 | 14.78 ± 0.07 | 14.46 | 26.15 / 26.17 | 24.36 | 2.05 |
+| G | 12237 | −13.1° | 6 | 14.08 ± 0.01 | 14.39 | 27.55 / 27.54 | 25.57 | 1.93 |
+| H | 12230 | −14.2° | 4 | 14.27 ± 0.06 | 14.36 | 27.14 / 27.12 | 25.22 | 1.94 |
+| I | 12242 | −20.9° | 4 | 13.81 ± 0.18 | 14.17 | 28.12 / 27.98 | 26.06 | 1.81 |
+
 - Our latitudes agree with NOAA's to 0.7° on average; arcsin and sine-fit periods agree within 0.14 d for all 9 spots.
 - Spots scatter around the 150-year law by 0.36 °/day (mean offset +0.02) — the same as single groups in the long record (0.50 °/day). A fit to the 9 spots alone gives 14.68 ± 0.17 − (4.70 ± 1.69) sin²: one week shows differential rotation, only a large sample measures it precisely.
 - A systematic error found and fixed: the first version took the disk edge at half the central brightness, but the limb itself is only ~45% as bright (limb darkening), so the radius came out 954.6 px instead of 959.2 px. That made rates ~0.1 °/day too fast; after the fix the mean offset from the 150-year law fell from +0.12 to +0.02 °/day.
 
-**C. The equation and its assumptions** (`scripts/rotation_equation.py`)
+**C. Deriving the equation, and its assumptions** (`scripts/rotation.py`, `scripts/rotation_equation.py`)
 
 ![Linearised fit](figures/rotation_equation.png)
 
-Against s = sin²(latitude) the rates lie on a straight line, so ω = A + B·s with intercept A and slope B from a least-squares line (through the band medians: 14.48 − 2.77 s; through all single groups: 14.54 − 2.84 s — the mean of a skewed distribution sits a little above its median). Hence
-ω(φ) = 14.54 − 2.84 sin²φ °/day, P(φ) = 360/ω(φ) days, **v(φ) = ω·(π/180)/86400·R☉·cos φ = 2.043 cos φ (1 − 0.196 sin²φ) km/s.**
+1. **One rotation rate per tracked spot.** For every disk passage, the trigonometry of Part B gives the spot's longitude each day; the slope of longitude against time is its rate seen from Earth, and adding Earth's orbital motion gives the true (sidereal) rate ω. Doing this for 21,003 sunspot-group passages (1874–2026) gives 21,003 pairs (latitude φᵢ, rate ωᵢ); our own 9 SDO spots give 9 more.
+2. **Choose the form.** The Sun is north–south symmetric (+φ and −φ rotate alike), so only even powers of sin φ can appear. The simplest such form, and the standard one in solar physics, is ω = A + B·sin²φ.
+3. **Make it a straight line.** With s = sin²φ the model becomes ω = A + B·s. Plotted against s, the band medians (red dots above) do lie on a straight line.
+4. **Least squares (linear regression).** B = Σ(sᵢ − s̄)(ωᵢ − ω̄) / Σ(sᵢ − s̄)², A = ω̄ − B·s̄ (A is the rate at the equator, s = 0). Fitted to all single groups after removing 421 outliers beyond 3 standard deviations (20,582 left); errors from 200 bootstrap resamples.
+5. **Result: A = 14.535 ± 0.005 °/day, B = −2.84 ± 0.05 °/day → ω(φ) = 14.54 − 2.84 sin²φ °/day.**
+   - A line through the 2.5°-band medians gives 14.48 − 2.77 sin²φ: the distribution of single groups is skewed (young groups rotate fast), so its mean sits a little above its median.
+   - Adding a C·sin⁴φ term gives C = −0.10 ± 0.43, i.e. zero: within ±40° the sin²φ term is enough.
+   - Our 9 SDO spots alone give 14.68 ± 0.17 − (4.70 ± 1.69) sin²φ: same trend, much larger error.
+6. **Period and speed.** P(φ) = 360/ω(φ) days. The surface speed is the angular rate times the radius of the latitude circle: v = ω·(π/180)/86400 · R☉·cos φ, so **v(φ) = 2.043 · cos φ · (1 − 0.196 sin²φ) km/s** (2.04 km/s at the equator, 1.95 at 15°, 1.68 at 30°).
 
-Assumptions: the Sun is a sphere seen from far away (orthographic projection); spots move only with the surface and at a constant rate over a few days; rotation depends only on latitude and is north–south symmetric (hence sin²φ); images have solar north up (checked against NOAA); B0 ≈ 0 for the simple formulas (the full method includes B0); Earth's orbital motion 0.9856 °/day for synodic → sidereal (true range 0.953–1.019); R☉ = 695,700 km; exact image times; valid only within ±40° latitude.
+Assumptions:
+1. The Sun is a perfect sphere.
+2. It is seen from far away (orthographic projection). In reality we see slightly less than a hemisphere: 0.27° at the limb, negligible.
+3. Spots move only with the surface, at a constant rate over a few days. Not exactly true for single spots (e.g. spot D), hence the large sample.
+4. Rotation depends only on latitude and is north–south symmetric, so it can be written as A + B·sin²φ.
+5. Images have solar north up (P = 0); checked against NOAA latitudes (0.7° mean difference).
+6. B0 = 0 in the simple formulas (B0 was −0.5° to −1.3° on our dates); the full method includes B0.
+7. Earth's orbital motion is 0.9856 °/day for synodic → sidereal (truly 0.953–1.019, at most ±0.03 °/day); the full method uses the exact value.
+8. R☉ = 695,700 km (IAU nominal value).
+9. Image times are exact (SDO time stamps, to the second).
+10. The equation is valid only within ±40° latitude, where sunspots exist.
 
 Details: [`results_rotation.txt`](results_rotation.txt), [`results_sdo_tracking.txt`](results_sdo_tracking.txt), [`results_manual_walkthrough.txt`](results_manual_walkthrough.txt), [`results_sine_fit_all.txt`](results_sine_fit_all.txt), [`results_rotation_equation.txt`](results_rotation_equation.txt)
 
