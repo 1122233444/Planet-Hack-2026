@@ -43,7 +43,9 @@ def get_image(day):
 
 def find_disk(gray):
     """Disk centre and radius: take the edge of the bright disk and fit a circle through it."""
-    level = 0.5 * np.median(gray[gray > 50])
+    # The outermost ring is only ~45% as bright as the disk centre (limb darkening) and then drops to
+    # black within about 3 pixels. Half the median would cut inside that ring, so cut at a quarter.
+    level = 0.25 * np.median(gray[gray > 50])
     lab, _ = ndimage.label(gray > level)
     disk = ndimage.binary_fill_holes(lab == np.bincount(lab.ravel())[1:].argmax() + 1)
     yy, xx = np.nonzero(disk & ~ndimage.binary_erosion(disk))
@@ -172,6 +174,7 @@ for _, b in best.iterrows():
     for i in tracks[int(b.track)]:
         q = det.loc[i]; dk = disks[q.day]
         pos.append(dict(spot=b.label, noaa=b.noaa, time_utc=f"{q.time:%Y-%m-%d %H:%M:%S}",
+                        jd=round(float(julian_day(q.time.to_datetime64())), 5),
                         x_px=round(q.x, 1), y_px=round(q.y, 1), disk_cx_px=round(dk["xc"], 1),
                         disk_cy_px=round(dk["yc"], 1), disk_r_px=round(dk["r"], 1),
                         image=os.path.basename(dk["png"]).replace(".png", ".jpg")))

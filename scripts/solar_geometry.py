@@ -4,6 +4,7 @@ sun_ephemeris()   B0 (tilt of the Sun's axis toward Earth), L0 (Carrington longi
                   disk centre) and P, from J. Meeus, Astronomical Algorithms (2nd ed.), ch. 25 & 29.
 pixel_to_helio()  position on a solar image -> heliographic latitude and central-meridian distance.
 fit_line()        straight-line fit used to turn positions over several days into a rotation rate.
+fit_sine()        sine-curve fit of a spot's x pixel position against time -> rotation period.
 """
 import numpy as np
 
@@ -16,6 +17,13 @@ def julian_day(t):
     """UTC timestamps (anything numpy can turn into datetime64) -> Julian Day."""
     ns = np.asarray(t, dtype="datetime64[ns]").astype("int64")
     return ns / 86400e9 + 2440587.5
+
+
+def jd_from_date(year, month, day, hour=0.0):
+    """The same Julian Date with the classic formula (valid 1901-2099), so it can be done by hand:
+    JD = 367Y - INT(7(Y + INT((M+9)/12))/4) + INT(275M/9) + D + 1721013.5 + UT/24"""
+    return (367 * year - (7 * (year + (month + 9) // 12)) // 4 + (275 * month) // 9 + day
+            + 1721013.5 + hour / 24)
 
 
 def sun_longitude(jd):
@@ -99,6 +107,31 @@ def fit_line(t, v):
     return coef[1], s_err, np.sqrt((res**2).mean())
 
 
+def fit_sine(t, x, xc, A_fixed=None, A_guess=900.0):
+    """Fit x(t) = xc + A·sin(2π(t - t0)/P) to a spot's x pixel positions.
+
+    A spot on a turning sphere seen from far away moves across the image like a sine wave:
+    A = R·cos(latitude) (radius of its circle of latitude, in pixels), P = synodic period.
+    A_fixed: give R·cos(latitude) to fit only P and t0 (2 unknowns instead of 3).
+    """
+    from scipy.optimize import curve_fit
+    t = np.asarray(t, float); x = np.asarray(x, float)
+    A0 = A_fixed if A_fixed is not None else A_guess
+    ang = np.arcsin(np.clip((x - xc) / A0, -1, 1))                  # first guess from arcsin
+    k = np.polyfit(t, ang, 1)
+    P0, t00 = 2 * np.pi / k[0], -k[1] / k[0]
+    if A_fixed is None:
+        f = lambda tt, A, P, t0: xc + A * np.sin(2 * np.pi * (tt - t0) / P)
+        p, cov = curve_fit(f, t, x, p0=[A0, P0, t00])
+        (A, P, t0), (eA, eP, _) = p, np.sqrt(np.diag(cov))
+    else:
+        f = lambda tt, P, t0: xc + A_fixed * np.sin(2 * np.pi * (tt - t0) / P)
+        p, cov = curve_fit(f, t, x, p0=[P0, t00])
+        (P, t0), (eP, _), A, eA = p, np.sqrt(np.diag(cov)), A_fixed, 0.0
+    rms = np.sqrt(np.mean((x - f(t, *p)) ** 2))
+    return dict(A=A, A_err=eA, P=P, P_err=eP, t0=t0, rms=rms, curve=lambda tt: f(np.asarray(tt, float), *p))
+
+
 def speed_km_s(omega_deg_day, lat_deg):
     """Linear speed of the surface: v = omega * R * cos(latitude)."""
     return np.radians(omega_deg_day) / 86400 * R_SUN_KM * np.cos(np.radians(lat_deg))
@@ -124,3 +157,12 @@ if __name__ == "__main__":
         print(f"   round trip B0={B0:+.2f}: max error {max(abs(la - lat).max(), abs(cm - cmd).max()):.1e}°")
     jd = julian_day(np.array(["2026-01-03", "2026-07-04"], dtype="datetime64[ns]"))
     print("   Earth's orbital rate in Jan / Jul:", earth_orbital_rate(jd).round(3), "deg/day")
+    # Self-test 3: the hand formula for the Julian Date gives the same number
+    a = jd_from_date(2014, 12, 11, 23 + 59 / 60 + 40 / 3600)
+    b = julian_day(np.datetime64("2014-12-11T23:59:40"))
+    print(f"   JD of 2014-12-11 23:59:40 UT: formula {a:.5f}, numpy {b:.5f}")
+    # Self-test 4: a sine fit recovers a known period from 6 noisy points spanning 5 days
+    t = np.linspace(0, 5, 6); rng = np.random.default_rng(1)
+    x = 1024 + 900 * np.sin(2 * np.pi * (t - 1.7) / 27.3) + rng.normal(0, 0.5, t.size)
+    print(f"   sine fit of a fake spot (P = 27.30 d): free A -> {fit_sine(t, x, 1024)['P']:.2f} d, "
+          f"fixed A -> {fit_sine(t, x, 1024, A_fixed=900)['P']:.2f} d")

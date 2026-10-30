@@ -1,0 +1,7 @@
+incident,reported_then,biggest_flare,blackout,n_X,year_SSN,years_from_max,what,source
+March 1989,X15,X21.4,R5,11,211.2,-0.7,Geomagnetic storm collapses the Hydro-Québec power grid: 6 million people without power for ~9 h,"Boteler 2019, Space Weather"
+Halloween 2003,X28+,X40.0,R5,6,99.0,1.9,"HF radio blackouts, polar flights rerouted, FAA's GPS augmentation (WAAS) unusable ~30 h, power cut in Malmö (Sweden), Japanese satellite ADEOS-II lost",NOAA Service Assessment 2004
+December 2006,X9.0,X12.9,R4,2,24.6,5.0,Intense solar radio burst makes GPS receivers on the sunlit side of Earth lose track,"Cerruti et al. 2008, Space Weather"
+September 2017,X9.3,X14.6,R4,6,21.8,3.4,Hours-long HF radio blackout hits emergency communications during the Caribbean hurricane response (Irma),"Redmon et al. 2018, Space Weather"
+February 2022,M1.1,M1.1,R1,0,83.0,-2.7,Minor geomagnetic storm raises atmospheric drag: 38 of 49 new Starlink satellites re-enter,"SpaceX 2022; Dang et al. 2022, Space Weather"
+May 2024,X8.7,X8.7,R3,12,154.5,-0.4,"Strongest geomagnetic storm since 2003 (G5): GPS-guided farm machinery disrupted, HF radio blackouts","NOAA SWPC reports, May 2024"

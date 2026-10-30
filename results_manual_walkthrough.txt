@@ -1,0 +1,39 @@
+Step 3 example, Julian Date of 2014-12-12 23:59:40 UT:
+   JD = 367×2014 − INT(7×(2014 + INT((12+9)/12))/4) + INT(275×12/9) + 12 + 1721013.5 + 23.9944/24
+      = 739138 − 3526 + 366 + 12 + 1721013.5 + 0.99977 = 2457004.49977
+
+Step 1 example (hmi_20141213.jpg): left edge x = 64, right edge x = 1983, top edge y = 65, bottom edge y = 1984
+   centre = ((64+1983)/2, (65+1984)/2) = (1023.5, 1024.5);  radius = ((1983−64) + (1984−65))/4 = 959.5
+   (automatic circle fit on the same image: centre (1023.8, 1024.5), radius 959.3)
+Step 2+4, spot A on 2014-12-12 23:59:40: pixel (302, 553) -> X = (302−1023.5)/959.5 = -0.7520, Y = −(553−1024.5)/959.5 = +0.4914 -> latitude +29.43°, CMD -59.70°
+Step 2+4, spot A on 2014-12-17 23:59:40: pixel (1082, 528) -> X = (1082−1024.0)/959.25 = +0.0605, Y = −(528−1024.5)/959.25 = +0.5176 -> latitude +31.17°, CMD +4.05°
+Step 2+4, spot E on 2014-12-11 23:59:40: pixel (296, 1149) -> X = (296−1024.0)/959.25 = -0.7589, Y = −(1149−1024.5)/959.25 = -0.1298 -> latitude -7.46°, CMD -49.94°
+Step 2+4, spot E on 2014-12-17 23:59:40: pixel (1486, 1143) -> X = (1486−1024.0)/959.25 = +0.4816, Y = −(1143−1024.5)/959.25 = -0.1235 -> latitude -7.10°, CMD +29.04°
+
+Measurements (JD = Julian Date):
+spot            time_utc            jd  x_px  y_px  disk_cx_px  disk_cy_px  disk_r_px   lat    cmd
+   A 2014-12-12 23:59:40 2457004.49977   302   553      1023.5      1024.5     959.50 29.12 -59.40
+   A 2014-12-13 23:59:40 2457005.49977   413   548      1023.5      1024.0     959.25 29.24 -46.83
+   A 2014-12-14 23:59:40 2457006.49977   553   542      1023.5      1024.0     959.25 29.44 -34.28
+   A 2014-12-15 23:59:40 2457007.49977   718   535      1023.0      1024.0     959.00 29.73 -21.48
+   A 2014-12-16 23:59:40 2457008.49977   898   532      1023.0      1024.5     959.25 29.78  -8.63
+   A 2014-12-17 23:59:40 2457009.49977  1082   528      1024.0      1024.5     959.25 29.92   4.00
+   E 2014-12-11 23:59:40 2457003.49977   296  1149      1024.0      1024.5     959.25 -7.77 -49.99
+   E 2014-12-12 23:59:40 2457004.49977   455  1147      1023.5      1024.5     959.50 -7.83 -36.73
+   E 2014-12-13 23:59:40 2457005.49977   643  1144      1023.5      1024.0     959.25 -7.87 -23.61
+   E 2014-12-14 23:59:40 2457006.49977   852  1143      1023.5      1024.0     959.25 -7.99 -10.40
+   E 2014-12-15 23:59:40 2457007.49977  1069  1142      1023.0      1024.0     959.00 -8.07   2.78
+   E 2014-12-16 23:59:40 2457008.49977  1283  1145      1023.0      1024.5     959.25 -8.30  15.90
+   E 2014-12-17 23:59:40 2457009.49977  1486  1143      1024.0      1024.5     959.25 -8.19  29.12
+
+Period seen from Earth (synodic) by both trigonometric methods, then the true (sidereal) rotation:
+ spot   lat   days | arcsin+line | sine fit (A=R·cos lat) | sine fit (A free)  | sidereal: omega   period  | speed: across disk   true
+  A    +29.5    6 |   28.35 d   |   28.18 ± 0.03 d        |  28.22 d (A=835 vs 835px) |  13.79 °/d  26.10 d | 186.1 px/d = 1.56 km/s   1.69 km/s
+  E     -8.0    7 |   27.32 d   |   27.33 ± 0.02 d        |  27.46 d (A=954 vs 950px) |  14.19 °/d  25.37 d | 218.4 px/d = 1.83 km/s   1.98 km/s
+
+(simple formula 1/P_sid = 1/P_syn + 1/365.25 gives P_sid = A: 26.16 d, E: 25.42 d)
+y stays almost constant: A: range 25 px, E: range 7 px  (small drift: the Sun's axis tilt B0 and the spot's own motion)
+
+Compared with the automatic tracking (sub-pixel positions, circle fit for the disk):
+   spot A: whole-pixel readings give 13.79 °/day, automatic 13.71 °/day
+   spot E: whole-pixel readings give 14.19 °/day, automatic 14.19 °/day

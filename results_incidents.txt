@@ -1,0 +1,26 @@
+Reported incidents vs our data (biggest_flare and blackout level on today's NOAA scale; reported_then = class announced at the time; up to 2017 that used the old scale, about 0.7× today's):
+      incident reported_then biggest_flare blackout  n_X  year_SSN  years_from_max
+    March 1989           X15         X21.4       R5   11     211.2            -0.7
+Halloween 2003          X28+         X40.0       R5    6      99.0             1.9
+ December 2006          X9.0         X12.9       R4    2      24.6             5.0
+September 2017          X9.3         X14.6       R4    6      21.8             3.4
+ February 2022          M1.1          M1.1       R1    0      83.0            -2.7
+      May 2024          X8.7          X8.7       R3   12     154.5            -0.4
+
+Past years with a sunspot number like the 2035 forecast (middle half: 112-189):
+        SSN  R1+ (≥M1)  R3+ (≥X1)  R4+ (≥X10)
+year                                         
+1978  131.2        267         26           0
+1982  162.9        828         66           6
+1988  122.7        327         20           0
+1992  133.3        309         15           1
+1999  136.2        277          8           0
+2000  173.8        381         21           0
+2001  170.3        528         34           2
+2002  163.6        402         17           0
+2014  113.6        345         25           0
+2023  125.3        365         13           0
+2024  154.5        916         50           0
+2025  123.4        358         18           0
+   per year: 362 R1+ events and 20 R3+ events (median); at least one R3 in 100% of these years, an R4 in 25%
+   compare the forecast for 2035 from flares.py: ~438 R1+ and ~30 R3+ events
