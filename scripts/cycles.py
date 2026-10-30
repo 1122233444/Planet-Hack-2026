@@ -4,7 +4,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 
-from paths import D, F
+from paths import D, F, assert_data
+assert_data(D + "SN_m_tot_V2.0.csv"); assert_data(D + "bflydata.txt")
 
 # ---------- monthly sunspot number, our own 13-month smoothing ----------
 sn = pd.read_csv(D+"SN_m_tot_V2.0.csv", sep=";", header=None,

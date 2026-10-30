@@ -15,7 +15,7 @@ from paths import D, F
 SPLIT = 15            # latitude separating "high" (new cycle) from "low" (old cycle) spots
 CR_DAYS = 27.2753     # one Carrington rotation
 T0 = pd.Timestamp("1853-11-09")
-SILSO_MIN = [1889.6, 1902.0, 1913.6, 1923.6, 1933.7, 1944.1, 1954.3, 1964.8, 1976.2, 1986.7, 1996.6, 2008.9, 2019.9]
+SILSO_MIN = [1878.9, 1889.6, 1902.0, 1913.6, 1923.6, 1933.7, 1944.1, 1954.3, 1964.8, 1976.2, 1986.7, 1996.6, 2008.9, 2019.9]
 
 g = load_groups()
 g["cr"] = ((g.time - T0).dt.total_seconds() / 86400 // CR_DAYS).astype(int) + 1
@@ -108,7 +108,7 @@ for _, r in res[res.start > 2000].iterrows():
     a3.text(r.max_year + 0.2, r.max_area, f"maximum {r.max_year:.1f}", fontsize=9)
 a3.set_ylabel("sunspot area\n(millionths of a\nhemisphere, 1-yr mean)"); a3.set_xlabel("Year")
 a3.set_title(f"Period {c24.start:.1f} → {c25.start:.1f} = {P:.1f} yr; rise to maximum ≈ {rise:.1f} yr "
-             f"→ next maximum ≈ {pred_max:.1f}  (all {len(full)} cycles since 1890: {all_max:.1f} ± {all_err:.1f})",
+             f"→ next maximum ≈ {pred_max:.1f}  (all {len(full)} cycles since {int(res.start.iloc[0])}: {all_max:.1f} ± {all_err:.1f})",
              fontsize=10)
 a3.set_xlim(2006, 2041)
 plt.tight_layout(); plt.savefig(F + "butterfly_own.png", dpi=140)

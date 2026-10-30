@@ -9,8 +9,8 @@
 |---|---|---|
 | Track ≥ 2 sunspots at different latitudes on SDO/HMI images; record x, y pixels and Julian Dates | ✅ | Part 4B: spots A (+30°) and E (−8°) measured step by step (`data/rotation/manual_walkthrough.csv`); 9 spots tracked automatically |
 | Trigonometric rotation period at each latitude; plot x and y vs time, fit a sine curve, estimate the rate of motion | ✅ | Part 4B: arcsin method and sine-curve fit for every spot |
-| Quantify differential rotation; derive an equation, state the assumptions | ✅ | Part 4C: ω = 14.54 − 2.84 sin²φ °/day, v = 2.04 cos φ (1 − 0.196 sin²φ) km/s, 10 assumptions |
-| Own butterfly diagram of the last two cycles; cycle period and next maximum from it | ✅ | Part 1B: period 11.2 yr, next maximum ≈ 2036.4 (all 12 cycles: 2034.9 ± 1.3) |
+| Quantify differential rotation; derive an equation, state the assumptions | ✅ | Part 4C: ω = 14.54 − 2.84 sin²φ °/day, v = 2.04 cos φ (1 − 0.195 sin²φ) km/s, 10 assumptions |
+| Own butterfly diagram of the last two cycles; cycle period and next maximum from it | ✅ | Part 1B: period 11.2 yr, next maximum ≈ 2036.4 (all 13 cycles: 2034.8 ± 1.2) |
 | Forecast 2035; cross-check with solar activity ↔ radio blackouts (reported incidents) | ✅ | Parts 2–3: SSN median 156, ~30 R3 blackouts in 2035 (true-flux scale); 6 reported incidents and 12 look-alike years |
 | Mission protection strategy | ⏳ | Step 5 (next) |
 | Video pitch to the ISECG launch panel | ⏳ | Step 5 (next) |
@@ -46,11 +46,11 @@ Timing of the maximum is fairly predictable from statistics; the *strength* is n
 
 ![Own butterfly diagram](figures/butterfly_own.png)
 
-Built directly from the latitude of 3,647 sunspot groups (2006–2026). A cycle starts when more than half of the sunspot area (1-year running total) sits at |latitude| ≥ 15°, after a stretch in which almost all of it was below 15° (starts at least 7 years apart). Maximum = peak of the 1-year mean sunspot area.
+Built directly from the latitude of 3,779 sunspot groups (2006–2026). A cycle starts when more than half of the sunspot area (1-year running total) sits at |latitude| ≥ 15°, after a stretch in which almost all of it was below 15° (starts at least 7 years apart). Maximum = peak of the 1-year mean sunspot area.
 
-- Cycle 24 starts 2008.77, cycle 25 starts 2019.97 (official minima 2008.9 and 2019.9; over 1874–2026 the 13 detected starts differ from the official minima by +0.11 yr on average, 0.6 yr at most).
+- Cycle 24 starts 2008.77, cycle 25 starts 2019.97 (official minima 2008.9 and 2019.9; over 1874–2026 the 14 detected starts differ from the official minima by +0.13 yr on average, 0.6 yr at most).
 - **Period of cycle 24: 11.2 yr.** Rise to maximum: 5.67 yr (cycle 24), 4.71 yr (cycle 25).
-- **Next maximum from the last two cycles: 2019.97 + 11.20 + 5.19 ≈ 2036.4**; from all 12 complete cycles since 1890: 2034.9 ± 1.3. Both agree with the sunspot-number forecast (2035.4 ± 1.2).
+- **Next maximum from the last two cycles: 2019.97 + 11.20 + 5.19 ≈ 2036.4**; from all 13 complete cycles since 1879: 2034.8 ± 1.2. Both agree with the sunspot-number forecast (2035.4 ± 1.2).
 - At maximum the mean spot latitude is 15.5° ± 2.8° (cycle 24: 12.6°, cycle 25: 13.9°) — a marker to watch for in cycle 26.
 
 ## Part 2 – Improved forecast (v2): verified data, reliable cycles, analogue ensemble
@@ -113,10 +113,10 @@ Look-alike years (yearly SSN 112–189, the middle half of the 2035 forecast; 12
 
 ## Part 4 – Differential rotation (Steps 1–2): tracking sunspots with trigonometry
 
-**Result:** sidereal rotation rate of sunspots **ω = 14.54 − 2.84 sin²(latitude) °/day** (21,003 tracked sunspot groups).
+**Result:** sidereal rotation rate of sunspots **ω = 14.54 − 2.84 sin²(latitude) °/day** (21,566 tracked sunspot-group passages).
 Equator: 24.8 days, 2.04 km/s · 30°: 26.0 days, 1.68 km/s · 40°: 26.9 days, 1.44 km/s. Seen from Earth an active region comes back about every **27 days** and needs about **7 days** to rotate from the east limb to face Earth.
 
-**A. Large sample** (`scripts/rotation.py`): daily positions of sunspot groups 1874–2026 (Greenwich + USAF/NOAA, compiled by D. Hathaway; 253,104 positions). For each disk passage (≥ 4 days within 60° of the central meridian) the Carrington longitude is fitted against time; slope + 14.184 °/day = sidereal rate.
+**A. Large sample** (`scripts/rotation.py`): daily positions of sunspot groups 1874–2026 (Greenwich + USAF/NOAA, compiled by D. Hathaway; 260,398 positions). For each disk passage (≥ 4 days within 60° of the central meridian) the Carrington longitude is fitted against time; slope + 14.184 °/day = sidereal rate.
 
 ![Rotation vs latitude](figures/rotation_vs_latitude.png)
 
@@ -127,7 +127,7 @@ Equator: 24.8 days, 2.04 km/s · 30°: 26.0 days, 1.68 km/s · 40°: 26.9 days, 
 | 30° | 13.83 | 26.0 d | 28.0 d | 1.68 km/s |
 | 40° | 13.36 | 26.9 d | 29.1 d | 1.44 km/s |
 
-Checks: A = 14.535 ± 0.005 (statistical) ± 0.016 (systematic = half the Greenwich–USAF/NOAA difference), B = −2.84 ± 0.05 ± 0.10. Sample: 21,003 passages pass the quality cuts; the fit removes 421 outliers beyond 3σ and uses 20,582 (the two era fits remove their own 215 + 207, hence 12,463 + 8,118 = 20,581). Greenwich era 14.55 − 2.92 sin² vs USAF/NOAA era 14.52 − 2.72 sin²; north 14.535 − 2.88 sin² vs south 14.537 − 2.81 sin²; changing the 60° limit to 45° or 75° moves A by ≤ 0.014 °/day. No sunspots above ~40°, so values there are extrapolations (Doppler measurements give ~34 days at the poles).
+Checks: A = 14.536 ± 0.004 (statistical) ± 0.016 (systematic = half the Greenwich–USAF/NOAA difference), B = −2.84 ± 0.05 ± 0.09. Sample: 21,566 passages pass the quality cuts; the fit removes 430 outliers beyond 3σ and uses 21,136 (the two era fits remove their own 220 + 207, hence 12,952 + 8,187 = 21,139). Greenwich era 14.55 − 2.91 sin² vs USAF/NOAA era 14.52 − 2.72 sin²; north 14.535 − 2.87 sin² vs south 14.538 − 2.81 sin²; changing the 60° limit to 45° or 75° moves A by ≤ 0.015 °/day. (An earlier version silently missed 5 of the 153 yearly files – 1879, 1967, 1968, 2006, 2020 – because the server had sent error pages; the download script now checks every file and all numbers here use the complete data.) No sunspots above ~40°, so values there are extrapolations (Doppler measurements give ~34 days at the poles).
 
 ![Shear of a straight line](figures/differential_rotation_shear.png)
 
@@ -176,12 +176,12 @@ The sine fits leave 0.5 px residuals. The amplitude is fixed to R·cos(lat): wit
 |---|---|---|---|---|---|---|---|---|
 | A | 12236 | +29.5° | 6 | 13.71 ± 0.01 | 13.85 | 28.34 / 28.25 | 26.26 | 1.68 |
 | B | 12239 | +14.2° | 4 | 14.79 ± 0.04 | 14.37 | 26.12 / 26.10 | 24.34 | 2.02 |
-| C | 12240 | +10.3° | 4 | 14.42 ± 0.07 | 14.44 | 26.84 / 26.93 | 24.96 | 1.99 |
-| D | 12234 | +3.6° | 5 | 15.17 ± 0.15 | 14.52 | 25.43 / 25.29 | 23.74 | 2.13 |
+| C | 12240 | +10.3° | 4 | 14.42 ± 0.07 | 14.45 | 26.84 / 26.93 | 24.96 | 1.99 |
+| D | 12234 | +3.6° | 5 | 15.17 ± 0.15 | 14.53 | 25.43 / 25.29 | 23.74 | 2.13 |
 | E | 12235 | −8.0° | 7 | 14.19 ± 0.01 | 14.48 | 27.32 / 27.33 | 25.38 | 1.97 |
 | F | 12241 | −9.4° | 4 | 14.78 ± 0.07 | 14.46 | 26.15 / 26.17 | 24.36 | 2.05 |
 | G | 12237 | −13.1° | 6 | 14.08 ± 0.01 | 14.39 | 27.55 / 27.54 | 25.57 | 1.93 |
-| H | 12230 | −14.2° | 4 | 14.27 ± 0.06 | 14.36 | 27.14 / 27.12 | 25.22 | 1.94 |
+| H | 12230 | −14.2° | 4 | 14.27 ± 0.06 | 14.37 | 27.14 / 27.12 | 25.22 | 1.94 |
 | I | 12242 | −20.9° | 4 | 13.81 ± 0.18 | 14.17 | 28.12 / 27.98 | 26.06 | 1.81 |
 
 - Our latitudes agree with NOAA's to 0.7° on average; arcsin and sine-fit periods agree within 0.14 d for all 9 spots.
@@ -192,15 +192,15 @@ The sine fits leave 0.5 px residuals. The amplitude is fixed to R·cos(lat): wit
 
 ![Linearised fit](figures/rotation_equation.png)
 
-1. **One rotation rate per tracked spot.** For every disk passage, the trigonometry of Part B gives the spot's longitude each day; the slope of longitude against time is its rate seen from Earth, and adding Earth's orbital motion gives the true (sidereal) rate ω. Doing this for 21,003 sunspot-group passages (1874–2026) gives 21,003 pairs (latitude φᵢ, rate ωᵢ); our own 9 SDO spots give 9 more.
+1. **One rotation rate per tracked spot.** For every disk passage, the trigonometry of Part B gives the spot's longitude each day; the slope of longitude against time is its rate seen from Earth, and adding Earth's orbital motion gives the true (sidereal) rate ω. Doing this for 21,566 sunspot-group passages (1874–2026) gives 21,566 pairs (latitude φᵢ, rate ωᵢ); our own 9 SDO spots give 9 more.
 2. **Choose the form.** The Sun is north–south symmetric (+φ and −φ rotate alike), so only even powers of sin φ can appear. The simplest such form, and the standard one in solar physics, is ω = A + B·sin²φ.
 3. **Make it a straight line.** With s = sin²φ the model becomes ω = A + B·s. Plotted against s, the band medians (red dots above) do lie on a straight line.
-4. **Least squares (linear regression).** B = Σ(sᵢ − s̄)(ωᵢ − ω̄) / Σ(sᵢ − s̄)², A = ω̄ − B·s̄ (A is the rate at the equator, s = 0). Fitted to all single groups after removing 421 outliers beyond 3 standard deviations (20,582 left); errors from 200 bootstrap resamples.
-5. **Result: A = 14.535 ± 0.005 (stat.) ± 0.016 (syst.) °/day, B = −2.84 ± 0.05 (stat.) ± 0.10 (syst.) °/day → ω(φ) = 14.54 − 2.84 sin²φ °/day.** Systematic = half the difference between the Greenwich and USAF/NOAA datasets.
+4. **Least squares (linear regression).** B = Σ(sᵢ − s̄)(ωᵢ − ω̄) / Σ(sᵢ − s̄)², A = ω̄ − B·s̄ (A is the rate at the equator, s = 0). Fitted to all single groups after removing 430 outliers beyond 3 standard deviations (21,136 left); errors from 200 bootstrap resamples.
+5. **Result: A = 14.536 ± 0.004 (stat.) ± 0.016 (syst.) °/day, B = −2.84 ± 0.05 (stat.) ± 0.09 (syst.) °/day → ω(φ) = 14.54 − 2.84 sin²φ °/day.** Systematic = half the difference between the Greenwich and USAF/NOAA datasets.
    - A line through the 2.5°-band medians gives 14.48 − 2.77 sin²φ: the distribution of single groups is skewed (young groups rotate fast), so its mean sits a little above its median.
-   - Adding a C·sin⁴φ term gives C = −0.10 ± 0.43, i.e. zero: within ±40° the sin²φ term is enough.
+   - Adding a C·sin⁴φ term gives C = −0.04 ± 0.41, i.e. zero: within ±40° the sin²φ term is enough.
    - Our 9 SDO spots alone give 14.68 ± 0.17 − (4.70 ± 1.69) sin²φ: same trend, much larger error.
-6. **Period and speed.** P(φ) = 360/ω(φ) days. The surface speed is the angular rate times the radius of the latitude circle: v = ω·(π/180)/86400 · R☉·cos φ, so **v(φ) = 2.043 · cos φ · (1 − 0.196 sin²φ) km/s** (2.04 km/s at the equator, 1.95 at 15°, 1.68 at 30°).
+6. **Period and speed.** P(φ) = 360/ω(φ) days. The surface speed is the angular rate times the radius of the latitude circle: v = ω·(π/180)/86400 · R☉·cos φ, so **v(φ) = 2.043 · cos φ · (1 − 0.195 sin²φ) km/s** (2.04 km/s at the equator, 1.95 at 15°, 1.68 at 30°).
 
 Assumptions:
 1. The Sun is a perfect sphere.

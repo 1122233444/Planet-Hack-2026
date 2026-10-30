@@ -1,11 +1,11 @@
-Straight line through 16 band medians: omega = 14.482 -2.765·sin²(lat)
-Fit to all 21,003 single groups (rotation.py):  omega = 14.535 -2.842·sin²(lat)
+Straight line through 16 band medians: omega = 14.484 -2.769·sin²(lat)
+Fit to all 21,566 single groups (rotation.py):  omega = 14.536 -2.841·sin²(lat)
 
 The equations:
    angular rate   omega(lat) = 14.54 − 2.84·sin²(lat)   [degrees per day, sidereal]
    period         P(lat)     = 360 / omega(lat)            [days]
    speed          v(lat)     = omega · (π/180) / 86400 · R☉ · cos(lat)
-                             = 2.043 · cos(lat) · (1 − 0.196·sin²(lat))   [km/s]
+                             = 2.043 · cos(lat) · (1 − 0.195·sin²(lat))   [km/s]
    check at  0°: omega 14.54 °/day, P 24.77 d, v 2.04 km/s
-   check at 15°: omega 14.35 °/day, P 25.10 d, v 1.95 km/s
-   check at 30°: omega 13.82 °/day, P 26.04 d, v 1.68 km/s
+   check at 15°: omega 14.35 °/day, P 25.09 d, v 1.95 km/s
+   check at 30°: omega 13.83 °/day, P 26.04 d, v 1.68 km/s

@@ -265,7 +265,7 @@ a1.set_ylim(-65, 135); a1.legend(fontsize=8, ncol=2, loc="upper left")
 r150 = pd.read_csv(D + "rotation_groups.csv")
 L = np.linspace(-35, 35, 141)
 a2.hexbin(r150.lat, r150.omega, gridsize=(50, 30), extent=(-36, 36, 12.5, 16), cmap="Greys", mincnt=1, bins="log")
-a2.plot(L, A + B * np.sin(np.radians(L)) ** 2, c="tab:red", lw=2, label="150-year fit (21,003 groups)")
+a2.plot(L, A + B * np.sin(np.radians(L)) ** 2, c="tab:red", lw=2, label=f"150-year fit ({len(r150):,} groups)")
 a2.plot(L, own[0] + own[1] * np.sin(np.radians(L)) ** 2, c="k", lw=1.5, ls="--", label=f"Fit to our {len(best)} spots only")
 for (_, b), c in zip(best.iterrows(), cols):
     a2.errorbar(b.lat, b.omega, yerr=b.omega_err, fmt="o", c=c, ms=9, mec="k", capsize=4,

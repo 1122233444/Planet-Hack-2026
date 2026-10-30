@@ -1,5 +1,6 @@
 Cycles read off our butterfly diagram (1874-2026):
             start  max_year  max_area  period  rise  silso_min
+cycle 12  1879.21   1883.91   1445.37   10.75  4.71     1878.9
 cycle 13  1889.96   1894.07   1627.41   11.95  4.11     1889.6
 cycle 14  1901.91   1905.49   1204.91   11.58  3.58     1902.0
 cycle 15  1913.49   1917.59   1613.57   10.01  4.11     1913.6
@@ -7,18 +8,18 @@ cycle 16  1923.49   1926.33   1506.66   10.38  2.84     1923.6
 cycle 17  1933.87   1937.31   2228.57   10.23  3.44     1933.7
 cycle 18  1944.11   1947.32   2727.60   10.38  3.21     1944.1
 cycle 19  1954.48   1957.92   3587.37   10.16  3.44     1954.3
-cycle 20  1964.64   1970.24   1634.61   12.10  5.60     1964.8
+cycle 20  1964.64   1968.37   1648.76   12.10  3.73     1964.8
 cycle 21  1976.74   1981.96   1794.48   10.08  5.22     1976.2
 cycle 22  1986.82   1989.43   1865.88   10.38  2.61     1986.7
 cycle 23  1997.20   2002.20   1463.83   11.58  5.01     1996.6
 cycle 24  2008.77   2014.45    877.86   11.20  5.67     2008.9
 cycle 25  2019.97   2024.68   1168.12     NaN  4.71     2019.9
 
-Start vs official (SILSO) minimum: mean difference +0.11 yr, largest 0.60 yr
+Start vs official (SILSO) minimum: mean difference +0.13 yr, largest 0.60 yr
 
 Two most recent cycles:
    cycle 24 starts 2008.77, maximum 2014.45 (rise 5.67 yr), length 11.20 yr
    cycle 25 starts 2019.97, maximum 2024.68 (rise 4.71 yr)
    -> cycle 26 starts ≈ 2019.97 + 11.20 = 2031.2; maximum ≈ 2031.2 + 5.19 = 2036.4
-   with all 12 complete cycles: period 10.83 ± 0.78 yr, rise 4.12 ± 1.04 yr -> cycle 26 maximum ≈ 2034.9 ± 1.3
+   with all 13 complete cycles: period 10.83 ± 0.75 yr, rise 4.03 ± 0.92 yr -> cycle 26 maximum ≈ 2034.8 ± 1.2
    mean latitude of spots at maximum: 15.5° ± 2.8° (cycle 24: 12.6°, cycle 25: 13.9°)

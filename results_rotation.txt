@@ -1,48 +1,48 @@
-Read 253,104 daily group positions, 1874-05 to 2026-09
-Disk passages tracked: 21,661; kept after quality cuts: 21,003 (Greenwich 12,678, USAF/NOAA 8,325)
+Read 260,398 daily group positions, 1874-05 to 2026-09
+Disk passages tracked: 22,235; kept after quality cuts: 21,566 (Greenwich 13,172, USAF/NOAA 8,394)
 Check: sidereal rate from Carrington longitudes minus (synodic rate + Earth's orbital rate): median -0.000 deg/day
        Using a constant 0.9856 deg/day for the Earth (the simple formula) instead is off by -0.032 .. +0.034 deg/day depending on the season
 
 Fit  omega(lat) = A + B sin²(lat)   [deg/day, sidereal]
    (each fit removes its own outliers beyond 3 standard deviations, so the counts of the two eras
     need not add up exactly to the count of the combined fit)
-   All groups            : A = 14.535 ± 0.005, B = -2.84 ± 0.05   (20,582 groups used, 421 outliers removed)
-   Greenwich 1874-1976   : A = 14.546 ± 0.006, B = -2.92 ± 0.06   (12,463 groups used, 215 outliers removed)
-   USAF/NOAA 1977-2026   : A = 14.515 ± 0.008, B = -2.72 ± 0.07   (8,118 groups used, 207 outliers removed)
-   Result: A = 14.535 ± 0.005 (statistical) ± 0.016 (systematic), B = -2.84 ± 0.05 (statistical) ± 0.10 (systematic)
+   All groups            : A = 14.536 ± 0.004, B = -2.84 ± 0.05   (21,136 groups used, 430 outliers removed)
+   Greenwich 1874-1976   : A = 14.547 ± 0.006, B = -2.91 ± 0.06   (12,952 groups used, 220 outliers removed)
+   USAF/NOAA 1977-2026   : A = 14.516 ± 0.008, B = -2.72 ± 0.07   (8,187 groups used, 207 outliers removed)
+   Result: A = 14.536 ± 0.004 (statistical) ± 0.016 (systematic), B = -2.84 ± 0.05 (statistical) ± 0.09 (systematic)
    systematic = half the difference between the two independent datasets (Greenwich vs USAF/NOAA)
-   with sin⁴ term       : A = 14.534 ± 0.006, B = -2.82 ± 0.11, C = -0.10 ± 0.43  (C is poorly fixed: almost no sunspots above 40°)
+   with sin⁴ term       : A = 14.536 ± 0.006, B = -2.83 ± 0.11, C = -0.04 ± 0.41  (C is poorly fixed: almost no sunspots above 40°)
    Carrington's 14.184 deg/day matches sunspots at latitude 20.6°
-   North hemisphere      : A = 14.535 ± 0.006, B = -2.88 ± 0.07
-   South hemisphere      : A = 14.537 ± 0.007, B = -2.81 ± 0.07
+   North hemisphere      : A = 14.535 ± 0.007, B = -2.87 ± 0.06
+   South hemisphere      : A = 14.538 ± 0.006, B = -2.81 ± 0.07
 
 Measured rotation by latitude band (median of groups):
                  lat   omega     se     n
 bin                                      
-(0.0, 2.5]     1.487  14.504  0.034   332
-(2.5, 5.0]     3.973  14.486  0.018   924
-(5.0, 7.5]     6.377  14.448  0.014  1752
-(7.5, 10.0]    8.789  14.409  0.012  2518
-(10.0, 12.5]  11.306  14.363  0.012  2818
-(12.5, 15.0]  13.764  14.329  0.011  2886
-(15.0, 17.5]  16.260  14.268  0.012  2586
-(17.5, 20.0]  18.697  14.213  0.013  2281
-(20.0, 22.5]  21.246  14.109  0.015  1733
-(22.5, 25.0]  23.688  14.051  0.019  1250
-(25.0, 27.5]  26.243  13.911  0.025   821
-(27.5, 30.0]  28.607  13.863  0.031   506
-(30.0, 32.5]  31.214  13.714  0.039   275
-(32.5, 35.0]  33.617  13.608  0.055   163
+(0.0, 2.5]     1.488  14.500  0.034   336
+(2.5, 5.0]     3.973  14.491  0.018   935
+(5.0, 7.5]     6.378  14.447  0.014  1776
+(7.5, 10.0]    8.789  14.411  0.012  2557
+(10.0, 12.5]  11.312  14.367  0.011  2881
+(12.5, 15.0]  13.764  14.331  0.011  2963
+(15.0, 17.5]  16.259  14.268  0.012  2666
+(17.5, 20.0]  18.702  14.209  0.013  2360
+(20.0, 22.5]  21.247  14.113  0.015  1791
+(22.5, 25.0]  23.684  14.051  0.018  1305
+(25.0, 27.5]  26.237  13.916  0.024   861
+(27.5, 30.0]  28.618  13.864  0.030   526
+(30.0, 32.5]  31.218  13.714  0.038   285
+(32.5, 35.0]  33.630  13.612  0.055   166
 (35.0, 37.5]  36.069  13.530  0.088    69
 (37.5, 40.0]  38.527  13.622  0.132    48
 
 Rotation period and speed (from the fit; * = beyond the sunspot belt, extrapolated):
  lat   omega(deg/d)  P_sidereal(d)  P_seen-from-Earth(d)  speed(km/s)
-   0     14.535        24.77           26.57               2.043
-  10     14.450        24.91           26.74               2.000
-  15     14.345        25.10           26.95               1.947
-  20     14.203        25.35           27.24               1.876
-  30     13.825        26.04           28.04               1.683
-  40     13.361        26.94           29.09               1.438
-  60*    12.404        29.02           31.53               0.872
-  90*    11.693        30.79           33.62               0.000
+   0     14.536        24.77           26.57               2.043
+  10     14.451        24.91           26.74               2.000
+  15     14.346        25.09           26.95               1.947
+  20     14.204        25.34           27.23               1.876
+  30     13.826        26.04           28.04               1.683
+  40     13.363        26.94           29.09               1.439
+  60*    12.406        29.02           31.52               0.872
+  90*    11.696        30.78           33.61               0.000

@@ -12,13 +12,14 @@ import glob, re, numpy as np, pandas as pd, xarray as xr, matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from paths import D, F
+from paths import D, F, assert_data
 BASE = dict(A=1e-8, B=1e-7, C=1e-6, M=1e-5, X=1e-4)
 
 # ---------- legacy text reports 1975 - 2017-02-08 ----------
 rec = []
 for f in sorted(glob.glob(D+"flares/goes-xrs-report_*.txt")):
     if "modified" in f: continue
+    assert_data(f)
     for line in open(f, errors="ignore"):
         m = re.match(r"31777(\d{6})", line)
         if not m or not line[23:27].strip().isdigit(): continue

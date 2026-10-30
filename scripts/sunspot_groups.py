@@ -2,13 +2,14 @@
 USAF/NOAA 1977-present data, files data/groups/gYYYY.txt)."""
 import glob, numpy as np, pandas as pd
 
-from paths import D
+from paths import D, assert_data
 
 
 def load_groups(first_year=1874, last_year=2100):
     rec = []
     for f in sorted(glob.glob(D + "groups/g*.txt")):
         if not first_year <= int(f[-8:-4]) <= last_year: continue
+        assert_data(f)
         for line in open(f):
             tok = line.split()
             if len(tok) < 11: continue
