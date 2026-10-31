@@ -5,7 +5,8 @@
 **重点（考官要求）：** 第一是防太阳粒子（高能质子），第二是大气阻力。所以开场、"威胁"和"结果"三段都先讲粒子，再讲阻力。结果部分按我们方案的三层来讲：① 预警层、② 辐射安全模式（响应层）、③ 被动屏蔽层。
 
 - 配图全部用 `figures/` 里白底的普通科学图，不用 `figures/video/` 里的深色图。
-- 英文台词约 740 词，按每分钟 148 词左右的语速约 5 分钟。录之前先计时练一遍。超时的话，先把 5c 换成短版（见 5c 下面），再删减第 5 段。
+- 英文台词约 748 词，按每分钟 150 词左右的语速约 5 分钟。录之前先计时练一遍。超时的话，先把 5c 换成短版（见 5c 下面），再删掉 6g 里 "Our calendar predicts…" 那一句。
+- 有两处讲局限：5e 讲预测的局限，6g 讲方案的局限。评委看重这个，不要删光。
 - 台词里不用破折号，句子尽量短，像说话一样。
 - 视频里的每个数字都要和 README 一致。**不要用那份 PDF 报告里的数字**，原因见文末。
 
@@ -13,7 +14,7 @@
 
 ## 一、分段大纲
 
-### 1. 开场（0:00–0:21）
+### 1. 开场（0:00–0:20）
 
 **画面：**
 - `data/sdo/hmi_20141215.png`（真实的 SDO 太阳图像）全屏，慢慢放大。
@@ -21,107 +22,113 @@
 
 > Halloween 2003. One of the strongest solar proton storms ever measured swept past Earth, three thousand times NOAA's alert level. In 2022, a far weaker storm dragged 38 Starlink satellites out of orbit. ISECG will launch a hundred-billion-dollar satellite system in 2035, whatever the Sun is doing. We are its advisors.
 
-### 2. 空间天气（0:21–0:43）
+### 2. 空间天气（0:20–0:42）
 
 **画面：** `sdo_daily_strip.png`（7 天里黑子从左往右移动，可以在剪辑软件里平移），然后 `flares_vs_sunspots.png`（黑线是黑子数，柱子是耀斑）。
 
-> Space weather starts at sunspots, knots of magnetic field whose number rises and falls every eleven years. Near the peak they fire flares. The X-rays reach us in eight minutes, and solar energetic particles, mostly protons, arrive minutes to hours later. One to three days after that, clouds of plasma hit Earth's magnetic field.
+> Space weather starts at sunspots, knots of magnetic field whose number rises and falls every eleven years. Near the peak they fire flares. The X-rays reach us in eight minutes, and solar particles, mostly protons, arrive minutes to hours later. One to three days after that, clouds of plasma hit Earth's magnetic field.
 
-### 3. 威胁：先讲粒子，再讲阻力（0:43–1:11）
+### 3. 威胁：先讲粒子，再讲阻力（0:42–1:07）
 
 **画面：**
 - `protons.png` 左图（每年的质子事件，红色是强事件）。
 - 然后 `drag_leo.png` 左图（空气密度：蓝线是低谷，橙线是 2035 年）。
 
-> For a satellite, the particles are the first danger. A single proton can flip a bit in a computer or lock up a chip, and over the years the dose wears out electronics and solar panels. The second danger is drag. In a maximum year the Sun swells the upper atmosphere. At 550 kilometres the air is fourteen times denser than at minimum, storms add more, and satellites sink.
+> For a satellite, the particles are the first danger. One proton can flip a bit or lock up a chip, and over the years the dose wears out electronics and solar panels. The second danger is drag. In a maximum year the Sun swells the upper atmosphere. At 550 kilometres the air is fourteen times denser than at minimum, so satellites sink.
 
-### 4. 利害（1:11–1:25）
+### 4. 利害（1:07–1:21）
 
 **画面：** `incidents_timeline.png` 全图（历史事件加上我们对 2035 年的预测）。
 
 > Big storms can strike in any year, but they cluster around the peak and just after it. 2035 is the next peak. The system isn't built yet, so we have seven years to design for it.
 
-### 5. 我们的研究（1:25–2:56）
+### 5. 我们的研究（1:21–2:52）
 
-**5a 手动测量（1:25–1:52）**
+**5a 手动测量（1:21–1:46）**
 
 **画面：** 你们自己录的测量过程（拍法见第二部分，镜头 1–4），最后 4 秒切到 `manual_steps.png`，证明和程序的结果一致。
 
-> We measured the Sun ourselves. On NASA SDO images, one per day, we found the edges of the disk, left at pixel 64 and right at 1983, and from them its centre and radius. Then we read two sunspots at very different latitudes, with the exact time as a Julian Date. A program measured every image, and we checked it by hand, step by step.
+> We measured the Sun ourselves. On NASA SDO images, one per day, we found the edges of the disk, left at pixel 64 and right at 1983, giving its centre and radius. Then we read two sunspots at very different latitudes, with the exact time as a Julian Date. A program measured every image, and we checked it by hand, step by step.
 
-**5b 三角函数和正弦拟合（1:52–2:12）**
+**5b 三角函数和正弦拟合（1:46–2:07）**
 
 **画面：** 你们录的表格计算过程，然后 `xy_sine_fit.png`（镜头 5–7）。
 
 > Trigonometry turns pixels into angles. Latitude is arcsin of Y, and longitude is arcsin of X over cos latitude. Plotted against time, each spot's x position traces a sine wave. The fits give 26.1 days at 30 degrees north and 25.4 days at 8 degrees south, so the equator spins faster.
 
-**5c 自转方程（2:12–2:28）**
+**5c 自转方程（2:07–2:20）**
 
 **画面：** 你们在表格里解两个方程、散点图上出现趋势线公式；然后 `rotation_vs_latitude.png` 左图（21,566 个点组成的云），最后 `rotation_equation.png`（镜头 8–10）。
 
-> Two spots give two equations, enough to solve omega equals A plus B sin squared latitude. Ours give 14.2 minus 1.6. Single spots wander, so we checked 21,566 groups from 150 years of records. They give 14.54 minus 2.84.
+> Two spots give two equations, enough to solve omega equals A plus B sin squared latitude. Ours give 14.2 minus 1.6. Adding 21,566 groups from 150 years refines it to 14.54 minus 2.84.
 
-短版（不讲两个黑子的推导，省约 5 秒）：
+短版（不讲两个黑子的推导）：
 
 > With 21,566 sunspot groups from 150 years of records, the rates fall on a straight line: omega equals 14.54 minus 2.84 sin squared latitude, in degrees per day.
 
-**5d 蝴蝶图（2:28–2:43）**
+**5d 蝴蝶图（2:20–2:34）**
 
 **画面：** `differential_rotation_shear.png` 放 3 秒，然后 `butterfly_own.png`，放大最上面那张。
 
-> This uneven rotation winds up the magnetic field, and that drives the cycle. Our own butterfly diagram shows new cycles starting in 2008.8 and 2020.0. That's an 11.2-year cycle, pointing to a peak in 2035 or 2036.
+> This uneven rotation winds up the magnetic field and drives the cycle. Our own butterfly diagram shows cycles starting in 2008.8 and 2020.0, 11.2 years apart, pointing to a peak in 2035 or 2036.
 
-**5e 预测（2:43–2:56）**
+**5e 预测（2:34–2:52）**
 
-**画面：** `forecast_v2_ensemble.png`
+**画面：** `forecast_v2_ensemble.png`。讲到 "a range, not a promise" 时，圈出预测分布的宽度。
 
-> Combining fifteen real past cycles into 210 possible futures puts the peak at 2035.4, plus or minus 1.2 years, with a sunspot number around 156. The launch falls inside the storm season.
+> Combining fifteen real past cycles into 210 possible futures puts the peak at 2035.4, plus or minus 1.2 years, with a sunspot number around 156. That's a range, not a promise: fifteen cycles is a small sample. Still, the launch falls inside the storm season.
 
-### 6. 结果和建议（2:56–4:43）
+### 6. 结果和建议（2:52–4:44）
 
-结果部分按我们方案的三层来讲：**① 预警 → ② 辐射安全模式 → ③ 被动屏蔽**，最后是阻力和成本。
+结果部分按我们方案的三层来讲：**① 预警 → ② 辐射安全模式 → ③ 被动屏蔽**，然后是阻力、成本和方案的局限。
 
-**6a 2035 年的太阳粒子（2:56–3:06）**
+**6a 2035 年的太阳粒子（2:52–3:02）**
 
 **画面：** `protons.png` 中图（质子事件和黑子数的关系，橙色带是 2035 年）。
 
 > First, the particles. We expect about eleven proton events in 2035, one or two of them strong. A ten-year mission meets about eight strong ones.
 
-**6b ① 预警层（3:06–3:32）**
+**6b ① 预警层（3:02–3:21）**
 
 **画面：** `region_calendar.png`；讲到"GOES alerts"时可以闪一下 `response_playbook.png` 的 Warning/Alert 两行。
 
-> Our particle defence has three layers. One is warning. A flare's light reaches us in eight minutes and its protons minutes to hours later, so GOES proton alerts trigger our response automatically. For days of notice, our rotation law tracks the regions behind 85 percent of proton events. For the May 2024 superstorm region, it was right to within a day, five weeks ahead.
+> Our particle defence has three layers. One is warning. GOES proton alerts trigger our response automatically. For days of notice, our rotation law tracks the regions behind 85 percent of proton events. For the May 2024 superstorm region, it was right to within a day, five weeks ahead.
 
 注意：不要说"L1 卫星提前发现耀斑和粒子"。L1 只比地球早几秒看到光和高能质子。它的作用是提前 1–3 天看到日冕物质抛射（日冕仪），以及在它撞上地球前 15–60 分钟测到太阳风，这一点在阻力部分可以提一句。
 
-**6c ② 辐射安全模式（3:32–3:45）**
+**6c ② 辐射安全模式（3:21–3:34）**
 
 **画面：** `response_playbook.png`（Alert 那一行）。
 
 > Two is a radiation safe mode. The payload switches off and non-essential electronics sleep. The flight computer is our crew. It lives in its vault, with a hot spare and error-correcting memory.
 
-**6d ③ 被动屏蔽（3:45–4:17）**
+**6d ③ 被动屏蔽（3:34–4:01）**
 
 **画面：** `shielding.png` 中图（地球磁场挡掉多少）→ 右图（剂量随屏蔽厚度下降；星星是我们的保险箱，和 2 g/cm² 纯铝的点一样高，但更靠左，也就是更轻）。
 
 注意："fifty times below the chip limit" 只算了太阳粒子，所以台词里要说 solar-particle dose。辐射带（南大西洋异常区）的剂量我们没有算，见问答第 5 条。
 
-> Three is passive protection. At 53 degrees, Earth's magnetic field alone cuts an unshielded part's dose to a sixteenth of open space. A sealed box wraps the computer, its power and its memory: 3.7 millimetres of aluminium lined with 7.5 millimetres of polyethylene. Its solar-particle dose stays fifty times below the chip limit, and it's a kilogram lighter than solid aluminium. A shelter-thick wall would weigh six times more and still let bit-flipping protons through. That's layer two's job.
+> Three is passive protection. At 53 degrees, Earth's magnetic field alone cuts the dose sixteen-fold. A sealed box wraps the computer, its power and its memory: 3.7 millimetres of aluminium lined with 7.5 millimetres of polyethylene. Its solar-particle dose stays fifty times below the chip limit, and it's a kilogram lighter than solid aluminium. Thicker walls barely help, so layer two handles the protons that still get through.
 
-**6e 其次是阻力（4:17–4:30）**
+**6e 其次是阻力（4:01–4:13）**
 
 **画面：** `drag_leo.png` 中图（从多高出发能撑多少天）。
 
 > Second, drag. Coronagraphs warn us one to three days before a storm hits. We deploy at 300 kilometres, not 210, which gives weeks of margin instead of two or three days.
 
-**6f 成本（4:30–4:43）**
+**6f 成本（4:13–4:24）**
 
 **画面：** `layered_protection.png` 全表 → `cost.png`
 
-> Add spares in orbit and ground stations that can run off the grid, and all this adds twelve kilograms per satellite instead of 234. That's six percent of the cost of full hardening.
+> With spares in orbit and off-grid ground stations, all this adds twelve kilograms per satellite instead of 234, at six percent of the cost of full hardening.
 
-### 7. 结尾（4:43–5:00）
+**6g 我们方案的局限（4:24–4:44）**
+
+**画面：** 白底文字卡，标题 Limitations，四行：radiation belts not modelled / calendar: when, not whether / box untested / costs are estimates；最后一行 Next: radiation-belt model, proton-beam test。
+
+> Our design has limits too. We counted solar particles, not the radiation belts. Our calendar predicts when a region faces us, not whether it erupts. The box is untested, and our costs are estimates. Next, we would model the belts and test the box in a proton beam.
+
+### 7. 结尾（4:44–5:00）
 
 **画面：** 团队出镜。片尾放一张白底字幕，列出数据来源：NASA SDO、NOAA SWPC 和 NCEI（GOES）、WDC-SILSO、GFZ Potsdam、D. Hathaway 的黑子群记录、NRLMSIS 2.1，以及 GitHub 仓库地址。
 
@@ -131,7 +138,7 @@
 
 不要只放一张黑子图片。要你们自己从像素一路算到自转方程 ω = A + B·sin²(纬度)，并把过程录下来：评委看到的是你们在量、在算，台词"我们手动逐步检查"才是真实的。所以鼠标和键盘都要由你们自己操作。
 
-**最少的工作量：** 2 张图 × 2 个黑子 = 4 个黑子位置，加上每张图 4 个边缘。熟练后约 20 分钟，录下来剪成约 1 分钟（1:25–2:28）。
+**最少的工作量：** 2 张图 × 2 个黑子 = 4 个黑子位置，加上每张图 4 个边缘。熟练后约 20 分钟，录下来剪成约 1 分钟（1:21–2:20）。
 
 ### 0. 准备
 
@@ -291,7 +298,7 @@
 - B 是两个转速之差除以 0.24，所以一个黑子偏 0.5 °/天，B 就会偏约 2。
 - **结论：** 两个黑子足以推导出方程的形式、证明赤道转得快；要得到准确的系数，需要大量黑子。这就是我们接着用 21,566 个黑子群的原因。在视频里直接这样说，评委会认为你们理解了误差。
 
-### 8. 剪辑（1:25–2:28，接在 5a、5b、5c 三段里）
+### 8. 剪辑（1:21–2:20，接在 5a、5b、5c 三段里）
 
 录的时候可以录 20–30 分钟，剪辑时加速 4–8 倍。
 
@@ -304,9 +311,9 @@
 | 5 | 5b | 10 秒，加速 | 表格：一行行填进去，纬度、经度两列出现 |
 | 6 | 5b | 4 秒 | 放大周期那两格：26.15 天和 25.42 天 |
 | 7 | 5b | 6 秒 | `xy_sine_fit.png` |
-| 8 | 5c | 8 秒，加速 | 表格：两式相减求 B，代回求 A；散点图加上趋势线，放大 y = −1.6468x + 14.187 |
-| 9 | 5c | 4 秒 | `rotation_vs_latitude.png` 左图 |
-| 10 | 5c | 4 秒 | `rotation_equation.png`：金色星星就是 A 和 E |
+| 8 | 5c | 7 秒，加速 | 表格：两式相减求 B，代回求 A；散点图加上趋势线，放大 y = −1.6468x + 14.187 |
+| 9 | 5c | 3 秒 | `rotation_vs_latitude.png` 左图 |
+| 10 | 5c | 3 秒 | `rotation_equation.png`：金色星星就是 A 和 E |
 
 **可选：** 把图打印在 A4 纸上，用尺子量（以毫米为单位）拍几秒作为插入画面。这样很有"动手"感，但精度不如像素，所以不要用它的数。
 
