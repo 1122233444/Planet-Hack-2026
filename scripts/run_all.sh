@@ -21,5 +21,6 @@ run shielding.py          results_shielding.txt       # needs protons.py output 
 run region_calendar.py    results_region_calendar.txt # needs rotation.py, flares.py output
 run cost.py               results_cost.txt            # needs geomagnetic.py output
 run strategy_figures.py   results_strategy_figures.txt # needs the scripts above
+run vault_diagram.py      results_vault_diagram.txt   # needs shielding.py output
 run video_figures.py      results_video_figures.txt   # 16:9 figures for the video and slides (figures/video/)
 echo "== self-test (needs sunpy)"; python3 solar_geometry.py
