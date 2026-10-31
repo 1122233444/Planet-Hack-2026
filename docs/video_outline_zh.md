@@ -2,10 +2,10 @@
 
 给 ISECG 发射评审团的视频，用英文讲。结构按第二次工作坊建议的故事线：**开场 → 空间天气 → 威胁 → 利害 → 我们的研究 → 结果和建议 → 结尾**。
 
-**重点（考官要求）：** 第一是防太阳粒子（高能质子），第二是大气阻力。所以开场、"威胁"和"结果"三段都先讲粒子，再讲阻力。
+**重点（考官要求）：** 第一是防太阳粒子（高能质子），第二是大气阻力。所以开场、"威胁"和"结果"三段都先讲粒子，再讲阻力。结果部分按我们方案的三层来讲：① 预警层、② 辐射安全模式（响应层）、③ 被动屏蔽层。
 
 - 配图全部用 `figures/` 里白底的普通科学图，不用 `figures/video/` 里的深色图。
-- 英文台词约 740 词，按每分钟 150 词左右的语速约 5 分钟，要讲得稍快一点。录之前先计时练一遍，超时就删减第 5 段。
+- 英文台词约 710 词，按每分钟 145 词左右的语速约 5 分钟。录之前先计时练一遍，超时就删减第 5 段。
 - 视频里的每个数字都要和 README 一致。**不要用那份 PDF 报告里的数字**，原因见文末。
 
 ## 一、分段大纲
@@ -72,47 +72,51 @@
 
 ### 6. 结果和建议（3:00–4:40）
 
+结果部分按我们方案的三层来讲：**① 预警 → ② 辐射安全模式 → ③ 被动屏蔽**，最后是阻力和成本。
+
 **6a 2035 年的太阳粒子（3:00–3:10）**
 
 **画面：** `protons.png` 中图（质子事件和黑子数的关系，橙色带是 2035 年）。
 
-> First, the particles. Forty years of NOAA records give about eleven proton events in 2035, one or two of them strong — and a ten-year mission will meet about eight strong ones.
+> First, the particles: about eleven proton events in 2035, one or two of them strong. A ten-year mission meets about eight strong ones.
 
-**6b 怎么挡（3:10–3:35）**
+**6b ① 预警层（3:10–3:35）**
 
-**画面：** `shielding.png` 的三张图依次放大：左（GOES 测到的最大几次事件）→ 中（地球磁场挡掉多少）→ 右（剂量随铝厚度下降，绿线是我们的保险箱）。
+**画面：** `region_calendar.png`；讲到"GOES alerts"时可以闪一下 `response_playbook.png` 的 Warning/Alert 两行。
 
-> We took GOES measurements of the worst proton storms on record and calculated the dose behind shielding. The Earth's magnetic field is the first shield: at 53 degrees, an unshielded part gets one-sixteenth of the dose in open space. A vault of just two grams per square centimetre — seven millimetres of aluminium — cuts the ten-year dose to 0.2 krad, fifty times below what commercial chips survive. Thicker walls barely help.
+> Our particle defence has three layers. One: warning. A flare's light reaches us in eight minutes, its protons minutes to hours later — so GOES alerts trigger the response automatically. For days of notice, our rotation law tracks the regions behind 85% of proton events: for the May 2024 superstorm region, it was right to within a day, five weeks ahead.
 
-**6c 挡不住的部分（3:35–3:50）**
+注意：不要说"L1 卫星提前发现耀斑和粒子"。L1 只比地球早几秒看到光和高能质子。它的作用是提前 1–3 天看到日冕物质抛射（日冕仪），以及在它撞上地球前 15–60 分钟测到太阳风，这一点在阻力部分可以提一句。
 
-**画面：** 还是 `shielding.png` 右图，然后 `layered_protection.png` 放大第 3 行。
+**6c ② 辐射安全模式（3:35–3:50）**
 
-> But about half of the protons that flip bits still get through the vault. So the vault holds redundant computers with error-correcting memory, and the satellite goes into safe mode when a proton alert arrives — minutes to hours after the flare.
+**画面：** `response_playbook.png`（Alert 那一行）。
 
-**6d 提前看到（3:50–4:02）**
+> Two: a radiation safe mode. The payload switches off, non-essential electronics sleep, and the flight computer — our crew — stays in its shelter, with a hot spare and error-correcting memory.
 
-**画面：** `region_calendar.png`
+**6d ③ 被动屏蔽（3:50–4:15）**
 
-> Eighty-five percent of proton events come from regions facing Earth or to its west. Our rotation law predicts when a region gets there: for the region behind the May 2024 superstorm, it was right to within a day, five weeks ahead.
+**画面：** `shielding.png` 中图（地球磁场挡掉多少）→ 右图（剂量随铝厚度下降，绿线是保险箱）。
 
-**6e 其次是阻力（4:02–4:15）**
+> Three: passive protection. Earth's magnetic field is the first shield: at 53 degrees, an unshielded part gets one-sixteenth of the open-space dose. A seven-millimetre aluminium vault keeps the computer's ten-year dose fifty times below its limit, and conductive skins stop charging. Thicker walls barely help — the protons that still get through are why layer two exists.
+
+**6e 其次是阻力（4:15–4:28）**
 
 **画面：** `drag_leo.png` 中图（从多高出发能撑多少天）。
 
-> Second, drag: deploy at 300 kilometres, not 210 — three weeks of margin in a storm instead of two days — and operate near 550.
+> Second, drag. Coronagraphs and the solar-wind monitors at L1 give a day's warning of storms. We deploy at 300 kilometres, not 210 — weeks of margin instead of two days.
 
-**6f 整体方案和成本（4:15–4:40）**
+**6f 成本（4:28–4:40）**
 
-**画面：** `layered_protection.png` 全表 → `response_playbook.png` → `cost.png`
+**画面：** `layered_protection.png` 全表 → `cost.png`
 
-> With spares in orbit, ground stations that can run off-grid and a response playbook for every NOAA alert level, that is our layered defence. The cost: thirteen kilograms per satellite instead of 234 for full hardening — about 80 million dollars a year, six percent of the alternative.
+> With spares in orbit and ground stations that can run off-grid, all this adds thirteen kilograms per satellite instead of 234 — six percent of the cost of full hardening.
 
 ### 7. 结尾（4:40–5:00）
 
 **画面：** 团队出镜。片尾放一张白底字幕，列出数据来源：NASA SDO、NOAA SWPC 和 NCEI（GOES）、WDC-SILSO、GFZ Potsdam、D. Hathaway 的黑子群记录、NRLMSIS 2.1，以及 GitHub 仓库地址。
 
-> Our recommendation: launch in 2035 with these layers built in — the magnetic field, a small vault and a safe mode against particles first, altitude against drag second — and review the forecast as cycle 26 begins around 2030. 2035 will be stormy. The system can be ready.
+> Our recommendation: launch in 2035 with these layers built in — warning, safe mode and shielding against particles first, altitude against drag second — and review the forecast as cycle 26 begins around 2030. 2035 will be stormy. The system can be ready.
 
 ## 二、手动测量怎么拍
 
@@ -184,17 +188,19 @@
 
 工作坊说过："有最好的数据，讲不清、守不住也没用。"
 
-1. **"为什么保险箱只要 2 g/cm²？再厚一点不是更安全吗？"**
-   2 g/cm² 已经把 10 年的太阳质子剂量降到磁层外 1.8 krad（降到约 1/28）、53° 轨道 0.2 krad（约 1/16），远低于商用芯片约 10 krad 的上限。加到 5 g/cm²，保险箱重 2.5 倍，剂量只多降 4 倍。而能引发单粒子翻转的高能质子，2 g/cm² 时仍有约一半穿过，10 g/cm² 时也还有 11–15%，那要靠冗余和安全模式。
-2. **"你们的剂量算得对吗？"**
+1. **"宇航员避难舱要 10 g/cm²，为什么电脑的保险箱只要 2 g/cm²？"**
+   我们按 GOES 实测数据算过：2 g/cm² 时，53° 轨道上 10 年的太阳质子剂量是 0.2 krad，磁层外是 1.8 krad，都远低于商用芯片约 10 krad 的上限。做到 10 g/cm²，保险箱重约 5 倍，剂量本来就已经够低了；而能引发单粒子翻转的高能质子，10 g/cm² 时也还有 11–15% 穿过。所以多出的质量花在冗余和安全模式上更划算。电脑和人的区别是：人可以风暴时才躲进去，电脑一直待在保险箱里。
+2. **"L1 卫星能提前多久发现太阳粒子？"**
+   几乎不能提前。L1 离太阳只比地球近 150 万 km，光只早约 5 秒到，高能质子也只早几秒到一两分钟。粒子的预警时间来自"耀斑的光 8 分钟到、质子要几十分钟到几小时后才到"，以及我们提前几天到几周的活动区日历。L1 的价值在日冕物质抛射：日冕仪提前 1–3 天看到它出发，太阳风监测在它撞上地球前 15–60 分钟测到。要更早看到粒子的源头，要靠欧空局约 2031 年发射到 L5 的 Vigil，它能早约 4.5 天看到转过来的活动区。
+3. **"你们的剂量算得对吗？"**
    用的是 GOES 卫星实测的质子数据，每次事件的最高通量和 NOAA 列表对得上（例如 42,200 对 40,000）。质子在铝里的射程和 NIST 的标准值只差 0.1%。用的是标准的直线近似；忽略次级粒子在 2 g/cm² 时影响很小。
-3. **"辐射带和南大西洋异常区算了吗？"**
+4. **"辐射带和南大西洋异常区算了吗？"**
    没有，这是局限。近地轨道上那里的质子会带来持续的剂量。保险箱同样能挡掉一部分，下一步可以用 NASA 的辐射带模型来算。
-4. **"你们真的自己测了吗？"**
+5. **"你们真的自己测了吗？"**
    测了两个黑子、7 张图，手动逐步完成，录像可以证明。另外用程序测了 9 个黑子；150 年的方程用的是 D. Hathaway 整理的天文台黑子群记录。
-5. **"2035.4 ± 1.2 年准吗？"**
+6. **"2035.4 ± 1.2 年准吗？"**
    这是 210 种历史组合的分布，不是保证。蝴蝶图法得到 2036.4，13 个周期平均是 2034.8。三种方法都落在 2035 年前后一年里，而发射正好在风暴季里面。2029–2031 年看到第 26 周期的高纬度黑子后，可以把预测收紧。
-6. **"为什么不全面加固？"**
+7. **"为什么不全面加固？"**
    每颗卫星要多 234 kg，每年的成本约是我们方案的 16 倍。而且全面加固也救不了 2022 年那批 Starlink：它们是被大气阻力拖下来的，不是被辐射打坏的。
 
 ## 五、为什么不要用那份 PDF 报告里的数字
