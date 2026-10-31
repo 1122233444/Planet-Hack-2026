@@ -50,6 +50,23 @@
  "scale": 1.7113797833783877,
  "tol": 10.0,
  "margin": 2.0,
+ "vault": {
+  "al_mm": 3.7037037037037033,
+  "pe_mm": 7.499999999999999,
+  "areal": 1.7125,
+  "mission": {
+   "outside the magnetosphere": 1.8476177992907517,
+   "LEO 97.6\u00b0 (polar)": 0.5481943382708032,
+   "LEO 70\u00b0": 0.4851543935675669,
+   "LEO 53\u00b0 (Starlink)": 0.19963023209658481
+  },
+  "through30": {
+   "outside the magnetosphere": 0.4032895741907633,
+   "LEO 97.6\u00b0 (polar)": 0.42092630610649917,
+   "LEO 70\u00b0": 0.4267211954124872,
+   "LEO 53\u00b0 (Starlink)": 0.4752520830214313
+  }
+ },
  "transmission": {
   "outside the magnetosphere": {
    "10": 1.0,

@@ -5,8 +5,8 @@ aluminium, in which orbit — for the largest proton events on record, measured 
    over each event and multiplied by 4π (isotropic flux). The quiet background (5th percentile) is removed first.
 2. Spectrum. log F(>E) is interpolated between the channels; above 100 MeV the 60-100 MeV power law is
    continued to 1 GeV (real spectra fall faster there, so this errs on the safe side).
-3. Shielding. A proton of energy E loses energy in aluminium (Bethe formula, as in drag.py's check of ranges);
-   behind t g/cm² it keeps the energy E' with R(E') = R(E) - t and deposits S_Si(E') in silicon. Electronics in
+3. Shielding. A proton of energy E loses energy in aluminium or polyethylene (Bethe formula); behind t g/cm² it keeps
+   the energy E' with R(E') = R(E) - t (layer by layer) and deposits S_Si(E') in silicon. Electronics in
    the middle of a closed box of wall t (straight-ahead approximation, no secondary particles).
 4. Orbit. In low Earth orbit the Earth's magnetic field turns away protons below the local cutoff rigidity
    (Størmer, tilted dipole: Rc = 14.9 cos⁴(magnetic latitude) / r² GV) and the Earth blocks 30% of the sky at
@@ -75,14 +75,26 @@ def stopping(e, za, I):
     return K * za / b2 * (np.log(2 * ME * b2 * g ** 2 / (I * 1e-6)) - b2)
 
 
-S_AL, S_SI = stopping(E, 0.4818, 166.0), stopping(E, 0.4985, 173.0)
-R_AL = np.concatenate([[0.0], np.cumsum(np.diff(E) / (0.5 * (S_AL[1:] + S_AL[:-1])))]) + 1.0 / S_AL[0] / 2
+def csda(S):
+    """Range (g/cm²) of a proton of each energy in E, from the stopping power."""
+    return np.concatenate([[0.0], np.cumsum(np.diff(E) / (0.5 * (S[1:] + S[:-1])))]) + 1.0 / S[0] / 2
+
+
+S_AL, S_SI, S_PE = stopping(E, 0.4818, 166.0), stopping(E, 0.4985, 173.0), stopping(E, 0.5703, 57.4)
+R_AL, R_PE = csda(S_AL), csda(S_PE)
+RHO_AL, RHO_PE = 2.70, 0.95                           # g/cm³
+VAULT = [(1.0, R_AL), (0.75 * RHO_PE, R_PE)]          # our vault: 3.7 mm aluminium box, 7.5 mm polyethylene liner inside
+VAULT_AREAL = sum(t for t, _ in VAULT)
 
 
 def behind(t):
-    """Energy each proton keeps behind t g/cm² of aluminium (NaN if it stops)."""
-    r = R_AL - t
-    return np.where(r > R_AL[0], np.interp(r, R_AL, E), np.nan)
+    """Energy each proton keeps behind a wall (NaN if it stops): t g/cm² of aluminium, or layers [(g/cm², range table), ...]
+    from the outside in."""
+    e = E
+    for d, R in ([(t, R_AL)] if np.isscalar(t) else t):
+        r = np.interp(e, E, R) - d
+        e = np.where(r > R[0], np.interp(r, R, E), np.nan)
+    return e
 
 
 def rigidity(e):
@@ -112,7 +124,7 @@ T = {name: transmission(i, SHIFT['storm']) for name, i in ORBITS.items()}      #
 
 
 def dose(f, trans, t):
-    """Dose in silicon (rad) behind t g/cm² of aluminium."""
+    """Dose in silicon (rad) behind the wall t (see behind)."""
     e1 = behind(t)
     ok = np.isfinite(e1)
     return np.sum((f * trans * np.gradient(E))[ok] * np.interp(e1[ok], E, S_SI)) / MEV_G_PER_RAD
@@ -179,7 +191,18 @@ for orb in ["LEO 53° (Starlink)", "LEO 97.6° (polar)"]:
     print(f"   Protons above 30 MeV still getting through in October 1989, {orb}: behind 2 g/cm² {s[2] / s[0.1]:.0%}, "
           f"behind 10 g/cm² {s[10] / s[0.1]:.0%} of the unshielded number -> shielding cannot stop bit flips; redundancy must")
 
+f89, f_oct = spectrum(fl["the whole of 1989"]), spectrum(fl["October 1989 (S4)"])
+vault = {o: dose(f89, T[o], VAULT) * scale / 1e3 for o in ORBITS}
+vault_see = {o: through(f_oct, T[o], VAULT) / through(f_oct, T[o], 0.1) for o in ORBITS}
+print(f"\nOur vault: {VAULT[0][0] / RHO_AL * 10:.1f} mm aluminium + {VAULT[1][0] / RHO_PE * 10:.1f} mm polyethylene liner "
+      f"= {VAULT_AREAL:.2f} g/cm² (aluminium alone for the same dose: 2 g/cm² = {2 / RHO_AL * 10:.1f} mm):")
+for o in ORBITS:
+    q = year[year.orbit == o].set_index("depth").krad * scale
+    print(f"   {o:26s}: mission dose {vault[o]:6.3f} krad (2 g/cm² aluminium: {q[2]:6.3f}); {TOL / vault[o]:5.0f} times below "
+          f"{TOL:.0f} krad; protons above 30 MeV getting through in October 1989: {vault_see[o]:.0%}")
 json.dump(dict(fluence={k: list(v) for k, v in fl.items()}, need=need, scale=scale, tol=TOL, margin=MARGIN,
+               vault=dict(al_mm=VAULT[0][0] / RHO_AL * 10, pe_mm=VAULT[1][0] / RHO_PE * 10, areal=VAULT_AREAL,
+                          mission=vault, through30=vault_see),
                transmission={k: {e: float(np.interp(e, E, v)) for e in (10, 30, 100, 300)} for k, v in T.items()},
                transmission_quiet={k: {e: float(np.interp(e, E, v)) for e in (10, 30, 100, 300)} for k, v in TQ.items()},
                mission={o: year[year.orbit == o].set_index("depth").krad.mul(scale).to_dict() for o in ORBITS}),
@@ -202,8 +225,10 @@ dd = np.array(DEPTHS)
 for orb, col in zip(ORBITS, ["k", "tab:red", "tab:orange", "tab:blue"]):
     q = year[year.orbit == orb].set_index("depth").krad * scale
     c.loglog(dd, q, "o-", c=col, label=orb)
+    c.scatter(VAULT_AREAL, vault[orb], marker="*", s=180, c=col, edgecolor="k", zorder=4)
 c.axhline(TOL, c="gray", ls="--"); c.text(2.5, TOL * 1.15, f"commercial chip ≈ {TOL:.0f} krad (assumed)", fontsize=8, color="gray")
-c.axvline(2, color="tab:green", lw=2, alpha=0.6); c.text(2.15, 0.011, "our vault\n2 g/cm²", fontsize=8, color="tab:green")
-c.set_xlabel("Aluminium around the electronics (g/cm²; 1 g/cm² = 3.7 mm)"); c.set_ylabel("10-year solar-proton dose in silicon (krad)")
+c.axvline(VAULT_AREAL, color="tab:green", lw=2, alpha=0.6)
+c.text(VAULT_AREAL * 1.08, 0.011, "★ our vault: 3.7 mm Al\n+ 7.5 mm polyethylene", fontsize=8, color="tab:green")
+c.set_xlabel("Wall around the electronics (g/cm²; lines: aluminium, 1 g/cm² = 3.7 mm)"); c.set_ylabel("10-year solar-proton dose in silicon (krad)")
 c.set_title(f"Dose behind shielding, 2035–2044 (≈ {scale:.1f} × the year 1989)", fontsize=11); c.legend(fontsize=8)
 plt.tight_layout(); plt.savefig(F + "shielding.png", dpi=150)

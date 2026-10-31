@@ -42,3 +42,9 @@ A 10-year mission (2035-2044) expects 8.0 S3+ and 1.7 S4 events; 1989 had 6 and 
    LEO 53° (Starlink)        : mission dose   3.20 krad behind a thin 0.1 g/cm² skin,   0.44 behind 1 g/cm²,   0.20 behind 2,   0.06 behind 5  -> thinnest wall from the list keeping it below 5 krad: 0.1 g/cm²
    Protons above 30 MeV still getting through in October 1989, LEO 53° (Starlink): behind 2 g/cm² 48%, behind 10 g/cm² 15% of the unshielded number -> shielding cannot stop bit flips; redundancy must
    Protons above 30 MeV still getting through in October 1989, LEO 97.6° (polar): behind 2 g/cm² 42%, behind 10 g/cm² 11% of the unshielded number -> shielding cannot stop bit flips; redundancy must
+
+Our vault: 3.7 mm aluminium + 7.5 mm polyethylene liner = 1.71 g/cm² (aluminium alone for the same dose: 2 g/cm² = 7.4 mm):
+   outside the magnetosphere : mission dose  1.848 krad (2 g/cm² aluminium:  1.817);     5 times below 10 krad; protons above 30 MeV getting through in October 1989: 40%
+   LEO 97.6° (polar)         : mission dose  0.548 krad (2 g/cm² aluminium:  0.539);    18 times below 10 krad; protons above 30 MeV getting through in October 1989: 42%
+   LEO 70°                   : mission dose  0.485 krad (2 g/cm² aluminium:  0.477);    21 times below 10 krad; protons above 30 MeV getting through in October 1989: 43%
+   LEO 53° (Starlink)        : mission dose  0.200 krad (2 g/cm² aluminium:  0.197);    50 times below 10 krad; protons above 30 MeV getting through in October 1989: 48%

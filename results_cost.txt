@@ -8,18 +8,18 @@ Assumptions (central / low-cost end / high-cost end):
    radhard_premium :    1,000,000      500,000    3,000,000
    layered_parts   :       50,000       20,000      100,000
    ops_per_year    :    2,000,000    1,000,000    5,000,000
-   shielding 2.0 g/cm² on the protected parts; body (3.0, 1.5, 0.3) m; vault (0.3, 0.3, 0.15) m
+   full hardening: 2.0 g/cm² aluminium on the body (3.0, 1.5, 0.3) m; our vault (0.3, 0.3, 0.15) m: 3.7 mm aluminium + 7.5 mm polyethylene = 1.71 g/cm², the same dose as 2.0 g/cm² aluminium
 
-Added mass per satellite: full-scale hardening (whole body, 11.7 m²) 234 kg (+78%); layered: vault 10.2 kg (0.36 m² + 3 kg housing/pump) + 3 kg other = 13.2 kg (+4%)
+Added mass per satellite: full-scale hardening (whole body, 11.7 m²) 234 kg (+78%); layered: vault 9.2 kg (0.36 m² + 3 kg lid/connectors/mounts) + 3 kg other = 12.2 kg (+4%)
 Deploying at 300 km instead of 210 km: 53 m/s more from the upper stage -> 1.9% less payload per launch (each satellite then needs about 1 kg less of its own fuel to climb)
 
-Per satellite: full-scale hardening $1.58M (range 0.85-4.17M), layered $83k (40-166k)
+Per satellite: full-scale hardening $1.58M (range 0.85-4.17M), layered $80k (38-161k)
 Per year (800 new satellites on 16 launches):
    full-scale radiation hardening  : $  1268M  (range 681-3336M), 1.27% of the $100 billion system per year
-   our layered protection          : $    80M  (range 40-161M), 0.08% of the $100 billion system per year
+   our layered protection          : $    78M  (range 39-157M), 0.08% of the $100 billion system per year
    layered / full: 6%  (5%-6% across the range)
 
 What one lost batch costs (50 satellites + their launch): $78M (range 48-150M)
-   The layered protection for a whole year costs as much as losing 1.0 batches (range 0.8-1.1).
+   The layered protection for a whole year costs as much as losing 1.0 batches (range 0.8-1.0).
    With 2022 practice (deploy at 210 km whatever the forecast), in a year like 2035 58% of 5-day windows after a launch contain a G1+ storm: about 9 of the 16 batches a year would meet one in their first days, and on every 2035 day the air at 210 km is denser than on the day of the February 2022 losses (drag.py).
    So the layers pay for themselves if they save about one batch a year. Full-scale hardening costs as much as losing 16 batches a year and would not have saved the February 2022 satellites: they were lost to drag, not radiation.

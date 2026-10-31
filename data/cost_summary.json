@@ -1,7 +1,7 @@
 {
  "m_full": 234.00000000000003,
- "m_vault": 10.2,
- "m_layer": 13.2,
+ "m_vault": 9.165,
+ "m_layer": 12.165,
  "dv_deploy": 52.6758731805121,
  "costs": [
   {
@@ -9,30 +9,30 @@
    "launches": 16.0,
    "lost_payload": 0.019401118542203964,
    "full": 1268000000.0,
-   "layered": 80040671.12532237,
+   "layered": 77970671.12532237,
    "batch": 77500000.0,
    "full_per_sat": 1585000.0,
-   "layered_per_sat": 83000.0
+   "layered_per_sat": 80412.5
   },
   {
    "new": 800.0,
    "launches": 16.0,
    "lost_payload": 0.019401118542203964,
    "full": 680800000.0,
-   "layered": 39824402.67519343,
+   "layered": 38582402.67519343,
    "batch": 47500000.0,
    "full_per_sat": 851000.0,
-   "layered_per_sat": 39800.0
+   "layered_per_sat": 38247.5
   },
   {
    "new": 800.0,
    "launches": 16.0,
    "lost_payload": 0.019401118542203964,
    "full": 3336000000.0,
-   "layered": 161081342.25064474,
+   "layered": 156941342.25064474,
    "batch": 150000000.0,
    "full_per_sat": 4170000.0,
-   "layered_per_sat": 166000.0
+   "layered_per_sat": 160825.0
   }
  ],
  "storm_batches": 9.31007099025388,

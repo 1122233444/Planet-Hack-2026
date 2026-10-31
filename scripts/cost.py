@@ -20,20 +20,21 @@ A = dict(
     sat_cost=(0.8e6, 0.5e6, 1.5e6),          # US$ per satellite
     launch_per_kg=(2500, 1500, 5000),        # US$ per kg to low Earth orbit
     radhard_premium=(1.0e6, 0.5e6, 3.0e6),   # US$ per satellite for radiation-hardened electronics throughout
-    layered_parts=(50e3, 20e3, 100e3),       # US$ per satellite: spare computer, memory protection, grounding, vault pump
+    layered_parts=(50e3, 20e3, 100e3),       # US$ per satellite: spare computer, memory protection, grounding, vault
     ops_per_year=(2e6, 1e6, 5e6),            # US$ per year: space-weather desk (staff, data, software)
 )
-SHIELD = 2.0                                  # g/cm² for the shielded parts (≈ 7 mm aluminium or 2.2 cm of ester), chosen in shielding.py
+SHIELD = 2.0                                  # g/cm² of aluminium (7.4 mm) over the whole body for full-scale hardening
 BUS = (3.0, 1.5, 0.3)                         # m, flat satellite body (assumed)
-VAULT = (0.30, 0.30, 0.15)                    # m, box around flight computer and power control
-VAULT_EXTRA, LAYER_EXTRA = 3.0, 3.0           # kg: vault housing, pump and bellows; spare computer, grounding, coatings
+VAULT = (0.30, 0.30, 0.15)                    # m, box around flight computer, power control and memory
+VAULT_EXTRA, LAYER_EXTRA = 3.0, 3.0           # kg: lid, sealed connectors and mounts; spare computer, grounding, coatings
 STAGE_DRY, ISP_STAGE = 4000.0, 348.0          # upper stage: dry mass (kg), Isp (s)
 SYSTEM = 100e9                                # the "$100 billion system" in the curveball
 
 gs = json.load(open(D + "geomagnetic_summary.json"))
+vault = json.load(open(D + "shielding_summary.json"))["vault"]   # 3.7 mm aluminium + 7.5 mm polyethylene: same dose as SHIELD
 area = lambda d: 2 * (d[0] * d[1] + d[0] * d[2] + d[1] * d[2])
 m_full = area(BUS) * SHIELD * 10                         # g/cm² -> kg/m² is ×10
-m_vault = area(VAULT) * SHIELD * 10 + VAULT_EXTRA
+m_vault = area(VAULT) * vault["areal"] * 10 + VAULT_EXTRA
 m_layer = m_vault + LAYER_EXTRA
 
 
@@ -64,10 +65,11 @@ c = [costs(i) for i in range(3)]
 print("Assumptions (central / low-cost end / high-cost end):")
 for k, x in A.items():
     print(f"   {k:16s}: {x[0]:>12,.0f} {x[1]:>12,.0f} {x[2]:>12,.0f}")
-print(f"   shielding {SHIELD} g/cm² on the protected parts; body {BUS} m; vault {VAULT} m")
+print(f"   full hardening: {SHIELD} g/cm² aluminium on the body {BUS} m; our vault {VAULT} m: {vault['al_mm']:.1f} mm aluminium + "
+      f"{vault['pe_mm']:.1f} mm polyethylene = {vault['areal']:.2f} g/cm², the same dose as {SHIELD} g/cm² aluminium")
 
 print(f"\nAdded mass per satellite: full-scale hardening (whole body, {area(BUS):.1f} m²) {m_full:.0f} kg "
-      f"(+{m_full / A['sat_mass'][0]:.0%}); layered: vault {m_vault:.1f} kg ({area(VAULT):.2f} m² + {VAULT_EXTRA:.0f} kg housing/pump)"
+      f"(+{m_full / A['sat_mass'][0]:.0%}); layered: vault {m_vault:.1f} kg ({area(VAULT):.2f} m² + {VAULT_EXTRA:.0f} kg lid/connectors/mounts)"
       f" + {LAYER_EXTRA:.0f} kg other = {m_layer:.1f} kg (+{m_layer / A['sat_mass'][0]:.0%})")
 print(f"Deploying at 300 km instead of 210 km: {dv_deploy:.0f} m/s more from the upper stage -> {c[0]['lost_payload']:.1%} "
       "less payload per launch (each satellite then needs about 1 kg less of its own fuel to climb)")

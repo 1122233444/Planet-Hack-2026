@@ -12,6 +12,7 @@ ds = json.load(open(D + "drag_summary.json"))
 cs = json.load(open(D + "cost_summary.json"))
 sh = json.load(open(D + "shielding_summary.json"))
 mis = {o: {float(k): v for k, v in d.items()} for o, d in sh["mission"].items()}
+vlt = sh["vault"]
 OPEN, POLAR, STAR = "outside the magnetosphere", "LEO 97.6° (polar)", "LEO 53° (Starlink)"
 fc = json.load(open(D + "forecast_v2_summary.json"))
 yr = pd.read_csv(D + "flares_per_year.csv", index_col=0)
@@ -69,14 +70,14 @@ draw_table(
       f"210 km; holding 550 km costs {fuel550[0]:.1f}–{fuel550[1]:.1f} kg of fuel a year.",
       "Solar protons; drag in storms"],
      ["3  Satellite: solar-hardened, not fully hardened",
-      f"Fly edge-on in storms. A {cs['m_vault']:.0f} kg liquid-cooled, shielded vault (2 g/cm²) only around the flight computer "
-      "and power control. Commercial chips with triple redundancy, error-correcting memory and watchdogs. Conductive skin, "
+      f"Fly edge-on in storms. A sealed {cs['m_vault']:.0f} kg vault ({vlt['al_mm']:.1f} mm aluminium, {vlt['pe_mm']:.1f} mm "
+      "polyethylene liner) only around the flight computer, power control and memory. Commercial chips with triple redundancy, error-correcting memory and watchdogs. Conductive skin, "
       "single-point grounding. Safe mode: non-essential instruments off, less electrical activity, battery kept charged, "
       "telemetry and health monitoring stay on. Solar arrays sized with margin for proton damage.",
-      f"The 2 g/cm² vault cuts the 10-year solar-proton dose about {mis[OPEN][0.1] / mis[OPEN][2.0]:.0f}-fold "
-      f"({mis[OPEN][0.1]:.0f} → {mis[OPEN][2.0]:.1f} krad outside the magnetosphere, {mis[STAR][0.1]:.1f} → {mis[STAR][2.0]:.1f} "
-      f"at 53°), far below a commercial chip's ~10 krad. About half of the protons that flip bits still get through: hence "
-      f"redundancy and safe mode. +{cs['m_layer']:.0f} kg instead of +{cs['m_full']:.0f} kg for full hardening.",
+      f"The vault ({vlt['areal']:.2f} g/cm², the dose of 2 g/cm² aluminium for {1 - vlt['areal'] / 2:.0%} less mass) cuts the 10-year "
+      f"solar-proton dose about {mis[OPEN][0.1] / vlt['mission'][OPEN]:.0f}-fold ({mis[OPEN][0.1]:.0f} → {vlt['mission'][OPEN]:.1f} krad "
+      f"outside the magnetosphere, {mis[STAR][0.1]:.1f} → {vlt['mission'][STAR]:.1f} at 53°, {sh['tol'] / vlt['mission'][STAR]:.0f} times "
+      f"below a commercial chip's ~10 krad). About half of the protons that flip bits still get through: hence redundancy and safe mode. +{cs['m_layer']:.0f} kg instead of +{cs['m_full']:.0f} kg for full hardening.",
       "Solar-particle dose and bit flips; charging; drag"],
      ["4  Constellation",
       "Spare satellites in orbit, automatic safe mode, quick replacement launches.",

@@ -14,7 +14,7 @@
 | Forecast 2035; cross-check with solar activity ↔ radio blackouts (reported incidents) | ✅ | Parts 2–3: SSN median 156, ~30 R3 blackouts in 2035 (true-flux scale); 6 reported incidents and 12 look-alike years |
 | Mission protection strategy | ✅ | [Part 5](#part-5--protection-strategy-and-the-curveball-a-starlink-like-constellation-in-2035): launch timing (quiet windows, region calendar), orbit (deploy ≥ 300 km, operate ~550 km), hardware (vault and redundancy), ground stations (off-grid power) |
 | Workshop 2: tools for operational readiness and response; layered protection; monitoring and early warnings, safe mode, orbit and power management; emerging technologies | ✅ | Part 5B (risk calendars, region calendar tool, quiet-window rule), 5C (protection layers), 5D (response playbook) |
-| Curveball: ISECG launches in 2035 regardless; design a cost-effective solar-hardened satellite without full-scale hardening | ✅ | A Starlink-like constellation in low Earth orbit: storms ([Part 3B](#part-3b--geomagnetic-storms-for-a-starlink-like-constellation-scriptsgeomagneticpy)), drag ([Part 3C](#part-3c--air-drag-in-low-earth-orbit-scriptsdragpy)), solar-proton events and shielding, layers and cost ([Part 5](#part-5--protection-strategy-and-the-curveball-a-starlink-like-constellation-in-2035)): a 2 g/cm² vault cuts the 10-year solar-proton dose 16- to 28-fold; +13 kg per satellite instead of +234 kg, about 6% of the cost of full hardening |
+| Curveball: ISECG launches in 2035 regardless; design a cost-effective solar-hardened satellite without full-scale hardening | ✅ | A Starlink-like constellation in low Earth orbit: storms ([Part 3B](#part-3b--geomagnetic-storms-for-a-starlink-like-constellation-scriptsgeomagneticpy)), drag ([Part 3C](#part-3c--air-drag-in-low-earth-orbit-scriptsdragpy)), solar-proton events and shielding, layers and cost ([Part 5](#part-5--protection-strategy-and-the-curveball-a-starlink-like-constellation-in-2035)): a sealed vault (3.7 mm aluminium, 7.5 mm polyethylene liner) cuts the 10-year solar-proton dose 16- to 27-fold; +12 kg per satellite instead of +234 kg, about 6% of the cost of full hardening |
 | Video pitch to the ISECG launch panel | ⏳ | Outline with narration, shot list and a guide to filming the hand measurement ([`docs/video_outline_zh.md`](docs/video_outline_zh.md)); the team records it |
 
 **Headline:** Cycle 26 maximum ≈ **2035.4** (spread of historical analogues ±1.2 yr, full range 2033.6–2038.1) → mid-2035 smoothed sunspot number median **156** (10–90% of the historical-analogue combinations: 99–210) → expect ~**30 X-class flares (R3+ radio blackouts)** and ~440 M-class-or-stronger flares in 2035 on the true-flux scale used for today's alerts (19 and ~290 on the old pre-GOES-16 scale); elevated risk continues to ~2038 because, in equal time windows, X-class flares are 2.5–2.9× more frequent after a maximum than before it.
@@ -270,22 +270,25 @@ ISECG launches in 2035 whatever our forecast says (curveball). We protect a Star
 ![Proton events](figures/protons.png)
 
 ### 5A2 – Shielding against solar particles (`scripts/shielding.py`)
-How much proton dose reaches the electronics, behind how much aluminium, in which orbit.
+How much proton dose reaches the electronics, behind how much aluminium (or aluminium and polyethylene), in which orbit.
 - **Data:** GOES proton detectors (integral channels > 5 … > 100 MeV, 5-minute averages, downloaded to `data/goes_protons/`): October 1989, Halloween 2003, January 2005, September 2017, and the whole of 1989, the worst year on record. Check: the highest > 10 MeV flux in each event matches NOAA's list (42,200 vs 40,000 pfu; 33,700 vs 29,500; 5,040 vs 5,040; 1,298 vs 1,490).
-- **Method:** event fluence → spectrum (log-log between channels; the 60–100 MeV power law continued to 1 GeV) → energy loss in aluminium (Bethe formula; 100 MeV range 9.97 g/cm², NIST: 9.98) → dose in silicon at the centre of a closed box (straight-ahead, no secondary particles).
+- **Method:** event fluence → spectrum (log-log between channels; the 60–100 MeV power law continued to 1 GeV) → energy loss in aluminium and polyethylene, layer by layer (Bethe formula; 100 MeV range in aluminium 9.97 g/cm², NIST: 9.98) → dose in silicon at the centre of a closed box (straight-ahead, no secondary particles).
 - **Orbit:** in low Earth orbit the Earth's magnetic field turns away protons below the local cutoff. We use Størmer's formula on a tilted dipole, moved 6° toward the equator to match observed cutoffs (SAMPEX saw the ISS at 51.6° graze the polar cap) and 16° in severe storms (cutoffs shift 5–12° within a day, Leske et al. 2001). The Earth also blocks 30% of the sky at 550 km.
 - **10-year mission (2035–2044):** about 8 S3+ and 1.7 S4 events are expected (5A), about 1.7 × the whole of 1989. Solar-proton dose in silicon, severe-storm cutoffs (conservative):
 
-| Orbit | thin skin, 0.1 g/cm² | 1 g/cm² | **2 g/cm² (our vault)** | 5 g/cm² |
-|---|---|---|---|---|
-| Outside the magnetosphere | 50 krad | 4.7 | **1.8** | 0.5 |
-| LEO 97.6° (polar) | 13 | 1.3 | **0.54** | 0.15 |
-| LEO 53° (Starlink) | 3.2 | 0.44 | **0.20** | 0.06 |
+| Orbit | thin skin, 0.1 g/cm² | 1 g/cm² | 2 g/cm² | 5 g/cm² | **our vault: 3.7 mm Al + 7.5 mm PE (1.71 g/cm²)** |
+|---|---|---|---|---|---|
+| Outside the magnetosphere | 50 krad | 4.7 | 1.8 | 0.5 | **1.8** |
+| LEO 97.6° (polar) | 13 | 1.3 | 0.54 | 0.15 | **0.55** |
+| LEO 53° (Starlink) | 3.2 | 0.44 | 0.20 | 0.06 | **0.20** |
+
+(Columns 2–5: aluminium; 1 g/cm² = 3.7 mm.)
 
 - **What it means:**
   1. **The Earth's magnetic field is the first, free shield:** at 53° a satellite receives about 1/16 of the open-space dose and 1/4 of a polar one.
-  2. **A 2 g/cm² vault** (7 mm of aluminium, or 2.2 cm of the liquid ester) cuts the dose about 28-fold in open space and 16-fold at 53°. After that the returns fall: 5 g/cm² buys only 4× more for 2.5× the vault mass. A commercial chip (about 10 krad, assumed) stays far below its limit in every orbit.
-  3. **Shielding cannot stop bit flips:** in October 1989, 42–48% of the protons above 30 MeV still got through 2 g/cm² (11–15% through 10 g/cm²). Single-event upsets are handled by redundancy, error-correcting memory and a safe mode during proton storms.
+  2. **About 2 g/cm² is enough:** it cuts the dose about 28-fold in open space and 16-fold at 53°. After that the returns fall: 5 g/cm² buys only 4× more for 2.5× the vault mass. A commercial chip (about 10 krad, assumed) stays far below its limit in every orbit.
+  3. **Our vault: 3.7 mm of aluminium with a 7.5 mm polyethylene liner** gives the same dose as 7.4 mm of aluminium (2 g/cm²) with 14% less mass (6.2 instead of 7.2 kg of wall on a 30 × 30 × 15 cm box). Hydrogen-rich polyethylene slows protons better per gram than aluminium. The aluminium outside carries the structure, conducts heat and charge, and is grounded; the computer is mounted on it, not on the liner. At 53° the 10-year dose is 0.20 krad, 50 times below the chip limit. Polyethylene alone would need 14.6 mm (5.0 kg) but is an insulator that traps heat and charge, so we keep it inside the metal.
+  4. **Shielding cannot stop bit flips:** in October 1989, 42–48% of the protons above 30 MeV still got through 2 g/cm² or our vault (11–15% through 10 g/cm²). Single-event upsets are handled by redundancy, error-correcting memory and a safe mode during proton storms.
 - **Limitations:** solar protons only — the trapped protons of the South Atlantic Anomaly add a steady dose in low Earth orbit that we did not model; the spectrum above 100 MeV is extrapolated; straight-ahead transport ignores secondary particles; the cutoff shifts are approximate.
 
 ![Shielding against solar particles](figures/shielding.png)
@@ -309,8 +312,8 @@ Monitoring and early warning, orbit, a solar-hardened satellite with a safe mode
 
 ### 5E – Cost-effectiveness (`scripts/cost.py`)
 All inputs are assumptions, with a low and a high value: 4,000 satellites with a 5-year life (800 new a year, 50 per launch), 300 kg, $0.8M each (0.5–1.5), launch $2,500 per kg (1,500–5,000), radiation-hardened electronics +$1M per satellite (0.5–3), our extra parts $50k (20–100k), a space-weather desk $2M a year (1–5).
-- **Full-scale hardening** (2 g/cm² over the whole 11.7 m² body and hardened electronics): +234 kg per satellite (+78%), about $1.3 billion a year (0.7–3.3), 1.3% of the $100 billion system every year.
-- **Our layers:** +13 kg per satellite (+4%: the 10 kg vault, a spare computer and grounding), deploying at 300 km instead of 210 km (53 m/s more from the upper stage, 1.9% less payload) and the operations desk: about **$80M a year (40–160), 0.08% of the system, 6% of the cost of full hardening**.
+- **Full-scale hardening** (2 g/cm² of aluminium over the whole 11.7 m² body and hardened electronics): +234 kg per satellite (+78%), about $1.3 billion a year (0.7–3.3), 1.3% of the $100 billion system every year.
+- **Our layers:** +12 kg per satellite (+4%: the 9 kg vault with its lid, sealed connectors and mounts, a spare computer and grounding), deploying at 300 km instead of 210 km (53 m/s more from the upper stage, 1.9% less payload) and the operations desk: about **$78M a year (39–157), 0.08% of the system, 6% of the cost of full hardening**.
 - **One lost batch** (50 satellites and their launch) costs about $78M (48–150), so a whole year of our layers costs about one lost batch. With 2022 practice in a year like 2035, about 9 of the 16 batches a year would meet a G1+ storm in their first five days, and at 210 km every 2035 day has denser air than the day of the 2022 losses. The layers pay for themselves if they save one batch a year.
 - **Full-scale radiation hardening would not have saved the February 2022 satellites:** they were lost to drag, not radiation.
 
