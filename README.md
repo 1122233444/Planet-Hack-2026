@@ -13,9 +13,9 @@
 | Own butterfly diagram of the last two cycles; cycle period and next maximum from it | ✅ | Part 1B: period 11.2 yr, next maximum ≈ 2036.4 (all 13 cycles: 2034.8 ± 1.2) |
 | Forecast 2035; cross-check with solar activity ↔ radio blackouts (reported incidents) | ✅ | Parts 2–3: SSN median 156, ~30 R3 blackouts in 2035 (true-flux scale); 6 reported incidents and 12 look-alike years |
 | Mission protection strategy | ✅ | [Part 5](#part-5--protection-strategy-and-the-curveball-a-starlink-like-constellation-in-2035): launch timing (quiet windows, region calendar), orbit (deploy ≥ 300 km, operate ~550 km), hardware (vault and redundancy), ground stations (off-grid power) |
-| Workshop 2, risk identification: tools for operational readiness and response, layered protection | ✅ | Part 5B (risk calendars, region calendar tool, quiet-window rule), 5C (five layers), 5D (response playbook) |
+| Workshop 2: tools for operational readiness and response; layered protection; monitoring and early warnings, safe mode, orbit and power management; emerging technologies | ✅ | Part 5B (risk calendars, region calendar tool, quiet-window rule), 5C (protection layers), 5D (response playbook) |
 | Curveball: ISECG launches in 2035 regardless; design a cost-effective solar-hardened satellite without full-scale hardening | ✅ | A Starlink-like constellation in low Earth orbit: storms ([Part 3B](#part-3b--geomagnetic-storms-for-a-starlink-like-constellation-scriptsgeomagneticpy)), drag ([Part 3C](#part-3c--air-drag-in-low-earth-orbit-scriptsdragpy)), protons, layers and cost ([Part 5](#part-5--protection-strategy-and-the-curveball-a-starlink-like-constellation-in-2035)): +13 kg per satellite instead of +234 kg, about 6% of the cost of full hardening |
-| Video pitch to the ISECG launch panel | ⏳ | Outline with narration ([`docs/video_outline_zh.md`](docs/video_outline_zh.md)) and figures ready; the team records it |
+| Video pitch to the ISECG launch panel | ⏳ | Outline with narration, shot list and a guide to filming the hand measurement ([`docs/video_outline_zh.md`](docs/video_outline_zh.md)); the team records it |
 
 **Headline:** Cycle 26 maximum ≈ **2035.4** (spread of historical analogues ±1.2 yr, full range 2033.6–2038.1) → mid-2035 smoothed sunspot number median **156** (10–90% of the historical-analogue combinations: 99–210) → expect ~**30 X-class flares (R3+ radio blackouts)** and ~440 M-class-or-stronger flares in 2035 on the true-flux scale used for today's alerts (19 and ~290 on the old pre-GOES-16 scale); elevated risk continues to ~2038 because, in equal time windows, X-class flares are 2.5–2.9× more frequent after a maximum than before it.
 
@@ -277,8 +277,10 @@ ISECG launches in 2035 whatever our forecast says (curveball). We protect a Star
 
 ![Region calendar](figures/region_calendar.png)
 
-### 5C – Five protection layers
-![Five protection layers](figures/layered_protection.png)
+### 5C – Protection layers
+Monitoring and early warning, orbit, a solar-hardened satellite with a safe mode and power management, the constellation, the ground segment, and emerging technology chosen now, while the system is still on paper.
+
+![Protection layers](figures/layered_protection.png)
 
 ### 5D – Response playbook
 ![Response playbook](figures/response_playbook.png)
@@ -293,7 +295,7 @@ All inputs are assumptions, with a low and a high value: 4,000 satellites with a
 ![Cost](figures/cost.png)
 
 ### 5F – Our decision and checkpoints
-ISECG launches in 2035. **Our recommendation: go, with the five layers and the playbook** — deploy at 300 km or higher in a forecast quiet window, operate near 550 km, keep spares in orbit. Checkpoints:
+ISECG launches in 2035. **Our recommendation: go, with the protection layers and the playbook** — deploy at 300 km or higher in a forecast quiet window, operate near 550 km, keep spares in orbit. Checkpoints:
 - **2029–2031:** look for the first high-latitude spots of cycle 26 (our butterfly method) to confirm the timing.
 - **About 2030:** estimate the cycle's strength from the Sun's polar magnetic field and adjust the margins.
 - **From about 2031:** add the side view from ESA's Vigil.
@@ -305,7 +307,7 @@ Limitations: the cost inputs are assumptions with wide ranges; the loss comparis
 The 5-minute video outline (in Chinese, with English narration): [`docs/video_outline_zh.md`](docs/video_outline_zh.md)
 
 ## Video and slide figures (`scripts/video_figures.py`)
-Fifteen 16:9 figures (1920×1080, English) in `figures/video/`, ready for the video and the slides. Every number on them is read from the data and result files, so they follow any rerun. Before saving, the script checks that no text overlaps or runs off the frame (`results_video_figures.txt`).
+Fifteen 16:9 figures (1920×1080, English) in `figures/video/`. The video outline now uses the standard scientific figures in `figures/` instead; this set is kept for slides. Every number on them is read from the data and result files, so they follow any rerun. Before saving, the script checks that no text overlaps or runs off the frame (`results_video_figures.txt`).
 
 | Figure | Shows |
 |---|---|

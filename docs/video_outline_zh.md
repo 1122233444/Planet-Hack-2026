@@ -1,99 +1,194 @@
 # 五分钟视频大纲
 
-给 ISECG 发射评审团的视频，用英文讲。下面每段写了时间、画面（用哪张图）和英文台词。台词约 700 词，按每分钟 140–150 词的语速约 5 分钟，录之前先计时练一遍，超时就删减第 5 段。
+给 ISECG 发射评审团的视频，用英文讲。结构按第二次工作坊建议的故事线：**开场 → 空间天气 → 威胁 → 利害 → 我们的研究 → 结果和建议 → 结尾**。
 
-图片路径都在 `figures/` 下：`figures/video/` 里是 16:9 的视频图，其余是普通分析图，放进视频时可以裁剪或放大其中一块。
+- 配图全部用 `figures/` 里白底的普通科学图，不用 `figures/video/` 里的深色图。
+- 英文台词约 700 词，按每分钟 140 词左右的语速约 5 分钟。录之前先计时练一遍，超时就删减第 6 段。
+- 视频里的每个数字都要和 README 一致。**不要用那份 PDF 报告里的数字**，原因见文末。
 
-## 1. 开场（0:00–0:20）
+## 一、分段大纲
 
-**画面：** `video/v01_cover.png` 2 秒，然后 `video/v02_incidents.png`，在剪辑软件里把 2022 年 Starlink 那个点圈出来。
+### 1. 开场（0:00–0:20）
 
-> February 2022: a minor solar storm brought down 38 brand-new Starlink satellites. In 2035 the Sun will be near its peak, and ISECG is launching anyway. We forecast what 2035 will bring, and designed layered, low-cost protection for a satellite constellation.
+**画面：**
+- `data/sdo/hmi_20141215.png`（真实的 SDO 太阳图像），全屏，慢慢放大。
+- 叠一行白字："February 2022: 38 Starlink satellites lost to a minor solar storm"。
 
-## 2. 数学：测黑子和自转（0:20–1:25）
+> February 2022. A minor solar storm swelled Earth's upper atmosphere, and 38 brand-new Starlink satellites fell back and burned up. ISECG will launch a 100-billion-dollar satellite system in 2035, whatever the Sun is doing. We are its advisors. Our job: say what 2035 will bring, and how to survive it.
 
-**0:20–0:40 画面：** `video/v05_step1_measure.png`，加队员手动量黑子的镜头。可以把 `data/sdo/` 里 7 张原图按顺序放成 2 秒延时，能看到黑子在移动。
+### 2. 空间天气（0:20–0:50）
 
-> We tracked sunspots on NASA SDO images, one per day. On every image we measured the disk edges, its centre and radius, and each spot's pixel position and Julian Date. A program measured all the images; we checked it by hand, step by step, on two spots: A at 30° north and E at 8° south.
+**画面：**
+- `sdo_daily_strip.png`：7 天的太阳图像排成一排，黑子一天天从左往右移动。可以在剪辑软件里从左到右平移。
+- 然后 `flares_vs_sunspots.png`：黑线是黑子数，柱子是耀斑，能看出 11 年的起伏。
 
-**0:40–0:55 画面：** `video/v06_step2_trigonometry.png`
+> Space weather starts at sunspots: knots of magnetic field on the Sun. Their number rises and falls every eleven years. Around the peak they fire flares — X-rays that reach us in eight minutes and black out radio; energetic protons that arrive within hours; and clouds of plasma, CMEs, that hit Earth's magnetic field one to three days later and cause geomagnetic storms.
 
-> Trigonometry turns pixels into angles: latitude = arcsin Y, longitude = arcsin(X ÷ cos latitude). Spot A moved 63.8° in 5 days. Add Earth's own orbital motion, and the Sun turns once in 26.1 days.
+### 3. 威胁（0:50–1:20）
 
-**0:55–1:10 画面：** `video/v07_step2_sine_fit.png`，再闪 2 秒 `xy_sine_fit.png`（题目要求画 x 和 y 两条，这张两条都有）。
+**画面：**
+- `protons.png` 左图（每年的质子事件）。
+- `drag_leo.png` 左图（空气密度随高度变化，蓝线是低谷，橙线是 2035 年）。
+- 最后 `incidents_timeline.png`，放大 1989 年魁北克那个标签。
 
-> Each spot's x position traces a sine wave; the fitted period gives 26.1 days for A and 25.4 days for E. The equator spins faster.
+> Each one hurts satellites differently. Protons flip bits and wear out chips. Storms charge satellite surfaces until they spark, and they heat the upper atmosphere: at 550 kilometres the air in a maximum year is fourteen times denser than at minimum, so satellites sink. On the ground, storms push currents into power grids — in 1989 they blacked out Québec.
 
-**1:10–1:25 画面：** `video/v08_step2_equation.png`
+### 4. 利害（1:20–1:35）
 
-> From 21,566 sunspot groups over 150 years we derived the law: ω = 14.54 − 2.84 sin² latitude, in degrees per day — assuming a spherical Sun whose rotation depends only on latitude.
+**画面：** `incidents_timeline.png` 全图：历史事件加上我们对 2035 年的预测。
 
-## 3. 蝴蝶图和预测（1:25–2:05）
+> Big flares and storms can strike in any year, but they are far more common near the peak — and 2035 sits at the next one. The system isn't built yet. We have seven years to design for it.
 
-**画面：** `differential_rotation_shear.png` 3 秒，然后 `video/v03_butterfly.png`，再 `video/v04_forecast.png`。
+### 5. 我们的研究（1:35–3:15）
 
-> This differential rotation winds up the Sun's magnetic field — the engine of the solar cycle. Our own butterfly diagram, from 3,779 sunspot groups, shows each new cycle starting when spots reappear at high latitude: 2008.8 and 2020.0. That's an 11.2-year cycle, so cycle 26 starts around 2031 and peaks in 2035–36. Combining 15 real past cycles into 210 possible futures puts the maximum at 2035.4 ± 1.2 years, with a sunspot number around 156 in 2035. Our launch sits right on the peak.
+**5a 手动测量（1:35–2:00）**
 
-## 4. 风险识别（2:05–2:50）
+**画面：** 你们自己录的测量过程（拍法见第二部分），最后 2 秒切到 `manual_steps.png`，证明和程序的结果一致。
 
-**画面：** `video/v10_flares_vs_sunspots.png`，然后 `video/v14_storms_after_maximum.png`，最后 `drag_leo.png`（裁出左边的密度图）。时间够的话闪一下 `protons.png`。
+> We measured it ourselves. On NASA SDO images, one per day, we found the edges of the Sun's disk — left at pixel 64, right at 1983 — and so its centre and radius. Then we read the pixel position of two sunspots at very different latitudes, with the exact time as a Julian Date. A program measured every image; we checked it by hand, step by step.
 
-> What does that mean? More sunspots, more flares: about 30 radio blackouts in 2035, and all 12 past years this active had at least one. For satellites in low Earth orbit, the bigger threat is geomagnetic storms: a storm as strong as the one that downed the Starlinks is expected one day in four, and storms peak 1–3 years after maximum. We fed our forecast into the NRLMSIS atmosphere model: at 550 km the air in 2035 is 14 times denser than at solar minimum — even a quiet 2035 day beats the 2022 storm day.
+**5b 三角函数和正弦拟合（2:00–2:20）**
 
-## 5. Curveball：五层防护和成本（2:50–4:15）
+**画面：** 你们录的表格计算过程（同样见第二部分），然后 `xy_sine_fit.png`。
 
-**画面：** 先放 `layered_protection.png` 全表，讲到哪一层就放大哪一行。
+> Trigonometry turns pixels into angles: latitude is arcsin of Y; longitude is arcsin of X over cos latitude. Plotted against time, each spot's x position traces a sine wave. The fits give 26.1 days for the spot at 30° north and 25.4 days at 8° south: the Sun's equator spins faster.
 
-> No single technology stops space weather, so we protect in five layers, and only spend mass where it matters.
+**5c 自转方程（2:20–2:35）**
 
-**第 1 层，画面：** `region_calendar.png`，再 `video/v12_risk_calendar.png`
+**画面：** `rotation_vs_latitude.png` 左图（21,566 个点组成的云），然后 `rotation_equation.png`。
 
-> Layer 1, forecasting tools. Our rotation law becomes a calendar: from one look at the region behind the May 2024 superstorm, it predicted every date — even its return a month later — to within a day. We add a yearly risk calendar, and deploy only when three calm days are forecast; in years like 2035, more than half of all 3-day stretches are storm-free.
+> Adding 21,566 sunspot groups from 150 years of observatory records, the rotation rates fall on a straight line against sin² latitude: omega equals 14.54 minus 2.84 sin² latitude, in degrees per day.
 
-**第 2 层，画面：** `drag_leo.png` 的中间和右边两张
+**5d 蝴蝶图（2:35–2:55）**
 
-> Layer 2, orbit: deploy at 300 km or higher, not 210 — in safe mode a satellite then survives 19 to 33 days instead of 2 to 3 — and operate near 550 km, where staying up costs about 1 kg of fuel a year.
+**画面：** `differential_rotation_shear.png` 放 3 秒（一条直线被转成螺旋），然后 `butterfly_own.png`，放大最上面那张蝴蝶图。
 
-**第 3 层，画面：** `layered_protection.png` 放大第 3 行，加 NASA 的 Juno 辐射保险箱照片（NASA 公开图片）
+> This differential rotation winds up the magnetic field — the engine of the cycle. Our own butterfly diagram shows each cycle starting when spots reappear at high latitude: 2008.8 and 2020.0. That's an 11.2-year cycle, pointing to a peak in 2035 to 2036.
 
-> Layer 3, a solar-hardened satellite, not a fully hardened one: fly edge-on in storms; put only the flight computer and power control in a 10 kg liquid-cooled, shielded vault, as NASA did on Juno; use commercial chips with triple redundancy and error correction; ground every surface against charging.
+**5e 预测（2:55–3:15）**
 
-**第 4、5 层，画面：** `layered_protection.png` 第 4、5 行；`video/v02_incidents.png` 放大 1989 年魁北克那个点
+**画面：** `forecast_v2_ensemble.png`
 
-> Layers 4 and 5: spares in orbit — dead satellites burn up within about 1.4 years at solar maximum — and ground stations that can run off-grid, the lesson of Québec 1989.
+> Combining fifteen real past cycles into 210 possible futures, the peak lands at 2035.4, plus or minus 1.2 years, with a sunspot number around 156 in 2035. The launch is not before the storm season. It's inside it.
 
-**成本，画面：** `cost.png`
+### 6. 结果和建议（3:15–4:40）
 
-> The cost: our layers add 13 kilograms per satellite; full hardening would add 234. That is about 80 million dollars a year instead of 1.3 billion — the price of one lost batch of satellites, and under 0.1% a year of the 100-billion-dollar system. And hardening would not have saved the 2022 Starlinks: drag killed them, not radiation.
+**6a 2035 年会遇到什么（3:15–3:40）**
 
-## 6. 应对手册和决定（4:15–4:40）
+**画面：** `flares_relation.png` 中间那张（X 级耀斑和黑子数），然后 `geomagnetic_storms.png` 右图（高峰后风暴最多）。
 
-**画面：** `response_playbook.png`，然后一条检查点时间线（PPT 里画：2029–31、2030、2031、发射前一个月、发射当天）。
+> What does 2035 bring? From decades of NOAA and GFZ records: about 30 X-class flares, 11 proton events, and a storm at least as strong as the one that downed the Starlinks one day in four. And storms peak one to three years after the maximum, in the system's first years.
 
-> Our response playbook links NOAA alerts to actions: G1–2 — hold deployments; G3 — low-drag attitude, pause manoeuvres; G4–5 or strong radiation storms — full safe mode and backup power; afterwards — raise sunken satellites and launch spares. Our recommendation: go in 2035, with these layers and checkpoints from 2029 onwards.
+**6b 分层防护（3:40–4:05）**
 
-## 7. 局限和结尾（4:40–5:00）
+**画面：** `drag_leo.png` 中间图（从多高出发能撑多少天），然后 `layered_protection.png`，讲到哪一层就放大哪一行。
 
-**画面：** 团队出镜，或回到封面；片尾列出数据和图片来源。
+> No single technology stops that, so we recommend layers. Monitor and warn. Fly higher: deploy at 300 kilometres, not 210 — three weeks of margin instead of two days. A solar-hardened satellite: a ten-kilogram shielded vault around the flight computer, redundant commercial chips, grounding, and a safe mode that turns edge-on and sheds power. Spares in orbit, and ground stations that can run off-grid.
 
-> Our forecast is built from real past cycles, so we'll update it every year, and some satellite numbers are assumptions. But the message is clear: 2035 will be stormy — and with layered, low-cost protection, the system can ride it out. Thank you.
+**6c 我们做的工具（4:05–4:15）**
 
-## 每条要求在视频里的位置
+**画面：** `region_calendar.png`
 
-| 要求 | 时间 |
-|---|---|
-| 1. 追踪两个不同纬度的黑子，记录像素坐标和儒略日 | 0:20–0:40 |
-| 2. 三角函数求周期；画 x、y 随时间变化，拟合正弦 | 0:40–1:10 |
-| 3. 推导自转方程，说明假设 | 1:10–1:25 |
-| 4. 自己画蝴蝶图，量出周期，找到下一个高峰 | 1:25–1:50 |
-| 5. 预测 2035 年，和真实无线电中断对照 | 1:50–2:20 |
-| 6. 防护方案：发射时机、轨道设计、硬件屏蔽、地面电网 | 第 1、2、3、5 层 |
-| 7. 向 ISECG 陈述，展示数学、蝴蝶图和决定 | 全片；决定在 4:15 |
-| Curveball：抗太阳风暴卫星、不做全面加固、经济地保护 1000 亿美元系统 | 2:50–4:15 |
-| 第二次工作坊"风险识别"：运行准备和应对工具、分层防护 | 第 1 层、5 层表、4:15 的应对手册 |
+> We also built a tool: from one look at a sunspot region, our rotation law predicts when it will face Earth. For the region behind the May 2024 superstorm, it was right to within a day, five weeks ahead.
 
-## 录制提醒
+**6d 应对手册（4:15–4:25）**
 
-- 视频里的数字要和 README 完全一致。
-- 一定要拍手动测量的镜头，配合 0:20 那句"程序量全部图像，我们手动逐步检查两个黑子"，这样说才是真实的。
-- 用到的照片优先选 NASA 的公开图片，片尾注明所有图片和数据的来源。
+**画面：** `response_playbook.png`
+
+> A response playbook tells each team what to do at each NOAA alert level, and how often to expect it.
+
+**6e 成本（4:25–4:40）**
+
+**画面：** `cost.png`
+
+> The cost: thirteen kilograms per satellite instead of 234 for full hardening — about 80 million dollars a year, six percent of the alternative, and about what one lost batch of satellites costs.
+
+### 7. 结尾（4:40–5:00）
+
+**画面：** 团队出镜。片尾放一张白底字幕，列出数据来源：NASA SDO、NOAA SWPC、WDC-SILSO、GFZ Potsdam、D. Hathaway 的黑子群记录、NRLMSIS 2.1，以及 GitHub 仓库地址。
+
+> Our recommendation: launch in 2035, with these layers built in from the start, and review the forecast as cycle 26 begins around 2030. Some of our satellite numbers are assumptions, and we've said which. But the message is clear: 2035 will be stormy — and the system can be ready.
+
+## 二、手动测量怎么拍
+
+不要只放一张黑子图片。要真的量一遍，把过程录下来：评委看到的是你们在量，台词"我们手动逐步检查"才是真实的。
+
+### 准备
+
+- **图片：** 用仓库里的 `data/sdo/hmi_20141213.jpg`（2048×2048 像素），我们的手动测量表用的就是这张。
+  - **注意：** 文件名写的是 13 日，但这张图实际拍摄于 **2014-12-12 23:59:40 UT**。时间写在同名的 `hmi_20141213.json` 里（`"date"` 那一项），要用这个时间。
+- **看像素坐标的软件**（都免费）：
+  - GIMP（Windows/Mac）：鼠标移到哪里，窗口左下角就显示坐标；"指针"窗口还能显示亮度。
+  - Fiji/ImageJ：坐标和亮度都显示在主窗口状态栏。
+  - Windows 自带的画图：左下角也显示坐标。
+- **录屏：**
+  - Windows：Win+G，或者 OBS Studio。
+  - Mac：Cmd+Shift+5。
+  - 录 1080p。把软件界面字体调大，或者在剪辑时放大坐标那一块，让评委看得清数字。
+- **算数：** Excel 或 Google 表格。
+- **再准备一部手机**，架在队员身后拍肩膀和屏幕。
+
+### 量什么、应该得到什么
+
+1. **左边缘：** 放大到 800% 左右，鼠标沿着中间那条横线（y ≈ 1024）从黑往亮移动。亮度从十几一下跳到四五十的那个像素就是边缘，应该在 **x = 64**。
+2. **右、上、下边缘：** 同样的方法，应该是右 **1983**、上 **65**、下 **1984**。上下边缘沿竖线 x ≈ 1024 找。
+3. **圆心和半径：**
+   - 圆心 = ((64 + 1983)/2, (65 + 1984)/2) = **(1023.5, 1024.5)**
+   - 半径 = (1983 − 64)/2 = **959.5**
+4. **黑子 A：** 在左上方，放大，把鼠标放在中间最黑的那一小块（本影）的中心，应该在 **(302, 553)**。
+5. **黑子 E：** 在左下方，应该在 **(455, 1147)**。
+6. **其他天：** 至少再量两三张，最好 7 张都量。仓库里的 `data/rotation/manual_walkthrough.csv` 有我们每一天的数，可以对照。
+
+你们量出来的数和我们差 1–3 个像素是正常的，只会让周期差 0.1 天左右。**如果差别正好是这个大小，就在视频里说出来**，评委会觉得更真实。
+
+### 表格里的公式（Excel / Google 表格）
+
+| 算什么 | 公式 | 黑子 A 第一张图的结果 |
+|---|---|---|
+| 儒略日（UT 写成小时，23:59:40 = 23.9944） | `=367*Y-INT(7*(Y+INT((M+9)/12))/4)+INT(275*M/9)+D+1721013.5+UT/24` | 2457004.49977 |
+| X | `=(x-1023.5)/959.5` | −0.752 |
+| Y | `=-(y-1024.5)/959.5` | +0.491 |
+| 纬度 | `=DEGREES(ASIN(Y))` | +29.4° |
+| 经度（离中央经线） | `=DEGREES(ASIN(X/COS(RADIANS(纬度))))` | −59.7°；5 天后的那张图是 +4.1° |
+| 从地球看的转速 | `=(最后经度-最初经度)/(最后JD-最初JD)` | 63.8° ÷ 5 天 = 12.75 °/天 |
+| 真实周期（加上地球 12 月每天 1.017° 的公转） | `=360/(转速+1.017)` | **26.1 天** |
+
+再把 x 对 JD 画一张散点图，能看出点排在一条正弦曲线上。
+
+### 剪辑成 25 秒（放在 1:35–2:00）
+
+录的时候可以录 10 分钟，剪辑时加速 4–8 倍：
+
+| 镜头 | 时长 | 内容 |
+|---|---|---|
+| 1 | 3 秒 | 手机拍的肩后镜头：队员握着鼠标，屏幕上是太阳图像（证明是你们在做） |
+| 2 | 8 秒，加速 | 录屏：放大到左边缘，坐标停在 x = 64；再移到黑子 A，坐标 (302, 553) |
+| 3 | 8 秒，加速 | 录屏：表格里一格格填进去，最后出现 26.1 天 |
+| 4 | 2 秒 | 切到 `manual_steps.png`：程序给出同样的数 |
+| 5 | 4 秒 | 散点图里的正弦形状，接到下一段的 `xy_sine_fit.png` |
+
+**可选：** 把图打印在 A4 纸上，用尺子量（以毫米为单位）拍几秒作为插入画面。这样很有"动手"感，但精度不如像素，所以不要用它的数。
+
+## 三、怎么让科学图在视频里看得清
+
+- 三联图（`drag_leo.png`、`geomagnetic_storms.png`、`protons.png`、`rotation_vs_latitude.png`、`flares_relation.png`）宽 2,400–2,550 像素。只放其中一张图时，在剪辑软件里放大到那一块，每块约 800 像素宽，放到 1080p 里依然清楚。
+- 不要给图加特效。需要强调某个点时，用一个简单的圆圈或箭头。
+- 每张图出现时，台词说的数字要能在图上找到。
+
+## 四、评委可能会问的问题（录之前准备好答案）
+
+工作坊说过："有最好的数据，讲不清、守不住也没用。"
+
+1. **"你们真的自己测了吗？"** 测了两个黑子、7 张图，手动逐步完成，录像可以证明。另外用程序测了 9 个黑子；150 年的方程用的是 D. Hathaway 整理的天文台黑子群记录。
+2. **"2035.4 ± 1.2 年准吗？"** 这是 210 种历史组合的分布，不是保证。蝴蝶图法得到 2036.4，13 个周期平均是 2034.8。三种方法都落在 2035 年前后一年里，而发射正好在风暴季里面。2029–2031 年看到第 26 周期的高纬度黑子后，可以把预测收紧。
+3. **"为什么不全面加固？"** 每颗卫星要多 234 kg，每年的成本约是我们方案的 16 倍，而且救不了 2022 年那批 Starlink：它们是被大气阻力拖下来的，不是被辐射打坏的。
+4. **"成本数字可靠吗？"** 输入都是假设，我们给了高低范围。在整个范围里，分层防护都只要全面加固成本的 5–6%。
+5. **"300 km 的依据？"** 用 NRLMSIS 2.1 模型算的，模型先拿 2022 年的事故检验过：算出阻力比之前的发射高约 40%，SpaceX 当时说最多高 50%。
+
+## 五、为什么不要用那份 PDF 报告里的数字
+
+那份报告和仓库对不上，评委一查 GitHub 就会发现：
+- 它说用了"2010–2026 年 16 年的 SDO 图像，检测到 253,104 个黑子群"。仓库里没有这个分析。实际上 150 年的自转方程来自 D. Hathaway 的黑子群记录，SDO 图像只有 2014 年 12 月的 7 天。
+- 它的加固方案（8 g/cm² 保险箱、剂量从 88.8% 降到 1.0%、20,000 颗卫星、我们的方案 22 亿美元占 2.2%、全面加固 720 亿美元占 72%）来自 `scripts/hardening.py`，仓库里没有这个文件，没法复现，而且和 `cost.py` 的结果不一样。
+
+视频一律用本文和 README 里的数字。

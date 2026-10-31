@@ -46,23 +46,27 @@ def draw_table(fname, title, header, rows, widths, colors, note):
 
 draw_table(
     "layered_protection.png",
-    "Five layers of protection for a Starlink-like constellation in 2035 — no single technology stops space weather",
+    "Layered protection for a Starlink-like constellation in 2035 — no single technology stops space weather",
     ["Layer", "What we do", "The numbers behind it (our analyses)", "Protects against"],
-    [["1  Forecast and monitor",
-      "Year: risk calendar for flares, storms and protons. Weeks: active-region calendar from our rotation law. Days: deploy "
-      "only into a forecast 3-day quiet window. From about 2031: ESA's Vigil at L5 sees regions about 4.5 days earlier.",
+    [["1  Monitor and warn",
+      "Watch flares (GOES X-rays), particles (GOES protons) and CMEs (coronagraphs: 1–3 days' warning; solar-wind monitors "
+      "at L1: 15–60 minutes). Our tools: risk calendar (years), active-region calendar (weeks), 3-day quiet-window rule (days). "
+      "An operations desk warns satellite operators before conditions arrive. From about 2031 ESA's Vigil at L5 sees regions "
+      "about 4.5 days earlier.",
       f"Maximum {fc['max_mean']:.1f} ± {fc['max_sd']:.1f}; storms peak 1–3 years after it. The calendar predicted the May 2024 "
       f"G5 region's dates to within 0.7 days, 5 weeks ahead. In years like 2035, {gs['free3_G1']:.0%} of 3-day stretches are storm-free.",
       "Everything: early warning"],
      ["2  Orbit",
-      "Deploy new satellites at 300 km or higher (not 210 km). Operate near 550 km. Prefer low inclination where the service allows.",
+      "Deploy new satellites at 300 km or higher (not 210 km). Operate near 550 km. Track the orbits from the ground and "
+      "re-raise satellites after storms with electric propulsion. Prefer low inclination where the service allows.",
       f"In safe mode a satellite survives 19–33 days at 300 km but 2–3 days at 210 km in 2035. Holding 550 km costs "
       f"{fuel550[0]:.1f}–{fuel550[1]:.1f} kg of fuel a year.",
       "Drag in storms; protons over the poles"],
      ["3  Satellite: solar-hardened, not fully hardened",
       f"Fly edge-on in storms. A {cs['m_vault']:.0f} kg liquid-cooled, shielded vault (2 g/cm²) only around the flight computer "
       "and power control. Commercial chips with triple redundancy, error-correcting memory and watchdogs. Conductive skin, "
-      "single-point grounding.",
+      "single-point grounding. Safe mode: non-essential instruments off, less electrical activity, battery kept charged, "
+      "telemetry and health monitoring stay on. Solar arrays sized with margin for proton damage.",
       f"+{cs['m_layer']:.0f} kg per satellite instead of +{cs['m_full']:.0f} kg for full hardening. 2035: about {s('S1+'):.0f} "
       f"proton events ({s('S3+'):.1f} strong) and {r3:.0f} X-class flares.",
       "Radiation hits, charging, drag"],
@@ -75,9 +79,16 @@ draw_table(
       "Ground stations on batteries and generators, able to run off the grid. Stations spread in latitude and longitude. "
       "Links that do not depend on short-wave radio.",
       f"Québec 1989 (G5): 9-hour grid blackout. 2035: about {g('y2035_G4+'):.0f} severe (G4+) storm days and {r3:.0f} R3+ radio blackouts.",
-      "Power-grid failures, radio blackouts"]],
+      "Power-grid failures, radio blackouts"],
+     ["6  Emerging technology, chosen now",
+      "On-board autonomy: the satellite enters safe mode by itself from its own radiation and charging sensors if the ground "
+      "link is down. Laser links between satellites keep data flowing through radio blackouts. Machine-learning flare "
+      "forecasts from SDO magnetograms feed the operations desk.",
+      "The $100 billion system is not built yet: seven years before launch, the vault, the safe mode and the 300 km "
+      "deployment cost almost nothing to write into the design and the launch contracts.",
+      "Slow reactions, lost links"]],
     [44, 62, 66, 22],
-    ["#cfe2f3", "#d9ead3", "#fff2cc", "#fce5cd", "#ead1dc"],
+    ["#cfe2f3", "#d9ead3", "#fff2cc", "#fce5cd", "#ead1dc", "#d9d2e9"],
     "Sources: forecast_v2.py, geomagnetic.py, protons.py, flares.py, drag.py, region_calendar.py, cost.py (this repository). "
     "Satellite mass, drag area and costs are assumptions (see cost.py and drag.py).")
 
@@ -86,7 +97,7 @@ draw_table(
     "Response playbook: what each team does at each NOAA alert level, and how often to expect it in 2035",
     ["Level", "Trigger", "How often in 2035", "Satellites", "Launch and deployment", "Ground stations"],
     [["Routine", "Every day: NOAA SWPC forecasts, our active-region calendar",
-      "365 days", "Normal operations; update the region calendar", "Deploy only into a forecast 3-day quiet window, at 300 km or higher",
+      "365 days", "Normal operations; the operations desk updates the region calendar and sends a daily outlook to operators", "Deploy only into a forecast 3-day quiet window, at 300 km or higher",
       "Test backup power every month"],
      ["Watch", "A big region enters the danger zone (E30–W90), or G1–G2 storm, S1 proton event, R1–R2 blackout",
       f"G1+ storm days: about {g('y2035_G1+'):.0f}; S1+ proton events: about {s('S1+'):.0f}",
@@ -94,16 +105,16 @@ draw_table(
       "Check generator fuel; plan links that avoid short-wave radio"],
      ["Warning", "G3 storm, S2 proton event or R3 blackout (X-class flare)",
       f"G3+ days: about {g('y2035_G3+'):.0f}; S2+ events: about {s('S2+'):.0f}; X-class flares: about {r3:.0f}",
-      "Satellites below 400 km fly edge-on; pause manoeuvres and software uploads; scrub memory more often", "No launches",
+      "Charge batteries fully; satellites below 400 km fly edge-on; pause manoeuvres and software uploads; scrub memory more often", "No launches",
       "Backup power on standby; staff on call"],
      ["Alert", "G4–G5 storm, S3+ proton event or R4 blackout",
       f"G4+ days: about {g('y2035_G4+'):.0f}; G5 storms: about {g('y2035_G5_storms'):.1f}; S3+ events: about {s('S3+'):.1f}; "
       f"R4 flares: about {r4:.1f}",
-      "All satellites in safe mode, edge-on; switch off non-essential payloads", "No launches",
+      "Safe mode for all: edge-on, non-essential instruments off, less electrical activity; keep the telemetry link and health monitoring", "No launches",
       "Switch to backup power and run off the grid; staff 24/7; coordinate with the grid operator"],
      ["Recovery", "After the storm", "—",
-      "Track orbits; raise satellites that sank; reset upsets; replace failures from spares",
-      "Resume after a 3-day quiet forecast", "Reconnect to the grid; write a short report"]],
+      "Track orbits from the ground; raise satellites that sank; reset upsets; check batteries and solar-array output; replace failures from spares",
+      "Resume normal operations after a 3-day quiet forecast", "Reconnect to the grid; write a short report"]],
     [10, 30, 30, 34, 26, 30],
     ["#d9ead3", "#fff2cc", "#fce5cd", "#f4cccc", "#cfe2f3"],
     "Frequencies are 2035 medians from geomagnetic.py (storm days and storms), protons.py (proton events) and flares.py "
