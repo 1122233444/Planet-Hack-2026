@@ -46,8 +46,7 @@ ax.text(W / 2, -2.1, "30 cm (box 30 × 30 × 15 cm, sealed lid)", ha="center", v
 ax.annotate("", xy=(-1.3, 0), xytext=(-1.3, H), arrowprops=dict(arrowstyle="<->", color="#333", lw=1.1))
 ax.text(-2.0, H / 2, "15 cm", ha="right", va="center", fontsize=14, rotation=90)
 
-ax.text(-5.5, 21.6, "Our vault: one sealed box around the electronics that must survive", fontsize=24, fontweight="bold", va="center")
-ax.text(-5.5, 19.6, "Cross-section. Walls drawn thicker than scale.", fontsize=15, color="gray", va="center")
+ax.text(-5.5, 21.6, "Our vault", fontsize=24, fontweight="bold", va="center")
 ax.text(-5.5, -5.4, f"Same solar-particle dose as {2 / 2.70 * 10:.1f} mm of solid aluminium, {saved:.0f} kg lighter.", fontsize=17, va="center")
 ax.text(-5.5, -7.3, f"10-year solar-particle dose at 53°: {dose53:.2f} krad, {tol / dose53:.0f}× below a commercial chip's ~{tol:.0f} krad.",
         fontsize=17, va="center")
