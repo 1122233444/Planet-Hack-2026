@@ -8,6 +8,8 @@
 - 英文台词约 710 词，按每分钟 145 词左右的语速约 5 分钟。录之前先计时练一遍，超时就删减第 5 段。
 - 视频里的每个数字都要和 README 一致。**不要用那份 PDF 报告里的数字**，原因见文末。
 
+> 注：开场不要说 ADEOS-II 是被这次质子风暴打坏的。它在 2003 年 10 月 24 日激波到达后失去电力，原因多半是充放电；而那次质子风暴 10 月 26 日才开始，28–29 日达到最强。
+
 ## 一、分段大纲
 
 ### 1. 开场（0:00–0:20）
@@ -16,7 +18,7 @@
 - `data/sdo/hmi_20141215.png`（真实的 SDO 太阳图像）全屏，慢慢放大。
 - 先叠字 "Halloween 2003: proton storm 3,000× NOAA's alert level"，再换成 "February 2022: 38 Starlink satellites lost"。
 
-> Halloween 2003. One of the strongest solar proton storms ever measured — about three thousand times NOAA's alert level — and Japan lost its ADEOS-II satellite. In 2022, a far weaker storm dragged 38 new Starlink satellites out of orbit. ISECG will launch a 100-billion-dollar satellite system in 2035, whatever the Sun is doing. We are its advisors.
+> Halloween 2003: one of the strongest solar proton storms ever measured swept past Earth — three thousand times NOAA's alert level. In 2022, a far weaker storm dragged 38 new Starlink satellites out of orbit. ISECG will launch a 100-billion-dollar satellite system in 2035, whatever the Sun is doing. We are its advisors.
 
 ### 2. 空间天气（0:20–0:45）
 
@@ -30,7 +32,7 @@
 - `protons.png` 左图（每年的质子事件，红色是强事件）。
 - 然后 `drag_leo.png` 左图（空气密度：蓝线是低谷，橙线是 2035 年）。
 
-> For a satellite, the particles are the first danger. A single proton can flip a bit in a computer or lock up a chip, and over the years the dose wears out electronics and solar panels. The second danger is drag: storms heat the upper atmosphere — at 550 kilometres, the air in a maximum year is fourteen times denser than at minimum — so satellites sink.
+> For a satellite, the particles are the first danger. A single proton can flip a bit in a computer or lock up a chip, and over the years the dose wears out electronics and solar panels. The second danger is drag: in a maximum year the Sun swells the upper atmosphere — at 550 kilometres the air is fourteen times denser than at minimum — and storms add more, so satellites sink.
 
 ### 4. 利害（1:15–1:30）
 
@@ -195,7 +197,7 @@
 3. **"你们的剂量算得对吗？"**
    用的是 GOES 卫星实测的质子数据，每次事件的最高通量和 NOAA 列表对得上（例如 42,200 对 40,000）。质子在铝里的射程和 NIST 的标准值只差 0.1%。用的是标准的直线近似；忽略次级粒子在 2 g/cm² 时影响很小。
 4. **"辐射带和南大西洋异常区算了吗？"**
-   没有，这是局限。近地轨道上那里的质子会带来持续的剂量。保险箱同样能挡掉一部分，下一步可以用 NASA 的辐射带模型来算。
+   没有，这是局限。近地轨道上那里的质子会带来持续的剂量。保险箱同样能挡掉一部分，下一步可以用 AE9/AP9 辐射带模型（美国空军研究实验室牵头开发）来算。
 5. **"你们真的自己测了吗？"**
    测了两个黑子、7 张图，手动逐步完成，录像可以证明。另外用程序测了 9 个黑子；150 年的方程用的是 D. Hathaway 整理的天文台黑子群记录。
 6. **"2035.4 ± 1.2 年准吗？"**
