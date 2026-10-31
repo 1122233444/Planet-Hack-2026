@@ -1,0 +1,73 @@
+Proton events: 264 (1976-2017); by peak level: S1: 151, S2: 71, S3: 33, S4: 9, S5: 0
+Events per cycle (cycles 21-24, 1976-2019 = 4 cycles) at each level vs NOAA's published averages:
+   S1:  37.8   (NOAA: 50)
+   S2:  17.8   (NOAA: 25)
+   S3:   8.2   (NOAA: 10)
+   S4:   2.2   (NOAA: 3)
+
+Proton events per year (S1+ = all events, S3+ = strong or stronger):
+        SSN  S1+  S2+  S3+  S4+
+year                           
+1976   18.3    1    0    0    0
+1977   39.3    2    2    0    0
+1978  131.2    9    4    2    0
+1979  219.9    7    2    0    0
+1980  219.0    2    1    0    0
+1981  198.8   10    5    1    0
+1982  162.9   12    6    2    0
+1983   90.8    2    1    0    0
+1984   60.7    7    3    1    0
+1985   20.5    3    2    0    0
+1986   14.8    4    2    0    0
+1987   33.7    1    1    0    0
+1988  122.7    9    0    0    0
+1989  211.2   23    9    6    1
+1990  191.4   12    5    0    0
+1991  203.4   17    8    4    1
+1992  133.3    6    3    2    0
+1993   76.4    2    0    0    0
+1994   44.9    2    1    1    1
+1995   25.2    1    0    0    0
+1996   11.5    0    0    0    0
+1997   28.9    2    1    0    0
+1998   88.0    8    6    2    0
+1999  136.2    5    0    0    0
+2000  173.8   13    4    2    2
+2001  170.3   21   11    5    3
+2002  163.6   19    6    1    0
+2003   99.0    9    5    2    1
+2004   65.3    5    3    1    0
+2005   45.7    7    5    3    0
+2006   24.6    2    2    1    0
+2007   12.6    0    0    0    0
+2008    4.1    0    0    0    0
+2009    4.8    0    0    0    0
+2010   24.9    1    0    0    0
+2011   80.8    7    0    0    0
+2012   84.4   13    6    2    0
+2013   93.7    7    3    1    0
+2014  113.6    6    3    1    0
+2015   69.8    4    1    1    0
+2016   39.8    0    0    0    0
+2017   21.8    3    2    1    0
+
+Link to the yearly sunspot number (events per year per 100 sunspots, line through 0 as for flares) and 2035 outlook (sunspot number 10/50/90%: [ 99. 156. 210.]):
+   S1+: 6.99 per 100 SSN (r = 0.74) -> 2035:  6.9 / 10.9 / 14.7 events; real years as active as 2035 with at least one: 9 of 9; at least one in a 30-day period: 59%
+   S2+: 2.99 per 100 SSN (r = 0.61) -> 2035:  3.0 /  4.7 /  6.3 events; real years as active as 2035 with at least one: 7 of 9; at least one in a 30-day period: 32%
+   S3+: 1.11 per 100 SSN (r = 0.48) -> 2035:  1.1 /  1.7 /  2.3 events; real years as active as 2035 with at least one: 7 of 9; at least one in a 30-day period: 13%
+   S4+: 0.24 per 100 SSN (r = 0.36) -> 2035:  0.2 /  0.4 /  0.5 events; real years as active as 2035 with at least one: 2 of 9; at least one in a 30-day period: 3%
+   (look-alike years: sunspot number 112-189: 1978, 1982, 1988, 1992, 1999, 2000, 2001, 2002, 2014)
+   Big events also come in quiet years: 1994 (SSN 45, 1 S3+), 2005 (SSN 46, 3 S3+), 2006 (SSN 25, 1 S3+), 2017 (SSN 22, 1 S3+)
+A satellite working 2035-2044 (median forecast sunspot number each year):
+   S1+: about 50.2 events
+   S3+: about  8.0 events (at least one: 100%)
+   S4+: about  1.7 events (at least one: 82%)
+
+Source position known for 230 of 264 events (the rest: unknown or far side):
+   western half of the disk: 65%;  between E30 and W90 (the 'danger zone'): 85%
+   S3+ events: 83% from E30-W90; the five largest events:
+      1991 Mar 23/0820    43000 pfu  flare X9/3B   at S26E28
+      1989 Oct 19/1305    40000 pfu  flare X13/4B  at S27E10
+      2001 Nov 04/1705    31700 pfu  flare X1/3B   at N06W18
+      2003 Oct 28/1215    29500 pfu  flare X17/4B  at S16E08
+      2000 Jul 14/1045    24000 pfu  flare X5/3B   at N22/W07

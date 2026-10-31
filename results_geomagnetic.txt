@@ -130,6 +130,7 @@ Storm days per year against the yearly sunspot number (1932-2025), straight line
    A G1 storm or stronger (Kp 5+ on 3-4 Feb 2022, when the Starlink satellites were lost, was G1) is expected on about 25% of days in 2035, i.e. about once every 4 days
    Share of n-day stretches with no storm at all, in those real years:
       3 days: no G1+ storm 56%, no G3+ storm 90%
+      5 days: no G1+ storm 42%, no G3+ storm 85%
       7 days: no G1+ storm 31%, no G3+ storm 81%
 
 Storm days per year in 1-year windows around cycle maximum (average of cycles 17-24; windows that leave a cycle are not counted for it):

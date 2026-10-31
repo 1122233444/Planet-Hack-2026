@@ -1,0 +1,18 @@
+NOAA 13664 first seen 02 May 2024 at latitude -18°, 64° east of the central meridian (Carrington longitude 355°)
+Our rotation law at that latitude: 13.29° per day seen from Earth, one turn in 27.1 days
+NOAA 13697 first seen 29 May 2024 at Carrington longitude 353°, latitude -18°: the same region one rotation later
+
+Predicted from the first day only (02 May) vs observed:
+   enters the danger zone (E30)                : predicted 04 May 13:22, observed 04 May 18:57  (-0.2 days, 2 days ahead)
+   faces Earth (central meridian)              : predicted 06 May 19:32, observed 07 May 03:51  (-0.3 days, 4 days ahead)
+   rotates off the disk (W90)                  : predicted 13 May 14:00, observed 14 May 06:33  (-0.7 days, 11 days ahead)
+   back at the east limb (E90)                 : predicted 27 May 02:56, observed 27 May 14:49  (-0.5 days, 25 days ahead)
+   enters the danger zone (E30)     (next turn): predicted 31 May 15:15, observed 01 Jun 04:52  (-0.6 days, 29 days ahead)
+   faces Earth (central meridian)   (next turn): predicted 02 Jun 21:24, observed 03 Jun 11:53  (-0.6 days, 31 days ahead)
+   rotates off the disk (W90)       (next turn): predicted 09 Jun 15:52, observed 10 Jun 08:57  (-0.7 days, 38 days ahead)
+   largest error 0.7 days
+
+Predicted danger windows: 04 May–13 May; 31 May–09 Jun
+X-class flares 1 May-15 June 2024 (all regions): 23, of which 18 fell inside these windows (±1 day)
+Severe (G4+) storm days: 10 May (Kp 8.7), 11 May (Kp 9.0)
+The CMEs behind the 10-11 May G5 storm left the Sun on 8-9 May (NOAA SWPC reports), inside the first window.

@@ -14,19 +14,14 @@ import json, numpy as np, pandas as pd, matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from paths import D, F, assert_data
+from paths import D, F
+from kp_index import load_kp
 
 LEVELS = {"G1+": 4.667, "G2+": 5.667, "G3+": 6.667, "G4+": 7.667, "G5": 9.0}
 NOAA_DAYS = {"G1+": 900, "G2+": 360, "G3+": 130, "G4+": 60, "G5": 4}   # NOAA scale table, storm days per cycle
 
 # ---------- daily maximum Kp ----------
-f = D + "Kp_ap_Ap_SN_F107_since_1932.txt"
-assert_data(f)
-kpc = [f"kp{i}" for i in range(1, 9)]
-cols = ["Y", "M", "D", "days", "days_m", "bsr", "db"] + kpc + [f"ap{i}" for i in range(1, 9)] + ["Ap", "SN", "F107obs", "F107adj", "flag"]
-k = pd.read_csv(f, sep=r"\s+", comment="#", header=None, names=cols)
-k["date"] = pd.to_datetime(dict(year=k.Y, month=k.M, day=k.D))
-k["kp"] = k[kpc].max(axis=1)
+k = load_kp()
 k = k[k.kp >= 0].reset_index(drop=True)
 for g, thr in LEVELS.items():
     k[g] = k.kp >= thr - 0.01
@@ -95,7 +90,7 @@ print(f"   A G1 storm or stronger (Kp 5+ on 3-4 Feb 2022, when the Starlink sate
 # Storms cluster, so count storm-free stretches directly in the real look-alike years
 print("   Share of n-day stretches with no storm at all, in those real years:")
 summary = {}
-for n in (3, 7):
+for n in (3, 5, 7):
     pooled = {g: np.concatenate([(k.loc[k.Y == y, g].astype(int).rolling(n).max().dropna() == 0).values for y in look.index]).mean()
               for g in ["G1+", "G3+"]}
     print(f"      {n} days: no G1+ storm {pooled['G1+'] * 100:.0f}%, no G3+ storm {pooled['G3+'] * 100:.0f}%")

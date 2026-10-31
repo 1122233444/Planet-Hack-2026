@@ -22,6 +22,7 @@ cd "$DATA"
 fetch https://www.sidc.be/SILSO/DATA/SN_m_tot_V2.0.csv
 fetch http://solarcyclescience.com/AR_Database/bflydata.txt
 fetch https://kp.gfz-potsdam.de/app/files/Kp_ap_Ap_SN_F107_since_1932.txt   # Kp index, for geomagnetic.py
+# NOAA solar proton events 1976-2017 (protons.py) are an HTML page, kept in the repository as data/sep_list.html
 
 # GOES X-ray flare lists: NCEI reports 1975-2017, GOES-16 summary 2017-2025, GOES-19 daily files 2025-
 mkdir -p flares/g19 && cd flares

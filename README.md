@@ -12,9 +12,10 @@
 | Quantify differential rotation; derive an equation, state the assumptions | ✅ | Part 4C: ω = 14.54 − 2.84 sin²φ °/day, v = 2.04 cos φ (1 − 0.195 sin²φ) km/s, 10 assumptions |
 | Own butterfly diagram of the last two cycles; cycle period and next maximum from it | ✅ | Part 1B: period 11.2 yr, next maximum ≈ 2036.4 (all 13 cycles: 2034.8 ± 1.2) |
 | Forecast 2035; cross-check with solar activity ↔ radio blackouts (reported incidents) | ✅ | Parts 2–3: SSN median 156, ~30 R3 blackouts in 2035 (true-flux scale); 6 reported incidents and 12 look-alike years |
-| Mission protection strategy | ⏳ | Step 5 (next) |
-| Curveball: ISECG launches in 2035 regardless; design a cost-effective solar-hardened satellite without full-scale hardening | ⏳ | We chose a Starlink-like constellation in low Earth orbit. Geomagnetic-storm statistics ([Part 3B](#part-3b--geomagnetic-storms-for-a-starlink-like-constellation-scriptsgeomagneticpy)) and air drag ([Part 3C](#part-3c--air-drag-in-low-earth-orbit-scriptsdragpy)) done; cost next |
-| Video pitch to the ISECG launch panel | ⏳ | Figures for the video and slides are ready ([below](#video-and-slide-figures-scriptsvideo_figurespy)); the pitch itself comes with Step 5 |
+| Mission protection strategy | ✅ | [Part 5](#part-5--protection-strategy-and-the-curveball-a-starlink-like-constellation-in-2035): launch timing (quiet windows, region calendar), orbit (deploy ≥ 300 km, operate ~550 km), hardware (vault and redundancy), ground stations (off-grid power) |
+| Workshop 2, risk identification: tools for operational readiness and response, layered protection | ✅ | Part 5B (risk calendars, region calendar tool, quiet-window rule), 5C (five layers), 5D (response playbook) |
+| Curveball: ISECG launches in 2035 regardless; design a cost-effective solar-hardened satellite without full-scale hardening | ✅ | A Starlink-like constellation in low Earth orbit: storms ([Part 3B](#part-3b--geomagnetic-storms-for-a-starlink-like-constellation-scriptsgeomagneticpy)), drag ([Part 3C](#part-3c--air-drag-in-low-earth-orbit-scriptsdragpy)), protons, layers and cost ([Part 5](#part-5--protection-strategy-and-the-curveball-a-starlink-like-constellation-in-2035)): +13 kg per satellite instead of +234 kg, about 6% of the cost of full hardening |
+| Video pitch to the ISECG launch panel | ⏳ | Outline with narration ([`docs/video_outline_zh.md`](docs/video_outline_zh.md)) and figures ready; the team records it |
 
 **Headline:** Cycle 26 maximum ≈ **2035.4** (spread of historical analogues ±1.2 yr, full range 2033.6–2038.1) → mid-2035 smoothed sunspot number median **156** (10–90% of the historical-analogue combinations: 99–210) → expect ~**30 X-class flares (R3+ radio blackouts)** and ~440 M-class-or-stronger flares in 2035 on the true-flux scale used for today's alerts (19 and ~290 on the old pre-GOES-16 scale); elevated risk continues to ~2038 because, in equal time windows, X-class flares are 2.5–2.9× more frequent after a maximum than before it.
 
@@ -252,6 +253,57 @@ Assumptions:
 
 Details: [`results_rotation.txt`](results_rotation.txt), [`results_sdo_tracking.txt`](results_sdo_tracking.txt), [`results_manual_walkthrough.txt`](results_manual_walkthrough.txt), [`results_sine_fit_all.txt`](results_sine_fit_all.txt), [`results_rotation_equation.txt`](results_rotation_equation.txt)
 
+## Part 5 – Protection strategy and the curveball: a Starlink-like constellation in 2035
+ISECG launches in 2035 whatever our forecast says (curveball). We protect a Starlink-like constellation in low Earth orbit with layers of cheap measures, each tied to a number from our analyses, plus tools and a playbook for the people who operate it.
+
+### 5A – Radiation storms: solar proton events (`scripts/protons.py`)
+- **Data:** NOAA's list of proton events (≥ 10 pfu at > 10 MeV) 1976–2017, stored as `data/sep_list.html`: 264 events (S1 151, S2 71, S3 33, S4 9). Per cycle at each level: S1 38, S2 18, S3 8, S4 2; NOAA's published averages are 50, 25, 10, 3.
+- **Link to sunspots** (events per year per 100 sunspots, line through zero as for flares): S1+ 7.0 (r = 0.74), S3+ 1.1 (r = 0.48), S4+ 0.24 (r = 0.36).
+- **2035:** about 11 proton events (10–90%: 7–15), 1.7 strong S3+ (1.1–2.3) and 0.4 severe S4. All 9 past years as active as 2035 had at least one event; 7 of 9 had an S3+.
+- **Big events also come in quiet years:** 1994, 2005, 2006 and 2017 had S3+ events at sunspot numbers of only 22–46, so timing alone cannot avoid them.
+- **Where they start:** 85% of the events with a known source began between E30 and W90 (65% in the western half). This is the danger zone used by the region calendar (5B). The five largest started within 30° of the disk centre.
+- **A satellite working 2035–2044** meets about 8 S3+ events and 1.7 S4 events (at least one S4: 82%).
+- In low Earth orbit the Earth's magnetic field keeps most solar protons out except over the polar regions, so radiation is handled by the satellite layer (vault and redundancy, 5C), not by thick shielding.
+- **Limitations:** NOAA's preliminary listing ends in 2017, merges close proton increases into one event and was measured by GOES detectors that were not cross-calibrated.
+
+![Proton events](figures/protons.png)
+
+### 5B – Tools for operational readiness
+1. **Risk calendars** (years): X-class flares per year 2030–2041 (`figures/video/v12_risk_calendar.png`), storms around maximum (Part 3B), proton events (5A).
+2. **Active-region calendar** (`scripts/region_calendar.py`, weeks): from one look at a region (its latitude and distance from the central meridian), our rotation law gives when it enters the danger zone, faces Earth, leaves the disk and comes back. `python3 scripts/region_calendar.py 2035-06-01 -15 -60` prints the calendar for a region at 15°S, 60° east of the central meridian on 1 June 2035.
+   - **Check with NOAA 13664**, the region behind the May 2024 G5 storm: predicted from its first day on the disk (2 May) only, all seven dates — including its return as NOAA 13697 a month later — were right to within 0.7 days, up to 38 days ahead. The predicted danger window (4–13 May) contains 8–9 May, when the CMEs behind the storm left the Sun.
+3. **Quiet-window rule** (days): deploy only into a forecast 3-day quiet window. In years like 2035, 56% of 3-day stretches had no G1+ storm (Part 3B).
+4. **Deployment altitude and fuel** (Part 3C): at least 300 km in 2035; about 1 kg of fuel a year at 550 km.
+
+![Region calendar](figures/region_calendar.png)
+
+### 5C – Five protection layers
+![Five protection layers](figures/layered_protection.png)
+
+### 5D – Response playbook
+![Response playbook](figures/response_playbook.png)
+
+### 5E – Cost-effectiveness (`scripts/cost.py`)
+All inputs are assumptions, with a low and a high value: 4,000 satellites with a 5-year life (800 new a year, 50 per launch), 300 kg, $0.8M each (0.5–1.5), launch $2,500 per kg (1,500–5,000), radiation-hardened electronics +$1M per satellite (0.5–3), our extra parts $50k (20–100k), a space-weather desk $2M a year (1–5).
+- **Full-scale hardening** (2 g/cm² over the whole 11.7 m² body and hardened electronics): +234 kg per satellite (+78%), about $1.3 billion a year (0.7–3.3), 1.3% of the $100 billion system every year.
+- **Our layers:** +13 kg per satellite (+4%: the 10 kg vault, a spare computer and grounding), deploying at 300 km instead of 210 km (53 m/s more from the upper stage, 1.9% less payload) and the operations desk: about **$80M a year (40–160), 0.08% of the system, 6% of the cost of full hardening**.
+- **One lost batch** (50 satellites and their launch) costs about $78M (48–150), so a whole year of our layers costs about one lost batch. With 2022 practice in a year like 2035, about 9 of the 16 batches a year would meet a G1+ storm in their first five days, and at 210 km every 2035 day has denser air than the day of the 2022 losses. The layers pay for themselves if they save one batch a year.
+- **Full-scale radiation hardening would not have saved the February 2022 satellites:** they were lost to drag, not radiation.
+
+![Cost](figures/cost.png)
+
+### 5F – Our decision and checkpoints
+ISECG launches in 2035. **Our recommendation: go, with the five layers and the playbook** — deploy at 300 km or higher in a forecast quiet window, operate near 550 km, keep spares in orbit. Checkpoints:
+- **2029–2031:** look for the first high-latitude spots of cycle 26 (our butterfly method) to confirm the timing.
+- **About 2030:** estimate the cycle's strength from the Sun's polar magnetic field and adjust the margins.
+- **From about 2031:** add the side view from ESA's Vigil.
+- **A month before each launch campaign:** run the region calendar.
+- **On the day:** follow the playbook.
+
+Limitations: the cost inputs are assumptions with wide ranges; the loss comparison rests on one historical event; the region calendar uses the average rotation law for a region's latitude (single regions scatter around it by about 0.4°/day, Part 4).
+
+The 5-minute video outline (in Chinese, with English narration): [`docs/video_outline_zh.md`](docs/video_outline_zh.md)
+
 ## Video and slide figures (`scripts/video_figures.py`)
 Fifteen 16:9 figures (1920×1080, English) in `figures/video/`, ready for the video and the slides. Every number on them is read from the data and result files, so they follow any rerun. Before saving, the script checks that no text overlaps or runs off the frame (`results_video_figures.txt`).
 
@@ -278,6 +330,7 @@ Fifteen 16:9 figures (1920×1080, English) in `figures/video/`, ready for the vi
 - Sunspot area by latitude (butterfly data) and daily sunspot-group positions (Greenwich/RGO 1874–1976, USAF/NOAA 1977–2026): D. Hathaway – http://solarcyclescience.com/AR_Database/ (`bflydata.txt`, `gYYYY.txt`; also at https://solarscience.msfc.nasa.gov/greenwch.shtml)
 - Solar flares: NOAA NCEI GOES XRS flare reports 1975–2017 – https://www.ngdc.noaa.gov/stp/space-weather/solar-data/solar-features/solar-flares/x-rays/goes/xrs/ ; GOES-16 / GOES-19 XRS L2 flare summaries 2017–2026 – https://data.ngdc.noaa.gov/platforms/solar-space-observing-satellites/goes/
 - Geomagnetic Kp index: GFZ Helmholtz Centre for Geosciences, Potsdam – https://kp.gfz-potsdam.de (`Kp_ap_Ap_SN_F107_since_1932.txt`)
+- Solar proton events 1976–2017: NOAA SWPC preliminary listing – https://umbra.nascom.nasa.gov/SEP/ (stored as `data/sep_list.html`)
 - Solar images: SDO/HMI continuum via the Helioviewer API – https://api.helioviewer.org (viewer: https://helioviewer.org)
 - Exact download commands: [`scripts/download_data.sh`](scripts/download_data.sh)
 
@@ -310,6 +363,10 @@ python3 scripts/butterfly_own.py     # Part 1B
 python3 scripts/incidents.py         # Part 3 cross-check (needs flares.py output)
 python3 scripts/geomagnetic.py       # Part 3B (needs cycles.py and forecast_v2.py output)
 python3 scripts/drag.py              # Part 3C (needs geomagnetic.py output)
+python3 scripts/protons.py           # Part 5A
+python3 scripts/region_calendar.py   # Part 5B check (May 2024); or: region_calendar.py 2035-06-01 -15 -60
+python3 scripts/cost.py              # Part 5E (needs geomagnetic.py output)
+python3 scripts/strategy_figures.py  # Part 5C-5D tables (needs the scripts above)
 python3 scripts/video_figures.py     # 16:9 figures for the video and slides (figures/video/)
 python3 scripts/solar_geometry.py    # self-test against SunPy (pip install sunpy)
 ```

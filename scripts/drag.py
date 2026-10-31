@@ -13,7 +13,8 @@ import matplotlib.pyplot as plt
 import pymsis
 from scipy.integrate import solve_ivp
 
-from paths import D, F, assert_data
+from paths import D, F
+from kp_index import load_kp, AP3
 
 MU, RE, G0 = 3.986004e14, 6371e3, 9.80665
 B_LOW, B_HIGH, MASS, ISP = 0.01, 0.1, 300.0, 1500.0          # m²/kg, m²/kg, kg, s (electric propulsion)
@@ -22,13 +23,7 @@ ALTS = np.arange(140, 705, 5.0)
 LATS, LONS = np.arange(-50, 51, 10), np.arange(0, 360, 15)
 
 # ---------- daily Kp/Ap, sunspot number and F10.7 (GFZ file, see geomagnetic.py) ----------
-f = D + "Kp_ap_Ap_SN_F107_since_1932.txt"
-assert_data(f)
-kpc = [f"kp{i}" for i in range(1, 9)]
-cols = ["Y", "M", "D", "days", "days_m", "bsr", "db"] + kpc + [f"ap{i}" for i in range(1, 9)] + ["Ap", "SN", "F107obs", "F107adj", "flag"]
-k = pd.read_csv(f, sep=r"\s+", comment="#", header=None, names=cols)
-k["date"] = pd.to_datetime(dict(year=k.Y, month=k.M, day=k.D))
-k["kp"] = k[kpc].max(axis=1)
+k = load_kp()
 
 # sunspot number -> F10.7 (yearly means 1947-2025)
 y = k[(k.F107obs > 0) & k.Y.between(1947, 2025)].groupby("Y").agg(F=("F107obs", "mean"), SN=("SN", "mean"))
@@ -105,7 +100,7 @@ for B in (B_LOW, 0.02):
 print("   (all survival times scale as 1/B: a satellite stuck with its array facing the flow, B = 0.1, lasts 10× shorter)")
 
 # ---------- check: daily Ap vs the 3-hourly ap history that MSIS can also use ----------
-ap3 = pd.Series(k[[f"ap{i}" for i in range(1, 9)]].values.ravel(),
+ap3 = pd.Series(k[AP3].values.ravel(),
                 index=np.repeat(k.date.values, 8) + np.tile(np.arange(8) * np.timedelta64(3, "h"), len(k)))
 
 

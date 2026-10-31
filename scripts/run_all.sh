@@ -16,5 +16,9 @@ run butterfly_own.py      results_butterfly_own.txt
 run incidents.py          results_incidents.txt       # needs flares.py output
 run geomagnetic.py        results_geomagnetic.txt     # needs cycles.py and forecast_v2.py output
 run drag.py               results_drag.txt            # needs geomagnetic.py output
+run protons.py            results_protons.txt
+run region_calendar.py    results_region_calendar.txt # needs rotation.py, flares.py output
+run cost.py               results_cost.txt            # needs geomagnetic.py output
+run strategy_figures.py   results_strategy_figures.txt # needs the scripts above
 run video_figures.py      results_video_figures.txt   # 16:9 figures for the video and slides (figures/video/)
 echo "== self-test (needs sunpy)"; python3 solar_geometry.py
