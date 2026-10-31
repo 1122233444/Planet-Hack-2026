@@ -237,6 +237,7 @@ The sine fits leave 0.5 px residuals. The amplitude is fixed to R·cos(lat): wit
    - A line through the 2.5°-band medians gives 14.48 − 2.77 sin²φ: the distribution of single groups is skewed (young groups rotate fast), so its mean sits a little above its median.
    - Adding a C·sin⁴φ term gives C = −0.04 ± 0.41, i.e. zero: within ±40° the sin²φ term is enough.
    - Our 9 SDO spots alone give 14.68 ± 0.17 − (4.70 ± 1.69) sin²φ: same trend, much larger error.
+   - Two spots are already enough to solve for A and B (two equations, two unknowns). By hand for spots A and E (school formulas without the B0 tilt, first and last image, `docs/video_outline_zh.md` Part 2): 13.767 = A + 0.2546·B and 14.161 = A + 0.0158·B → **ω = 14.19 − 1.65 sin²φ**. At 30° it agrees with the 150-year law (13.77 vs 13.83 °/day); near the equator it is lower because single groups scatter by ~0.5 °/day and B = Δω/Δs with Δs = 0.24, so one spot off by 0.5 °/day moves B by ~2. Two spots give the form; many spots give precise coefficients.
 6. **Period and speed.** P(φ) = 360/ω(φ) days. The surface speed is the angular rate times the radius of the latitude circle: v = ω·(π/180)/86400 · R☉·cos φ, so **v(φ) = 2.043 · cos φ · (1 − 0.195 sin²φ) km/s** (2.04 km/s at the equator, 1.95 at 15°, 1.68 at 30°).
 
 Assumptions:
