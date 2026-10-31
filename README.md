@@ -13,6 +13,7 @@
 | Own butterfly diagram of the last two cycles; cycle period and next maximum from it | ✅ | Part 1B: period 11.2 yr, next maximum ≈ 2036.4 (all 13 cycles: 2034.8 ± 1.2) |
 | Forecast 2035; cross-check with solar activity ↔ radio blackouts (reported incidents) | ✅ | Parts 2–3: SSN median 156, ~30 R3 blackouts in 2035 (true-flux scale); 6 reported incidents and 12 look-alike years |
 | Mission protection strategy | ⏳ | Step 5 (next) |
+| Curveball: ISECG launches in 2035 regardless; design a cost-effective solar-hardened satellite without full-scale hardening | ⏳ | We chose a Starlink-like constellation in low Earth orbit. Geomagnetic-storm statistics done ([Part 3B](#part-3b--geomagnetic-storms-for-a-starlink-like-constellation-scriptsgeomagneticpy)); drag and cost next |
 | Video pitch to the ISECG launch panel | ⏳ | Figures for the video and slides are ready ([below](#video-and-slide-figures-scriptsvideo_figurespy)); the pitch itself comes with Step 5 |
 
 **Headline:** Cycle 26 maximum ≈ **2035.4** (spread of historical analogues ±1.2 yr, full range 2033.6–2038.1) → mid-2035 smoothed sunspot number median **156** (10–90% of the historical-analogue combinations: 99–210) → expect ~**30 X-class flares (R3+ radio blackouts)** and ~440 M-class-or-stronger flares in 2035 on the true-flux scale used for today's alerts (19 and ~290 on the old pre-GOES-16 scale); elevated risk continues to ~2038 because, in equal time windows, X-class flares are 2.5–2.9× more frequent after a maximum than before it.
@@ -110,6 +111,23 @@ Details: [`results_flares.txt`](results_flares.txt), [`data/flares_per_year.csv`
 
 Sources: Boteler 2019; NOAA Service Assessment 2004; Cerruti et al. 2008; Redmon et al. 2018; SpaceX 2022, Dang et al. 2022; NOAA SWPC 2024.
 Look-alike years (yearly SSN 112–189, the middle half of the 2035 forecast; 12 years since 1978): every one had R3 blackouts (median ~20 per year, range 8–66), 3 of 12 had an R4. Our 2035 forecast (~30 R3, ~440 R1+) is of the same size. Details: [`results_incidents.txt`](results_incidents.txt)
+
+## Part 3B – Geomagnetic storms for a Starlink-like constellation (`scripts/geomagnetic.py`)
+The curveball asks for a cost-effective, solar-hardened satellite. We chose a Starlink-like constellation in low Earth orbit. There the main space-weather threat is a geomagnetic storm: it heats and expands the upper atmosphere, so the drag on the satellites rises (February 2022: 38 of 49 new Starlink satellites were lost in a minor G1 storm).
+
+- **Data:** the planetary Kp index from GFZ Potsdam, every 3 hours since 1932 (34,637 days). NOAA G-scale: G1 is Kp 5 … G5 is Kp 9. A Kp level N covers N−, No and N+, so G1 starts at 5− (4.67) and G5 is 9o only (NOAA: "G4: Kp 8, including a 9−"). A storm day is a UT day whose highest Kp reaches the level.
+- **Check:** storm days per cycle (cycles 17–24): G1+ 874, G2+ 356, G3+ 127, G4+ 44, G5 3. NOAA's published averages: 900, 360, 130, 60, 4.
+- **Link to sunspots** (1932–2025, straight line a + b·SSN): G1+ r = 0.43, G3+ r = 0.68, G4+ r = 0.65. Storms also happen near minimum (fast wind from coronal holes), so the lines do not go through zero, and minor storms follow the sunspot number less closely than X-class flares do (r = 0.80).
+- **2035** (median sunspot number 156): about **93 G1+ storm days** (10–90%: 80–106), i.e. one day in four; 17 G3+ days (12–21); 6 G4+ days (4–8); about 0.4 G5 storms. In the 23 real years as active as 2035 (SSN 112–189), 21 had a G4+ storm and 9 a G5 storm.
+- **Storms cluster:** in those years 56% of 3-day stretches (31% of 7-day stretches) had no G1+ storm, and 90% of 3-day stretches had no G3+ storm. A deployment can wait for a quiet 3-day forecast.
+- **Timing:** unlike X-class flares, storms keep coming after maximum. G3+ storm days per year (average of cycles 17–24): 14.8 in the year before maximum, 13.5 in the year after, 18.8 and 19.2 one to three years after; **2.1× more 1–3 years after maximum than 1–3 years before** (G1+: 1.6×). With the maximum at 2035.4, the stormiest years are 2036–2038, the first years of the constellation.
+- **A satellite working 2035–2044** meets about 67 G3+ storms, 25 G4+ storms and 1.8 G5 storms (at least one G5: 84%).
+- **Known events:** 13 Mar 1989 Kp 9o (G5), 29 Oct 2003 Kp 9o (G5), 3–4 Feb 2022 Kp 5+ (G1, the Starlink losses), 11 May 2024 Kp 9o (G5).
+- **Limitations:** Kp is a global 3-hour index; the drag on a satellite depends on how the upper atmosphere responds at its altitude, which is the next step (an atmosphere model). The straight line against the yearly sunspot number misses part of the declining-phase storms; the timing analysis covers them. 2026 runs to 30 October and is scaled to a full year; the latest Kp values are preliminary.
+
+![Geomagnetic storms](figures/geomagnetic_storms.png)
+
+Details: [`results_geomagnetic.txt`](results_geomagnetic.txt)
 
 ## Part 4 – Differential rotation (Steps 1–2): tracking sunspots with trigonometry
 
@@ -217,7 +235,7 @@ Assumptions:
 Details: [`results_rotation.txt`](results_rotation.txt), [`results_sdo_tracking.txt`](results_sdo_tracking.txt), [`results_manual_walkthrough.txt`](results_manual_walkthrough.txt), [`results_sine_fit_all.txt`](results_sine_fit_all.txt), [`results_rotation_equation.txt`](results_rotation_equation.txt)
 
 ## Video and slide figures (`scripts/video_figures.py`)
-Thirteen 16:9 figures (1920×1080, English) in `figures/video/`, ready for the video and the slides. Every number on them is read from the data and result files, so they follow any rerun. Before saving, the script checks that no text overlaps or runs off the frame (`results_video_figures.txt`).
+Fifteen 16:9 figures (1920×1080, English) in `figures/video/`, ready for the video and the slides. Every number on them is read from the data and result files, so they follow any rerun. Before saving, the script checks that no text overlaps or runs off the frame (`results_video_figures.txt`).
 
 | Figure | Shows |
 |---|---|
@@ -234,11 +252,14 @@ Thirteen 16:9 figures (1920×1080, English) in `figures/video/`, ready for the v
 | `v11_after_maximum.png` | X-class flares per year around solar maximum (cycles 21–24) |
 | `v12_risk_calendar.png` | Expected X-class flares per year, 2030–2041 |
 | `v13_2035_in_numbers.png` | Six key numbers for 2035 |
+| `v14_storms_after_maximum.png` | Geomagnetic storms peak 1–3 years after maximum (cycles 17–24); ~93 G1+ storm days in 2035 |
+| `v15_leo_2035_in_numbers.png` | Six numbers for a Starlink-like constellation in 2035 |
 
 ## Data sources
 - Monthly sunspot number: WDC-SILSO, Royal Observatory of Belgium, Brussels – https://www.sidc.be/SILSO/datafiles (`SN_m_tot_V2.0.csv`)
 - Sunspot area by latitude (butterfly data) and daily sunspot-group positions (Greenwich/RGO 1874–1976, USAF/NOAA 1977–2026): D. Hathaway – http://solarcyclescience.com/AR_Database/ (`bflydata.txt`, `gYYYY.txt`; also at https://solarscience.msfc.nasa.gov/greenwch.shtml)
 - Solar flares: NOAA NCEI GOES XRS flare reports 1975–2017 – https://www.ngdc.noaa.gov/stp/space-weather/solar-data/solar-features/solar-flares/x-rays/goes/xrs/ ; GOES-16 / GOES-19 XRS L2 flare summaries 2017–2026 – https://data.ngdc.noaa.gov/platforms/solar-space-observing-satellites/goes/
+- Geomagnetic Kp index: GFZ Helmholtz Centre for Geosciences, Potsdam – https://kp.gfz-potsdam.de (`Kp_ap_Ap_SN_F107_since_1932.txt`)
 - Solar images: SDO/HMI continuum via the Helioviewer API – https://api.helioviewer.org (viewer: https://helioviewer.org)
 - Exact download commands: [`scripts/download_data.sh`](scripts/download_data.sh)
 
@@ -247,6 +268,7 @@ Thirteen 16:9 figures (1920×1080, English) in `figures/video/`, ready for the v
 - Hathaway, D., Wilson, R. & Reichmann, E. 1994, Solar Physics 151, 177 (shape of the sunspot cycle)
 - Snodgrass, H. & Ulrich, R. 1990, ApJ 351, 309 (rotation of Doppler features)
 - Balthasar, H., Vázquez, M. & Wöhl, H. 1986, A&A 155, 87 (sunspot-group rotation from Greenwich data)
+- Matzka, J. et al. 2021, Space Weather 19, e2020SW002641 (the Kp index)
 
 ## Reproduce
 All scripts find `data/` and `figures/` relative to the repository, so they run wherever it is cloned.
@@ -267,6 +289,7 @@ python3 scripts/manual_rotation.py my_spots.csv out.png   # your own hand measur
 python3 scripts/rotation_equation.py # Part 4C
 python3 scripts/butterfly_own.py     # Part 1B
 python3 scripts/incidents.py         # Part 3 cross-check (needs flares.py output)
+python3 scripts/geomagnetic.py       # Part 3B (needs cycles.py and forecast_v2.py output)
 python3 scripts/video_figures.py     # 16:9 figures for the video and slides (figures/video/)
 python3 scripts/solar_geometry.py    # self-test against SunPy (pip install sunpy)
 ```

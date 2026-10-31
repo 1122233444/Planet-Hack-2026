@@ -450,7 +450,59 @@ def numbers_2035():
     save(fig, "v13_2035_in_numbers.png")
 
 
+# ---------------------------------------------------------------- 14. geomagnetic storms around maximum
+def storms_after_max():
+    ph = pd.read_csv(D + "geomagnetic_phase.csv", index_col=0)
+    gs = json.load(open(D + "geomagnetic_summary.json"))
+    fig = canvas("Geomagnetic storms peak 1–3 years after maximum",
+                 f"Storm days per year, average of cycles 17–24 (Kp index since 1932). Orange years assume the next maximum at {MAX35:.1f}",
+                 "Kp: GFZ Potsdam (Matzka et al. 2021). Storm levels: NOAA G-scale (G1 minor … G5 extreme)")
+    panels = [("G1+", SUN, "Minor or stronger (G1+): the level of the\nFeb 2022 storm that downed 38 Starlink satellites",
+               f"≈{gs['y2035_G1+'][1]:.0f} storm days in 2035:\nabout 1 day in {365.25 / gs['y2035_G1+'][1]:.0f}"),
+              ("G3+", RED, "Strong or stronger (G3+)",
+               f"{gs['after_before_G3+']:.1f}× more storm days 1–3 years\nafter maximum than 1–3 years before")]
+    for k, (g, col, head, msg) in enumerate(panels):
+        ax = fig.add_axes([0.075 + k * 0.475, 0.14, 0.41, 0.58])
+        xs = ph.index + 0.5
+        ax.bar(xs, ph[g], width=0.8, color=col)
+        for x, v in zip(xs, ph[g]):
+            note(ax, x, v + ph[g].max() * 0.02, f"{v:.0f}", size=14, ha="center")
+        ax.plot([0, 0], [0, ph[g].max() * 1.12], color=TXT, ls="--", lw=1.5)
+        ax.set_xticks(range(-3, 7), [num(x, "+d") if x else "0" for x in range(-3, 7)])
+        ax.set_xlim(-3.3, 6.3); ax.set_ylim(0, ph[g].max() * 1.75)
+        ax.set_xlabel("Years from solar maximum")
+        if k == 0:
+            ax.set_ylabel("Storm days per year")
+        ax.text(0.02, 0.97, head, transform=ax.transAxes, va="top", fontsize=16, color=col, fontweight="bold", linespacing=1.3)
+        ax.text(0.02, 0.80, msg, transform=ax.transAxes, va="top", fontsize=15, color=TXT, linespacing=1.3)
+        top = ax.secondary_xaxis("top", functions=(lambda x: x + MAX35, lambda y: y - MAX35))
+        top.set_xticks(range(2033, 2042, 2)); top.tick_params(colors=SUN)
+    save(fig, "v14_storms_after_maximum.png")
+
+
+# ---------------------------------------------------------------- 15. a LEO constellation in 2035
+def leo_2035():
+    gs = json.load(open(D + "geomagnetic_summary.json"))
+    g1, g3 = gs["y2035_G1+"][1], gs["y2035_G3+"][1]
+    cards = [(f"≈{g1:.0f}", SUN, f"G1+ storm days in 2035:\nabout 1 day in {365.25 / g1:.0f}"),
+             (f"≈{g3:.0f}", RED, "strong (G3+) storm days\nin 2035"),
+             (f"{gs['look_G4_years']} of {gs['look_n']}", RED, "past years this active had a\nsevere (G4+) storm"),
+             (f"{gs['look_G5_years']} of {gs['look_n']}", RED, "had an extreme (G5) storm,\nlike May 2024"),
+             (f"{gs['free3_G1'] * 100:.0f}%", SUN, "of 3-day stretches had no\nstorm: deploy in those"),
+             (f"{gs['after_before_G3+']:.1f}×", SUN, "more strong-storm days 1–3 yr\nafter maximum than before")]
+    fig = canvas("A Starlink-like constellation in 2035",
+                 "What our forecast says about geomagnetic storms, the main space-weather threat in low Earth orbit",
+                 f"Kp index 1932–2026 (GFZ Potsdam); forecast: historical-analogue ensemble; comparable years: "
+                 f"sunspot number {gs['look_ssn'][0]:.0f}–{gs['look_ssn'][1]:.0f}")
+    for k, (big, col, small) in enumerate(cards):
+        cx, cy = 0.05 + (k % 3) * 0.31, 0.47 - (k // 3) * 0.36
+        fig.patches.append(FancyBboxPatch((cx, cy), 0.28, 0.30, boxstyle="round,pad=0.01", transform=fig.transFigure, fc=PANEL, ec=GRID))
+        fig.text(cx + 0.02, cy + 0.265, big, fontsize=52, fontweight="bold", color=col, va="top")
+        fig.text(cx + 0.02, cy + 0.125, small, fontsize=18, color=TXT, va="top", linespacing=1.35)
+    save(fig, "v15_leo_2035_in_numbers.png")
+
+
 if __name__ == "__main__":
     for f in [cover, incidents, butterfly, forecast, measure, trig, sine, equation, rotation_meaning,
-              flares_ssn, after_max, risk_calendar, numbers_2035]:
+              flares_ssn, after_max, risk_calendar, numbers_2035, storms_after_max, leo_2035]:
         f()
