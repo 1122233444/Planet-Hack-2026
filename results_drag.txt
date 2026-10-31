@@ -1,0 +1,83 @@
+Yearly F10.7 = 62.4 + 0.655 × sunspot number (1947-2025, r = 0.989)
+   2035 (sunspot number 10/50/90%: [ 99. 156. 210.]): F10.7 = [127. 165. 200.]
+   solar minimum: lowest yearly F10.7 = 69 (2008)
+Median daily Ap on days at each level: {'quiet': 7, 'G1': 22, 'G2': 35, 'G3': 53, 'G4': 89, 'G5': 186}
+
+Scenario inputs (F10.7 previous day, F10.7 81-day mean, daily Ap):
+   solar minimum, quiet             69     69     7
+   2035, quiet                     165    165     7
+   2035, G1 day                    165    165    22
+   2035, G2 day                    165    165    35
+   2035, G3 day                    165    165    53
+   2035, G4 day                    165    165    89
+   2035, G5 day                    165    165   186
+   May 2024 peak (G5)              223    177   271
+   Feb 2022, before the storm      130    109     6
+   Feb 2022, storm (G1)            126    109    32
+   2021, quiet (earlier launches)     82     82     7
+
+Orbit-averaged air density (kg/m³):
+        solar minimum, quiet  2035, quiet  2035, G1 day  2035, G2 day  2035, G3 day  2035, G4 day  2035, G5 day  May 2024 peak (G5)  Feb 2022, before the storm  Feb 2022, storm (G1)  2021, quiet (earlier launches)
+alt_km                                                                                                                                                                                                               
+200.0               1.67e-10     2.90e-10      3.07e-10      3.15e-10      3.23e-10      3.37e-10      3.75e-10            4.39e-10                    2.22e-10              2.44e-10                        1.84e-10
+210.0               1.17e-10     2.21e-10      2.34e-10      2.40e-10      2.47e-10      2.58e-10      2.89e-10            3.43e-10                    1.63e-10              1.80e-10                        1.31e-10
+300.0               8.17e-12     3.04e-11      3.32e-11      3.45e-11      3.58e-11      3.82e-11      4.49e-11            6.02e-11                    1.74e-11              1.99e-11                        1.05e-11
+350.0               2.39e-12     1.23e-11      1.36e-11      1.43e-11      1.49e-11      1.61e-11      1.94e-11            2.77e-11                    6.24e-12              7.33e-12                        3.27e-12
+400.0               7.65e-13     5.36e-12      6.03e-12      6.34e-12      6.66e-12      7.26e-12      8.97e-12            1.36e-11                    2.43e-12              2.92e-12                        1.11e-12
+480.0               1.44e-13     1.56e-12      1.79e-12      1.91e-12      2.02e-12      2.24e-12      2.89e-12            4.84e-12                    5.97e-13              7.48e-13                        2.27e-13
+550.0               4.01e-14     5.66e-13      6.65e-13      7.13e-13      7.64e-13      8.58e-13      1.15e-12            2.09e-12                    1.92e-13              2.47e-13                        6.48e-14
+600.0               1.88e-14     2.85e-13      3.39e-13      3.65e-13      3.93e-13      4.47e-13      6.13e-13            1.19e-12                    9.00e-14              1.18e-13                        2.97e-14
+
+Density relative to '2035, quiet':
+alt_km                          210.0  350.0  480.0  550.0
+solar minimum, quiet             0.53   0.19   0.09   0.07
+2035, quiet                      1.00   1.00   1.00   1.00
+2035, G1 day                     1.06   1.11   1.15   1.17
+2035, G2 day                     1.09   1.16   1.22   1.26
+2035, G3 day                     1.12   1.21   1.30   1.35
+2035, G4 day                     1.17   1.30   1.44   1.52
+2035, G5 day                     1.31   1.57   1.85   2.03
+May 2024 peak (G5)               1.56   2.25   3.11   3.69
+Feb 2022, before the storm       0.74   0.51   0.38   0.34
+Feb 2022, storm (G1)             0.82   0.59   0.48   0.44
+2021, quiet (earlier launches)   0.59   0.26   0.15   0.11
+
+Check with February 2022 (Starlink deployed with perigee ~210 km; 38 of 49 lost within days):
+   density at 210 km, storm day vs typical 2021 conditions (earlier launches): ×1.38  (SpaceX: drag up to 50% higher than during previous launches)
+   of which the storm itself (vs the days just before): ×1.10; the rest is the rising solar cycle
+   a QUIET day in 2035 vs that storm day: ×1.23 at 210 km, ×1.68 at 350 km
+   B = 0.01 m²/kg, circular 210 km: 3.6 days before the storm conditions, 3.3 days in them  (sinking 7 -> 8 km/day)
+   B = 0.02 m²/kg, circular 210 km: 1.8 days before the storm conditions, 1.6 days in them  (sinking 14 -> 16 km/day)
+   (all survival times scale as 1/B: a satellite stuck with its array facing the flow, B = 0.1, lasts 10× shorter)
+Daily Ap (used here) vs real 3-hourly ap, highest density during the storm relative to its first day:
+   May 2024: 3-hourly ×1.49 at 210 km, ×2.32 at 480 km; daily ×1.43 and ×2.14
+   Feb 2022: 3-hourly ×1.13 at 210 km, ×1.31 at 480 km; daily ×1.10 and ×1.25
+
+Days a satellite in low-drag safe mode (B = 0.01) survives without raising its orbit, by starting altitude:
+       solar minimum, quiet  2035, quiet  2035, G4 day  2035, G5 day  May 2024 peak (G5)  2035, 3-day G5 storm, then quiet
+200.0                   2.9          1.9           1.7           1.5                 1.4                               1.5
+210.0                   4.5          2.8           2.5           2.2                 1.9                               2.2
+250.0                  20.5          9.8           8.3           7.4                 6.1                               8.7
+300.0                  96.3         33.2          27.3          23.7                18.7                              31.8
+350.0                 368.4         93.5          74.3          63.1                47.0                              91.8
+400.0                1244.2        235.3         180.9         150.3               105.8                             233.3
+   solar minimum, quiet              : lowest altitude that survives 7 days: 225 km, 14 days: 240 km
+   2035, quiet                       : lowest altitude that survives 7 days: 240 km, 14 days: 265 km
+   2035, G4 day                      : lowest altitude that survives 7 days: 245 km, 14 days: 275 km
+   2035, G5 day                      : lowest altitude that survives 7 days: 250 km, 14 days: 280 km
+   May 2024 peak (G5)                : lowest altitude that survives 7 days: 260 km, 14 days: 290 km
+   2035, 3-day G5 storm, then quiet  : lowest altitude that survives 7 days: 245 km, 14 days: 270 km
+
+Storm days per year used: 2035 = median forecast (geomagnetic.py); solar minimum = mean of the 15 years with sunspot number < 20
+   2035         : quiet 272 d, G1 52 d, G2 24 d, G3 10 d, G4 6 d, G5 1 d  -> storm days give 29% of the year's drag at 480 km
+   solar minimum: quiet 324 d, G1 30 d, G2 9 d, G3 2 d, G4 1 d, G5 0 d  -> storm days give 15% of the year's drag at 480 km
+
+Drag to make up each year to stay at one altitude (ΔV), and electric-propulsion fuel for a 300 kg satellite (Isp 1500 s):
+   350 km, B = 0.01: 2035   119.7 m/s (  2.4 kg fuel), solar minimum   23.0 m/s ( 0.47 kg)  -> ×5
+   350 km, B = 0.10: 2035  1196.8 m/s ( 23.4 kg fuel), solar minimum  229.6 m/s ( 4.65 kg)  -> ×5
+   480 km, B = 0.01: 2035    15.1 m/s (  0.3 kg fuel), solar minimum    1.4 m/s ( 0.03 kg)  -> ×11
+   480 km, B = 0.10: 2035   150.6 m/s (  3.1 kg fuel), solar minimum   13.7 m/s ( 0.28 kg)  -> ×11
+   550 km, B = 0.01: 2035     5.5 m/s (  0.1 kg fuel), solar minimum    0.4 m/s ( 0.01 kg)  -> ×14
+   550 km, B = 0.10: 2035    54.6 m/s (  1.1 kg fuel), solar minimum    3.8 m/s ( 0.08 kg)  -> ×14
+
+A dead satellite at 550 km (tumbling, B = 0.05) falls back in 1.4 years in 2035-like conditions, 16 years in solar-minimum conditions

@@ -13,7 +13,7 @@
 | Own butterfly diagram of the last two cycles; cycle period and next maximum from it | ✅ | Part 1B: period 11.2 yr, next maximum ≈ 2036.4 (all 13 cycles: 2034.8 ± 1.2) |
 | Forecast 2035; cross-check with solar activity ↔ radio blackouts (reported incidents) | ✅ | Parts 2–3: SSN median 156, ~30 R3 blackouts in 2035 (true-flux scale); 6 reported incidents and 12 look-alike years |
 | Mission protection strategy | ⏳ | Step 5 (next) |
-| Curveball: ISECG launches in 2035 regardless; design a cost-effective solar-hardened satellite without full-scale hardening | ⏳ | We chose a Starlink-like constellation in low Earth orbit. Geomagnetic-storm statistics done ([Part 3B](#part-3b--geomagnetic-storms-for-a-starlink-like-constellation-scriptsgeomagneticpy)); drag and cost next |
+| Curveball: ISECG launches in 2035 regardless; design a cost-effective solar-hardened satellite without full-scale hardening | ⏳ | We chose a Starlink-like constellation in low Earth orbit. Geomagnetic-storm statistics ([Part 3B](#part-3b--geomagnetic-storms-for-a-starlink-like-constellation-scriptsgeomagneticpy)) and air drag ([Part 3C](#part-3c--air-drag-in-low-earth-orbit-scriptsdragpy)) done; cost next |
 | Video pitch to the ISECG launch panel | ⏳ | Figures for the video and slides are ready ([below](#video-and-slide-figures-scriptsvideo_figurespy)); the pitch itself comes with Step 5 |
 
 **Headline:** Cycle 26 maximum ≈ **2035.4** (spread of historical analogues ±1.2 yr, full range 2033.6–2038.1) → mid-2035 smoothed sunspot number median **156** (10–90% of the historical-analogue combinations: 99–210) → expect ~**30 X-class flares (R3+ radio blackouts)** and ~440 M-class-or-stronger flares in 2035 on the true-flux scale used for today's alerts (19 and ~290 on the old pre-GOES-16 scale); elevated risk continues to ~2038 because, in equal time windows, X-class flares are 2.5–2.9× more frequent after a maximum than before it.
@@ -128,6 +128,24 @@ The curveball asks for a cost-effective, solar-hardened satellite. We chose a St
 ![Geomagnetic storms](figures/geomagnetic_storms.png)
 
 Details: [`results_geomagnetic.txt`](results_geomagnetic.txt)
+
+## Part 3C – Air drag in low Earth orbit (`scripts/drag.py`)
+How solar activity and storms change the air density where Starlink-like satellites fly, how fast a satellite sinks, and how much fuel it needs in 2035.
+
+- **Model:** NRLMSIS 2.1 atmosphere model (`pymsis`), density averaged over latitudes ±50° and all local times. Inputs: the F10.7 radio flux, taken from our sunspot forecast with F10.7 = 62.4 + 0.655 × SSN (yearly means 1947–2025, r = 0.989) → 2035: 165 (10–90%: 127–200), solar minimum: 69; and the daily Ap index, the median on days of each G level in the Kp record (quiet 7, G1 22, G2 35, G3 53, G4 89, G5 186).
+- **Satellite (assumed, Starlink-like):** 300 kg; ballistic coefficient B = Cd·A/m = 0.01 m²/kg flying edge-on (low-drag safe mode) and 0.1 m²/kg with the solar array facing the flow; circular orbits; lost at 150 km. All survival times scale as 1/B.
+- **Check with February 2022:** on the storm day the air at 210 km was 1.38× as dense as in typical 2021 conditions (SpaceX: drag up to 50% higher than during previous launches). The storm itself added only ×1.10; the rest was the rising solar cycle. In safe mode a satellite at 210 km lasts 3–4 days, as the lost satellites did. Using the real 3-hourly ap instead of the daily Ap raises the storm peaks by less than 10%.
+- **The solar cycle matters more than single storms:** at 550 km the air on a quiet 2035 day is 14× denser than at solar minimum (350 km: 5×). On top of that a G4 day adds 52%, a G5 day doubles it, and the May 2024 peak (with its higher F10.7) gave 3.7×.
+- **A quiet day in 2035 is denser than the storm day that downed the Starlink satellites:** ×1.23 at 210 km, ×1.68 at 350 km.
+- **Deployment altitude:** to survive 14 days in safe mode without raising its orbit, a new satellite must start above 265 km on a quiet 2035 day, 280 km during a G5 storm and 290 km in May-2024-like conditions. Deploying at **300 km or higher** in 2035 gives 19–33 days; at 2022's 210 km it gives 2–3 days.
+- **Storm days** (Part 3B) cause 29% of the year's drag at 480 km in 2035 (15% at solar minimum).
+- **Fuel to stay at one altitude** (300 kg, electric propulsion, Isp 1500 s): at 550 km 5–55 m/s per year (0.1–1.1 kg of fuel); at 480 km 15–150 m/s (0.3–3 kg); at 350 km 120–1,200 m/s (2–23 kg). That is 5–14× more than at solar minimum, but small at 550 km.
+- **Silver lining:** a dead satellite at 550 km (tumbling, B = 0.05) falls back in about 1.4 years in 2035-like conditions, but 16 years at solar minimum.
+- **Limitations:** the satellite numbers (mass, B, Isp) are assumptions; MSIS is an empirical average model and can miss the densest hours of real storms; real deployment orbits are elliptical and sink more slowly than the circular ones here; each scenario keeps conditions constant; F10.7 comes from the yearly relation (2024 had F10.7 191 at sunspot number 155, so 2035 could be denser than assumed).
+
+![Air drag in low Earth orbit](figures/drag_leo.png)
+
+Details: [`results_drag.txt`](results_drag.txt)
 
 ## Part 4 – Differential rotation (Steps 1–2): tracking sunspots with trigonometry
 
@@ -269,6 +287,7 @@ Fifteen 16:9 figures (1920×1080, English) in `figures/video/`, ready for the vi
 - Snodgrass, H. & Ulrich, R. 1990, ApJ 351, 309 (rotation of Doppler features)
 - Balthasar, H., Vázquez, M. & Wöhl, H. 1986, A&A 155, 87 (sunspot-group rotation from Greenwich data)
 - Matzka, J. et al. 2021, Space Weather 19, e2020SW002641 (the Kp index)
+- Emmert, J. T. et al. 2021, Earth and Space Science 8, e2020EA001321 (NRLMSIS 2.0; we use version 2.1 through `pymsis`)
 
 ## Reproduce
 All scripts find `data/` and `figures/` relative to the repository, so they run wherever it is cloned.
@@ -290,6 +309,7 @@ python3 scripts/rotation_equation.py # Part 4C
 python3 scripts/butterfly_own.py     # Part 1B
 python3 scripts/incidents.py         # Part 3 cross-check (needs flares.py output)
 python3 scripts/geomagnetic.py       # Part 3B (needs cycles.py and forecast_v2.py output)
+python3 scripts/drag.py              # Part 3C (needs geomagnetic.py output)
 python3 scripts/video_figures.py     # 16:9 figures for the video and slides (figures/video/)
 python3 scripts/solar_geometry.py    # self-test against SunPy (pip install sunpy)
 ```

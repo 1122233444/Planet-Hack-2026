@@ -9,3 +9,4 @@ pillow==12.3.0
 # only for the self-test in scripts/solar_geometry.py
 sunpy==8.0.1
 astropy==8.0.2
+pymsis==0.13.0
