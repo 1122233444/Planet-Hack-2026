@@ -39,6 +39,18 @@ done; done | xargs -P 4 -I{} bash -c 'fetch "$1"' _ {}
 mkdir -p "$DATA/groups" && cd "$DATA/groups"
 seq 1874 2026 | xargs -P 3 -I{} bash -c 'fetch "http://solarcyclescience.com/AR_Database/g$1.txt"' _ {}
 
+# GOES proton detectors for the big proton events (shielding.py): all of 1989 (GOES-7), Oct-Nov 2003 (GOES-10),
+# Jan 2005 (GOES-11), Sep 2017 (GOES-13); 5-minute averages, about 45 MB
+mkdir -p "$DATA/goes_protons" && cd "$DATA/goes_protons"
+P=https://www.ncei.noaa.gov/data/goes-space-environment-monitor/access/avg
+for md in 01:31 02:28 03:31 04:30 05:31 06:30 07:31 08:31 09:30 10:31 11:30 12:31; do
+  m=${md%:*}; d=${md#*:}; fetch "$P/1989/$m/goes07/csv/g07_eps_5m_1989${m}01_1989${m}${d}.csv"
+done
+fetch "$P/2003/10/goes10/csv/g10_eps_5m_20031001_20031031.csv"
+fetch "$P/2003/11/goes10/csv/g10_eps_5m_20031101_20031130.csv"
+fetch "$P/2005/01/goes11/csv/g11_eps_5m_20050101_20050131.csv"
+fetch "$P/2017/09/goes13/csv/g13_epead_cpflux_5m_20170901_20170930.csv"
+
 # Final check over everything
 bad=$(grep -li "<!doctype html\|<html" "$DATA"/groups/*.txt "$DATA"/flares/*.txt "$DATA"/*.txt "$DATA"/*.csv 2>/dev/null || true)
 if [ -n "$bad" ]; then echo "These files are HTML pages, not data: $bad" >&2; exit 1; fi

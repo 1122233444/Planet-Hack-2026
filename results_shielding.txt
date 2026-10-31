@@ -1,0 +1,44 @@
+Range check (CSDA in aluminium): 100 MeV -> 9.97 g/cm² (NIST PSTAR: 9.98)
+
+Event fluences from GOES, protons/cm² (omnidirectional):
+                       >5 MeV   >10 MeV   >30 MeV   >50 MeV   >60 MeV  >100 MeV
+October 1989 (S4)    3.89e+10  1.93e+10  4.23e+09  1.76e+09  1.21e+09  4.59e+08
+Halloween 2003 (S4)  2.18e+10  1.34e+10  3.42e+09  1.12e+09  6.16e+08  1.61e+08
+January 2005 (S3)    6.40e+09  3.61e+09  1.04e+09  4.10e+08  2.55e+08  9.49e+07
+September 2017 (S3)  3.88e+09  1.94e+09  5.11e+08  2.07e+08  1.37e+08  4.84e+07
+the whole of 1989    6.86e+10  3.48e+10  7.41e+09  2.94e+09  1.94e+09  7.08e+08
+Check: highest >10 MeV flux in each event, GOES 5-minute data vs NOAA's event list (pfu):
+   October 1989 (S4)     :    42200 vs 40000
+   Halloween 2003 (S4)   :    33700 vs 29500
+   January 2005 (S3)     :     5040 vs 5040
+   September 2017 (S3)   :     1298 vs 1490
+
+Orbit-averaged share of protons that reach a 550 km orbit (geomagnetic cutoff × visible sky), quiet / severe storm:
+   outside the magnetosphere : 10 MeV 1.00 / 1.00, 30 MeV 1.00 / 1.00, 100 MeV 1.00 / 1.00, 300 MeV 1.00 / 1.00
+   LEO 97.6° (polar)         : 10 MeV 0.18 / 0.26, 30 MeV 0.20 / 0.28, 100 MeV 0.23 / 0.31, 300 MeV 0.27 / 0.35
+   LEO 70°                   : 10 MeV 0.09 / 0.22, 30 MeV 0.13 / 0.25, 100 MeV 0.18 / 0.28, 300 MeV 0.23 / 0.32
+   LEO 53° (Starlink)        : 10 MeV 0.00 / 0.06, 30 MeV 0.00 / 0.09, 100 MeV 0.03 / 0.13, 300 MeV 0.07 / 0.20
+
+Dose in silicon (krad) behind aluminium (g/cm²; 1 g/cm² = 3.7 mm), severe-storm cutoffs (quiet cutoffs: shielding_dose.csv):
+   October 1989 (S4):
+depth                          0.1       0.5       1.0       2.0       5.0       10.0      20.0
+orbit                                                                                          
+outside the magnetosphere    16.568     3.111     1.516     0.606     0.172     0.060     0.024
+LEO 97.6° (polar)             4.338     0.869     0.436     0.180     0.053     0.019     0.008
+LEO 70°                       3.642     0.753     0.382     0.160     0.048     0.018     0.007
+LEO 53° (Starlink)            1.049     0.265     0.145     0.066     0.022     0.009     0.004
+   the whole of 1989:
+depth                          0.1       0.5       1.0       2.0       5.0       10.0      20.0
+orbit                                                                                          
+outside the magnetosphere    29.480     5.592     2.718     1.062     0.281     0.095     0.036
+LEO 97.6° (polar)             7.721     1.562     0.781     0.315     0.087     0.031     0.012
+LEO 70°                       6.483     1.353     0.684     0.279     0.078     0.028     0.011
+LEO 53° (Starlink)            1.870     0.475     0.260     0.115     0.036     0.014     0.006
+
+A 10-year mission (2035-2044) expects 8.0 S3+ and 1.7 S4 events; 1989 had 6 and 1: mission ≈ 1.7 × the whole of 1989 (solar protons only)
+   outside the magnetosphere : mission dose  50.45 krad behind a thin 0.1 g/cm² skin,   4.65 behind 1 g/cm²,   1.82 behind 2,   0.48 behind 5  -> thinnest wall from the list keeping it below 5 krad: 1 g/cm²
+   LEO 97.6° (polar)         : mission dose  13.21 krad behind a thin 0.1 g/cm² skin,   1.34 behind 1 g/cm²,   0.54 behind 2,   0.15 behind 5  -> thinnest wall from the list keeping it below 5 krad: 0.5 g/cm²
+   LEO 70°                   : mission dose  11.09 krad behind a thin 0.1 g/cm² skin,   1.17 behind 1 g/cm²,   0.48 behind 2,   0.13 behind 5  -> thinnest wall from the list keeping it below 5 krad: 0.5 g/cm²
+   LEO 53° (Starlink)        : mission dose   3.20 krad behind a thin 0.1 g/cm² skin,   0.44 behind 1 g/cm²,   0.20 behind 2,   0.06 behind 5  -> thinnest wall from the list keeping it below 5 krad: 0.1 g/cm²
+   Protons above 30 MeV still getting through in October 1989, LEO 53° (Starlink): behind 2 g/cm² 48%, behind 10 g/cm² 15% of the unshielded number -> shielding cannot stop bit flips; redundancy must
+   Protons above 30 MeV still getting through in October 1989, LEO 97.6° (polar): behind 2 g/cm² 42%, behind 10 g/cm² 11% of the unshielded number -> shielding cannot stop bit flips; redundancy must

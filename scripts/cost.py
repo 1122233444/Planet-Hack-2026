@@ -23,7 +23,7 @@ A = dict(
     layered_parts=(50e3, 20e3, 100e3),       # US$ per satellite: spare computer, memory protection, grounding, vault pump
     ops_per_year=(2e6, 1e6, 5e6),            # US$ per year: space-weather desk (staff, data, software)
 )
-SHIELD = 2.0                                  # g/cm² for the shielded parts (≈ 7 mm aluminium or 2.2 cm of ester)
+SHIELD = 2.0                                  # g/cm² for the shielded parts (≈ 7 mm aluminium or 2.2 cm of ester), chosen in shielding.py
 BUS = (3.0, 1.5, 0.3)                         # m, flat satellite body (assumed)
 VAULT = (0.30, 0.30, 0.15)                    # m, box around flight computer and power control
 VAULT_EXTRA, LAYER_EXTRA = 3.0, 3.0           # kg: vault housing, pump and bellows; spare computer, grounding, coatings

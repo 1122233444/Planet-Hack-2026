@@ -17,6 +17,7 @@ run incidents.py          results_incidents.txt       # needs flares.py output
 run geomagnetic.py        results_geomagnetic.txt     # needs cycles.py and forecast_v2.py output
 run drag.py               results_drag.txt            # needs geomagnetic.py output
 run protons.py            results_protons.txt
+run shielding.py          results_shielding.txt       # needs protons.py output and data/goes_protons/
 run region_calendar.py    results_region_calendar.txt # needs rotation.py, flares.py output
 run cost.py               results_cost.txt            # needs geomagnetic.py output
 run strategy_figures.py   results_strategy_figures.txt # needs the scripts above

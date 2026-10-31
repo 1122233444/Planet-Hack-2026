@@ -10,6 +10,9 @@ gs = json.load(open(D + "geomagnetic_summary.json"))
 ps = json.load(open(D + "protons_summary.json"))
 ds = json.load(open(D + "drag_summary.json"))
 cs = json.load(open(D + "cost_summary.json"))
+sh = json.load(open(D + "shielding_summary.json"))
+mis = {o: {float(k): v for k, v in d.items()} for o, d in sh["mission"].items()}
+OPEN, POLAR, STAR = "outside the magnetosphere", "LEO 97.6° (polar)", "LEO 53° (Starlink)"
 fc = json.load(open(D + "forecast_v2_summary.json"))
 yr = pd.read_csv(D + "flares_per_year.csv", index_col=0)
 ssn35 = np.median(pd.read_csv(D + "forecast_v2_ssn2035_samples.csv").ssn_2035)
@@ -49,27 +52,32 @@ draw_table(
     "Layered protection for a Starlink-like constellation in 2035 — no single technology stops space weather",
     ["Layer", "What we do", "The numbers behind it (our analyses)", "Protects against"],
     [["1  Monitor and warn",
-      "Watch flares (GOES X-rays), particles (GOES protons) and CMEs (coronagraphs: 1–3 days' warning; solar-wind monitors "
-      "at L1: 15–60 minutes). Our tools: risk calendar (years), active-region calendar (weeks), 3-day quiet-window rule (days). "
-      "An operations desk warns satellite operators before conditions arrive. From about 2031 ESA's Vigil at L5 sees regions "
-      "about 4.5 days earlier.",
-      f"Maximum {fc['max_mean']:.1f} ± {fc['max_sd']:.1f}; storms peak 1–3 years after it. The calendar predicted the May 2024 "
-      f"G5 region's dates to within 0.7 days, 5 weeks ahead. In years like 2035, {gs['free3_G1']:.0%} of 3-day stretches are storm-free.",
+      "Solar particles first: a big flare is seen 8 minutes after it happens and its protons arrive about 10 minutes to a few "
+      "hours later, so GOES proton alerts trigger safe mode. CMEs: coronagraphs give 1–3 days, solar-wind monitors at L1 15–60 "
+      "minutes. Our tools: risk calendar (years), active-region calendar (weeks), 3-day quiet-window rule (days). From about "
+      "2031 ESA's Vigil at L5 sees regions about 4.5 days earlier.",
+      f"{ps['zone_share']:.0%} of proton events start in the danger zone E30–W90; the region calendar predicted the May 2024 G5 "
+      f"region's dates to within 0.7 days, 5 weeks ahead. 2035: about {s('S1+'):.0f} proton events, {s('S3+'):.1f} strong. "
+      f"Maximum {fc['max_mean']:.1f} ± {fc['max_sd']:.1f}.",
       "Everything: early warning"],
      ["2  Orbit",
-      "Deploy new satellites at 300 km or higher (not 210 km). Operate near 550 km. Track the orbits from the ground and "
-      "re-raise satellites after storms with electric propulsion. Prefer low inclination where the service allows.",
-      f"In safe mode a satellite survives 19–33 days at 300 km but 2–3 days at 210 km in 2035. Holding 550 km costs "
-      f"{fuel550[0]:.1f}–{fuel550[1]:.1f} kg of fuel a year.",
-      "Drag in storms; protons over the poles"],
+      "The Earth's magnetic field is the first, free shield against solar protons: use mid-inclination shells where the "
+      "service allows. Second, drag: deploy at 300 km or higher (not 210 km), operate near 550 km, track orbits from the "
+      "ground and re-raise satellites after storms.",
+      f"At 53° a satellite gets 1/{mis[OPEN][0.1] / mis[STAR][0.1]:.0f} of the open-space solar-proton dose and "
+      f"1/{mis[POLAR][0.1] / mis[STAR][0.1]:.0f} of a polar one. Safe-mode survival 19–33 days at 300 km vs 2–3 days at "
+      f"210 km; holding 550 km costs {fuel550[0]:.1f}–{fuel550[1]:.1f} kg of fuel a year.",
+      "Solar protons; drag in storms"],
      ["3  Satellite: solar-hardened, not fully hardened",
       f"Fly edge-on in storms. A {cs['m_vault']:.0f} kg liquid-cooled, shielded vault (2 g/cm²) only around the flight computer "
       "and power control. Commercial chips with triple redundancy, error-correcting memory and watchdogs. Conductive skin, "
       "single-point grounding. Safe mode: non-essential instruments off, less electrical activity, battery kept charged, "
       "telemetry and health monitoring stay on. Solar arrays sized with margin for proton damage.",
-      f"+{cs['m_layer']:.0f} kg per satellite instead of +{cs['m_full']:.0f} kg for full hardening. 2035: about {s('S1+'):.0f} "
-      f"proton events ({s('S3+'):.1f} strong) and {r3:.0f} X-class flares.",
-      "Radiation hits, charging, drag"],
+      f"The 2 g/cm² vault cuts the 10-year solar-proton dose about {mis[OPEN][0.1] / mis[OPEN][2.0]:.0f}-fold "
+      f"({mis[OPEN][0.1]:.0f} → {mis[OPEN][2.0]:.1f} krad outside the magnetosphere, {mis[STAR][0.1]:.1f} → {mis[STAR][2.0]:.1f} "
+      f"at 53°), far below a commercial chip's ~10 krad. About half of the protons that flip bits still get through: hence "
+      f"redundancy and safe mode. +{cs['m_layer']:.0f} kg instead of +{cs['m_full']:.0f} kg for full hardening.",
+      "Solar-particle dose and bit flips; charging; drag"],
      ["4  Constellation",
       "Spare satellites in orbit, automatic safe mode, quick replacement launches.",
       f"A dead satellite at 550 km falls back in about {ds['dead_years']['2035']:.1f} years at solar maximum "
@@ -89,7 +97,7 @@ draw_table(
       "Slow reactions, lost links"]],
     [44, 62, 66, 22],
     ["#cfe2f3", "#d9ead3", "#fff2cc", "#fce5cd", "#ead1dc", "#d9d2e9"],
-    "Sources: forecast_v2.py, geomagnetic.py, protons.py, flares.py, drag.py, region_calendar.py, cost.py (this repository). "
+    "Sources: forecast_v2.py, protons.py, shielding.py, geomagnetic.py, flares.py, drag.py, region_calendar.py, cost.py (this repository). "
     "Satellite mass, drag area and costs are assumptions (see cost.py and drag.py).")
 
 draw_table(
@@ -99,16 +107,16 @@ draw_table(
     [["Routine", "Every day: NOAA SWPC forecasts, our active-region calendar",
       "365 days", "Normal operations; the operations desk updates the region calendar and sends a daily outlook to operators", "Deploy only into a forecast 3-day quiet window, at 300 km or higher",
       "Test backup power every month"],
-     ["Watch", "A big region enters the danger zone (E30–W90), or G1–G2 storm, S1 proton event, R1–R2 blackout",
-      f"G1+ storm days: about {g('y2035_G1+'):.0f}; S1+ proton events: about {s('S1+'):.0f}",
+     ["Watch", "A big region enters the danger zone (E30–W90), or S1 proton event, G1–G2 storm, R1–R2 blackout",
+      f"S1+ proton events: about {s('S1+'):.0f}; G1+ storm days: about {g('y2035_G1+'):.0f}",
       "Check spares are ready; avoid manoeuvres while the region is in the danger zone", "Hold new deployments",
       "Check generator fuel; plan links that avoid short-wave radio"],
-     ["Warning", "G3 storm, S2 proton event or R3 blackout (X-class flare)",
-      f"G3+ days: about {g('y2035_G3+'):.0f}; S2+ events: about {s('S2+'):.0f}; X-class flares: about {r3:.0f}",
+     ["Warning", "S2 proton event, G3 storm or R3 blackout (X-class flare)",
+      f"S2+ events: about {s('S2+'):.0f}; G3+ days: about {g('y2035_G3+'):.0f}; X-class flares: about {r3:.0f}",
       "Charge batteries fully; satellites below 400 km fly edge-on; pause manoeuvres and software uploads; scrub memory more often", "No launches",
       "Backup power on standby; staff on call"],
-     ["Alert", "G4–G5 storm, S3+ proton event or R4 blackout",
-      f"G4+ days: about {g('y2035_G4+'):.0f}; G5 storms: about {g('y2035_G5_storms'):.1f}; S3+ events: about {s('S3+'):.1f}; "
+     ["Alert", "S3+ proton event, G4–G5 storm or R4 blackout",
+      f"S3+ events: about {s('S3+'):.1f}; G4+ days: about {g('y2035_G4+'):.0f}; G5 storms: about {g('y2035_G5_storms'):.1f}; "
       f"R4 flares: about {r4:.1f}",
       "Safe mode for all: edge-on, non-essential instruments off, less electrical activity; keep the telemetry link and health monitoring", "No launches",
       "Switch to backup power and run off the grid; staff 24/7; coordinate with the grid operator"],

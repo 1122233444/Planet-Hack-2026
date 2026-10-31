@@ -14,7 +14,7 @@
 | Forecast 2035; cross-check with solar activity ↔ radio blackouts (reported incidents) | ✅ | Parts 2–3: SSN median 156, ~30 R3 blackouts in 2035 (true-flux scale); 6 reported incidents and 12 look-alike years |
 | Mission protection strategy | ✅ | [Part 5](#part-5--protection-strategy-and-the-curveball-a-starlink-like-constellation-in-2035): launch timing (quiet windows, region calendar), orbit (deploy ≥ 300 km, operate ~550 km), hardware (vault and redundancy), ground stations (off-grid power) |
 | Workshop 2: tools for operational readiness and response; layered protection; monitoring and early warnings, safe mode, orbit and power management; emerging technologies | ✅ | Part 5B (risk calendars, region calendar tool, quiet-window rule), 5C (protection layers), 5D (response playbook) |
-| Curveball: ISECG launches in 2035 regardless; design a cost-effective solar-hardened satellite without full-scale hardening | ✅ | A Starlink-like constellation in low Earth orbit: storms ([Part 3B](#part-3b--geomagnetic-storms-for-a-starlink-like-constellation-scriptsgeomagneticpy)), drag ([Part 3C](#part-3c--air-drag-in-low-earth-orbit-scriptsdragpy)), protons, layers and cost ([Part 5](#part-5--protection-strategy-and-the-curveball-a-starlink-like-constellation-in-2035)): +13 kg per satellite instead of +234 kg, about 6% of the cost of full hardening |
+| Curveball: ISECG launches in 2035 regardless; design a cost-effective solar-hardened satellite without full-scale hardening | ✅ | A Starlink-like constellation in low Earth orbit: storms ([Part 3B](#part-3b--geomagnetic-storms-for-a-starlink-like-constellation-scriptsgeomagneticpy)), drag ([Part 3C](#part-3c--air-drag-in-low-earth-orbit-scriptsdragpy)), solar-proton events and shielding, layers and cost ([Part 5](#part-5--protection-strategy-and-the-curveball-a-starlink-like-constellation-in-2035)): a 2 g/cm² vault cuts the 10-year solar-proton dose 16- to 28-fold; +13 kg per satellite instead of +234 kg, about 6% of the cost of full hardening |
 | Video pitch to the ISECG launch panel | ⏳ | Outline with narration, shot list and a guide to filming the hand measurement ([`docs/video_outline_zh.md`](docs/video_outline_zh.md)); the team records it |
 
 **Headline:** Cycle 26 maximum ≈ **2035.4** (spread of historical analogues ±1.2 yr, full range 2033.6–2038.1) → mid-2035 smoothed sunspot number median **156** (10–90% of the historical-analogue combinations: 99–210) → expect ~**30 X-class flares (R3+ radio blackouts)** and ~440 M-class-or-stronger flares in 2035 on the true-flux scale used for today's alerts (19 and ~290 on the old pre-GOES-16 scale); elevated risk continues to ~2038 because, in equal time windows, X-class flares are 2.5–2.9× more frequent after a maximum than before it.
@@ -268,6 +268,27 @@ ISECG launches in 2035 whatever our forecast says (curveball). We protect a Star
 
 ![Proton events](figures/protons.png)
 
+### 5A2 – Shielding against solar particles (`scripts/shielding.py`)
+How much proton dose reaches the electronics, behind how much aluminium, in which orbit.
+- **Data:** GOES proton detectors (integral channels > 5 … > 100 MeV, 5-minute averages, downloaded to `data/goes_protons/`): October 1989, Halloween 2003, January 2005, September 2017, and the whole of 1989, the worst year on record. Check: the highest > 10 MeV flux in each event matches NOAA's list (42,200 vs 40,000 pfu; 33,700 vs 29,500; 5,040 vs 5,040; 1,298 vs 1,490).
+- **Method:** event fluence → spectrum (log-log between channels; the 60–100 MeV power law continued to 1 GeV) → energy loss in aluminium (Bethe formula; 100 MeV range 9.97 g/cm², NIST: 9.98) → dose in silicon at the centre of a closed box (straight-ahead, no secondary particles).
+- **Orbit:** in low Earth orbit the Earth's magnetic field turns away protons below the local cutoff. We use Størmer's formula on a tilted dipole, moved 6° toward the equator to match observed cutoffs (SAMPEX saw the ISS at 51.6° graze the polar cap) and 16° in severe storms (cutoffs shift 5–12° within a day, Leske et al. 2001). The Earth also blocks 30% of the sky at 550 km.
+- **10-year mission (2035–2044):** about 8 S3+ and 1.7 S4 events are expected (5A), about 1.7 × the whole of 1989. Solar-proton dose in silicon, severe-storm cutoffs (conservative):
+
+| Orbit | thin skin, 0.1 g/cm² | 1 g/cm² | **2 g/cm² (our vault)** | 5 g/cm² |
+|---|---|---|---|---|
+| Outside the magnetosphere | 50 krad | 4.7 | **1.8** | 0.5 |
+| LEO 97.6° (polar) | 13 | 1.3 | **0.54** | 0.15 |
+| LEO 53° (Starlink) | 3.2 | 0.44 | **0.20** | 0.06 |
+
+- **What it means:**
+  1. **The Earth's magnetic field is the first, free shield:** at 53° a satellite receives about 1/16 of the open-space dose and 1/4 of a polar one.
+  2. **A 2 g/cm² vault** (7 mm of aluminium, or 2.2 cm of the liquid ester) cuts the dose about 28-fold in open space and 16-fold at 53°. After that the returns fall: 5 g/cm² buys only 4× more for 2.5× the vault mass. A commercial chip (about 10 krad, assumed) stays far below its limit in every orbit.
+  3. **Shielding cannot stop bit flips:** in October 1989, 42–48% of the protons above 30 MeV still got through 2 g/cm² (11–15% through 10 g/cm²). Single-event upsets are handled by redundancy, error-correcting memory and a safe mode during proton storms.
+- **Limitations:** solar protons only — the trapped protons of the South Atlantic Anomaly add a steady dose in low Earth orbit that we did not model; the spectrum above 100 MeV is extrapolated; straight-ahead transport ignores secondary particles; the cutoff shifts are approximate.
+
+![Shielding against solar particles](figures/shielding.png)
+
 ### 5B – Tools for operational readiness
 1. **Risk calendars** (years): X-class flares per year 2030–2041 (`figures/video/v12_risk_calendar.png`), storms around maximum (Part 3B), proton events (5A).
 2. **Active-region calendar** (`scripts/region_calendar.py`, weeks): from one look at a region (its latitude and distance from the central meridian), our rotation law gives when it enters the danger zone, faces Earth, leaves the disk and comes back. `python3 scripts/region_calendar.py 2035-06-01 -15 -60` prints the calendar for a region at 15°S, 60° east of the central meridian on 1 June 2035.
@@ -333,6 +354,7 @@ Fifteen 16:9 figures (1920×1080, English) in `figures/video/`. The video outlin
 - Solar flares: NOAA NCEI GOES XRS flare reports 1975–2017 – https://www.ngdc.noaa.gov/stp/space-weather/solar-data/solar-features/solar-flares/x-rays/goes/xrs/ ; GOES-16 / GOES-19 XRS L2 flare summaries 2017–2026 – https://data.ngdc.noaa.gov/platforms/solar-space-observing-satellites/goes/
 - Geomagnetic Kp index: GFZ Helmholtz Centre for Geosciences, Potsdam – https://kp.gfz-potsdam.de (`Kp_ap_Ap_SN_F107_since_1932.txt`)
 - Solar proton events 1976–2017: NOAA SWPC preliminary listing – https://umbra.nascom.nasa.gov/SEP/ (stored as `data/sep_list.html`)
+- GOES proton fluxes (EPS/EPEAD, 5-minute averages): NOAA NCEI – https://www.ncei.noaa.gov/data/goes-space-environment-monitor/access/avg/
 - Solar images: SDO/HMI continuum via the Helioviewer API – https://api.helioviewer.org (viewer: https://helioviewer.org)
 - Exact download commands: [`scripts/download_data.sh`](scripts/download_data.sh)
 
@@ -343,6 +365,8 @@ Fifteen 16:9 figures (1920×1080, English) in `figures/video/`. The video outlin
 - Balthasar, H., Vázquez, M. & Wöhl, H. 1986, A&A 155, 87 (sunspot-group rotation from Greenwich data)
 - Matzka, J. et al. 2021, Space Weather 19, e2020SW002641 (the Kp index)
 - Emmert, J. T. et al. 2021, Earth and Space Science 8, e2020EA001321 (NRLMSIS 2.0; we use version 2.1 through `pymsis`)
+- Leske, R. A. et al. 2001, J. Geophys. Res. 106, 30011 (geomagnetic cutoff variations during solar particle events, SAMPEX)
+- Berger, M. J. et al., NIST PSTAR (proton stopping powers and ranges; used to check our Bethe ranges)
 
 ## Reproduce
 All scripts find `data/` and `figures/` relative to the repository, so they run wherever it is cloned.
@@ -366,6 +390,7 @@ python3 scripts/incidents.py         # Part 3 cross-check (needs flares.py outpu
 python3 scripts/geomagnetic.py       # Part 3B (needs cycles.py and forecast_v2.py output)
 python3 scripts/drag.py              # Part 3C (needs geomagnetic.py output)
 python3 scripts/protons.py           # Part 5A
+python3 scripts/shielding.py         # Part 5A2 (needs protons.py output and data/goes_protons/)
 python3 scripts/region_calendar.py   # Part 5B check (May 2024); or: region_calendar.py 2035-06-01 -15 -60
 python3 scripts/cost.py              # Part 5E (needs geomagnetic.py output)
 python3 scripts/strategy_figures.py  # Part 5C-5D tables (needs the scripts above)
